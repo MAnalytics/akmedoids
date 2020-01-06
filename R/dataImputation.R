@@ -37,7 +37,7 @@ dataImputation <- function(traj, id_field = FALSE, method = 2, replace_with = 1,
     dat <- dat[,2:ncol(dat)]
   }
 
-  #matrix to backup the 'null' information store the outlier information [TRUE or FALSE]
+  #matrix to backup the 'null' information store via the outlier information [TRUE or FALSE]
   null_mat <- matrix(FALSE, nrow(dat), ncol(dat))
 
   for(a in 1:ncol(dat)){ #a<-1
