@@ -1,4 +1,4 @@
-#' @title Determine the elbow point on a curve based on the maximum curvature along the curve
+#' @title Determine the elbow point on a curve
 #' @description Given a list of x, y coordinates on a curve, function determines the elbow point of the curve.
 #' @param x vector of x coordinates of points on the curve
 #' @param y vector of y coordinates of points on the curve
