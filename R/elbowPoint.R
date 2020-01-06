@@ -11,8 +11,6 @@
 #' abline(v=elbowPoint(x,y)$y, col="blue", pch=20, cex=3)
 #' @return a list containing the (x, y) coordinates of the elbow point.
 #' @details function is adapted from 'github.com/agentlans/KneeArrower'
-#' @importFrom stats approx cor median predict smooth.spline
-#' @importFrom stats approxfun optimize
 #' @export
 elbowPoint <- function(x, y) {
   # Test for non-numeric or infinite values
