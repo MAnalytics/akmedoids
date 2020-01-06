@@ -12,13 +12,13 @@ elbowPoint(x, y)
 \item{y}{vector of y coordinates of points on the curve}
 }
 \value{
-a list containing the (x, y) coordinates of the elbow point.
+an x, y coordinates of the elbow point.
 }
 \description{
 Given a list of x, y coordinates on a curve, function determines the elbow point of the curve.
 }
 \details{
-function is adapted from 'github.com/agentlans/KneeArrower'
+highlight the maximum curvature to identify the elbow point (credit: 'github.com/agentlans')
 }
 \examples{
 # Generate some curve
