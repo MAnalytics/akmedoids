@@ -2,7 +2,7 @@
 % Please edit documentation in R/elbowPoint.R
 \name{elbowPoint}
 \alias{elbowPoint}
-\title{Determine the elbow point on a curve based on the maximum curvature along the curve}
+\title{Determine the elbow point on a curve}
 \usage{
 elbowPoint(x, y)
 }
