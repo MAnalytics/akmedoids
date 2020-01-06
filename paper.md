@@ -37,4 +37,5 @@ The main clustering function of akmedoids is the `akmedoids.clust`. The function
 
 # Acknowledgment
 We gratefully acknowledge the Economic and Social Research Council (ESRC), who funded the Understanding Inequalities project (Grant Reference ES/P009301/1) through which this research was conducted.
+
 # References
