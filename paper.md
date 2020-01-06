@@ -1,34 +1,34 @@
 ---
-title: Akmedoids R package for generating directionally-homogeneous clusters of longitudinal
-  data sets
-authors:
-- affiliation: 1
-  name: Monsuru Adepeju
-  orcid: 0000-0002-9006-4934
-- affiliation: 1
-  name: Sam Langton
-  orcid: 0000-0002-1322-1553
-- affiliation: 1
-  name: Jon Bannister
-  orcid: null
-bibliography: paper.bib
+title: 'Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets'
 tags:
-- Anchored k-medoids
-- k-means
-- crime
-- longitudinal clustering
-- long-term trends
+  - Anchored k-medoids
+  - k-means
+  - crime
+  - longitudinal clustering
+  - long-term trends
+authors:
+  - name: Monsuru Adepeju
+    orcid: 0000-0002-9006-4934
+    affiliation: 1
+  - name: Sam Langton
+    orcid: 0000-0002-1322-1553
+    affiliation: 1
+  - name: Jon Bannister
+    orcid: null
+    affiliation: 1
 affiliations:
-- index: 1
-  name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
+  - index: 1
+    name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
+bibliography: paper.bib
+date: 6 January 2020
 ---
 
 # Summary
 
 In many social and behavioural sciences, longitudinal clustering is widely used for identifying groups of individual trends that correspond to certain developmental processes over time. Whilst the popular clustering techniques, such as the k-means and group-based trajectory modelling (GBTM), are more suited for identifying spherical clusters [@GenoFali2010; @Curman2015],  their malleability provide the perfect opportunities for identifying other forms of clusters, including those that represent linear growth over time (i.e. the directionally-homogeneous clusters). We introduced the `Anchored k-medoid`, package referred to as the `Ak-medoids`, which implements a medoid-based expectation maximisation (MEM) procedures within a classical k-mean clustering routine.  The package includes functions that allow certain pre-processing of longitudinal data sets, prior to the clustering procedures. The potential application areas of `Ak-medoids` include the criminology, transport, epidemiology and brain imaging.
 
-[Source Code:](https://github.com/MAnalytics/Packages)
-[Information:](https://cran.r-project.org/web/packages/akmedoids/index.html)
+[Source Code:](https://github.com/MAnalytics/akmedoids)
+[Information:](https://cran.r-project.org/web/akmedoids/index.html)
 
 # Design and implementation
 
