@@ -2,6 +2,7 @@
 #' @description Given a list of x, y coordinates on a curve, function determines the elbow point of the curve.
 #' @param x vector of x coordinates of points on the curve
 #' @param y vector of y coordinates of points on the curve
+#' @details highlight the maximum curvature to identify the elbow point (credit: 'github.com/agentlans')
 #' @examples
 #' # Generate some curve
 #' x <- runif(100, min=-2, max=3)
@@ -9,24 +10,24 @@
 #' plot(x, y)
 #' # Plot elbow points
 #' abline(v=elbowPoint(x,y)$y, col="blue", pch=20, cex=3)
-#' @return a list containing the (x, y) coordinates of the elbow point.
-#' @details function is adapted from 'github.com/agentlans/KneeArrower'
+#' @return an x, y coordinates of the elbow point.
 #' @export
 elbowPoint <- function(x, y) {
-  # Test for non-numeric or infinite values
+
+  # check for non-numeric or infinite values in the inputs
   is.invalid <- function(x) {
     any((!is.numeric(x)) | is.infinite(x))
   }
   if (is.invalid(x) || is.invalid(y)) {
-    stop("x and y must be numeric and finite. Missing values not allowed.")
+    stop("x and y must be finite and numeric. Missing values are not allowed.")
   }
   if (length(x) != length(y)) {
     stop("x and y must be of equal length.")
   }
 
-  # Get value of curve at equally-spaced points
+  # generate value of curve at equally-spaced points
   new.x <- seq(from=min(x), to=max(x), length.out=length(x))
-  # Use a spline which automatically smooths out noise
+  # Smooths out noise using a spline
   sp <- smooth.spline(x, y)
   new.y <- predict(sp, new.x)$y
 
