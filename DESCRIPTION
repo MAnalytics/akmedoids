@@ -5,9 +5,9 @@ Version: 0.1.3
 Date: 2020-01-06
 Author: Monsuru Adepeju [cre, aut], Samuel Langton [aut], Jon Bannister [aut]
 Maintainer: Monsuru Adepeju <monsuur2010@yahoo.com> 
-Description: Advances a novel adaptation of longitudinal k-means clustering technique (Genolini et al. (2015) <doi:10.18637/jss.v065.i04>) for grouping trajectories based on the similarities of their long-term trends and determines the optimal solution based on the Calinski-Harabatz criterion (Calinski and Harabatz (1974) <doi:10.1080/03610927408827101>). Includes functions to extract descriptive statistics and generate a visualisation of the resulting groups, drawing methods from the 'ggplot2' library (Wickham H. (2016) <doi:10.1007/978-3-319-24277-4>). The package also includes a number of other useful functions for exploring and manipulating longitudinal data prior to the clustering process.
+Description: Advances a novel adaptation of longitudinal k-means clustering technique (Genolini et al. (2015) <doi:10.18637/jss.v065.i04>) for grouping trajectories based on the similarities of their long-term trends and determines the optimal solution based on either the average silhouette width (Rousseeuw P. J. (1987)<doi:10.1016/0377042787901257>) or the Calinski-Harabatz criterion (Calinski and Harabatz (1974) <doi:10.1080/03610927408827101>). Includes functions to extract descriptive statistics and generate a visualisation of the resulting groups, drawing methods from the 'ggplot2' library (Wickham H. (2016) <doi:10.1007/978-3-319-24277-4>). The package also includes a number of other useful functions for exploring and manipulating longitudinal data prior to the clustering process.
 Depends: R (>= 3.5.0)
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
