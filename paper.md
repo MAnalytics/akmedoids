@@ -7,16 +7,15 @@ tags:
   - longitudinal clustering
   - long-term trends
 authors:
-  - name: Adrian M. Price-Whelan
-    orcid: 0000-0003-0872-7098
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID
-    affiliation: 2
+  - name: Monsuru Adepeju
+    orcid: 0000-0002-9006-4934
+    affiliation: 1
+  - name: Sam Langton
+    orcid: 0000-0002-1322-1553
+    affiliation: 1
 affiliations:
- - name: Lyman Spitzer, Jr. Fellow, Princeton University
+ - name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
    index: 1
- - name: Institution 2
-   index: 2
 date: 13 August 2017
 bibliography: paper.bib
 
