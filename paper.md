@@ -20,7 +20,6 @@ affiliations:
   - index: 1
     name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
 date: 6 January 2020
-bibliography: paper.bib
 ---
 
 
