@@ -17,6 +17,7 @@ There were no ERRORs, WARNINGs or NOTEs.
 1. Add arguments 'digits' and 'scale' to the 'props' function. 
 2. Add argument 'crit' to the 'akmedoids.clust' function
 3. Add new function 'elbowPoint' for determining the elbowpoint on a curve.
+4. 'paper.md' (and associated 'paper.bib' file) containing a high-level description of the package
 
 Your faithfully.
 Monsuru.
