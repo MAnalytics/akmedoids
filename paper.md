@@ -1,31 +1,30 @@
 ---
-title: 'Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets'
-tags:
-  - Anchored k-medoids
-  - k-means
-  - crime
-  - longitudinal clustering
-  - long-term trends
-authors:
-  - name: Monsuru Adepeju
-    orcid: 0000-0002-9006-4934
-    affiliation: 1
-  - name: Sam Langton
-    orcid: 0000-0002-1322-1553
-    affiliation: 1
-  - name: Jon Bannister
-    orcid: 0000-0002-1350-510X
-    affiliation: 1
-affiliations:
- - name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
-   index: 1
-date: 7 January 2020
-bibliography: paper.bib
-
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-aas-doi: 10.3847/xxxxx
+title: Akmedoids R package for generating directionally-homogeneous clusters of longitudinal
+  data sets
 aas-journal: The Journal of Open Source Software
+date: "7 January 2020"
+output: word_document
+bibliography: paper.bib
+affiliations:
+- index: 1
+  name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
+authors:
+- affiliation: 1
+  name: Monsuru Adepeju
+  orcid: 0000-0002-9006-4934
+- affiliation: 1
+  name: Sam Langton
+  orcid: 0000-0002-1322-1553
+- affiliation: 1
+  name: Jon Bannister
+  orcid: 0000-0002-1350-510X
+tags:
+- Anchored k-medoids
+- k-means
+- crime
+- longitudinal clustering
+- long-term trends
+aas-doi: 10.3847/xxxxx
 ---
 
 # Summary
