@@ -28,5 +28,8 @@ aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
 aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
+# Summary
+In social and behavioural sciences, longitudinal clustering is widely used for identifying groups of individual trends that correspond to certain developmental processes over time. Whilst popular clustering techniques, such as k-means and group-based trajectory modelling (GBTM), are suited for identifying spherical clusters [@GenoFali:2010; @Curman:2015],  their malleability provides opportunity for identifying alternative forms of clusters, including those that represent linear growth over time (i.e. directionally-homogeneous clusters). Here, we introduce `Anchored k-medoids`, a package referred to as `Ak-medoids`, which implements a medoid-based expectation maximisation (MEM) procedure within a classical k-mean clustering routine.  The package includes functions to assist in the manipulation of longitudinal data sets prior to the clustering procedure, and the visualisation of solutions post-procedure. The potential application areas of `Ak-medoids` include criminology, transport, epidemiology and brain imaging.
+
 # References
 
