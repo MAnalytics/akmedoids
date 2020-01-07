@@ -1,11 +1,11 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets'
 tags:
-  - Python
-  - astronomy
-  - dynamics
-  - galactic dynamics
-  - milky way
+  - Anchored k-medoids
+  - k-means
+  - crime
+  - longitudinal clustering
+  - long-term trends
 authors:
   - name: Adrian M. Price-Whelan
     orcid: 0000-0003-0872-7098
