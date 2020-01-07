@@ -13,10 +13,13 @@ authors:
   - name: Sam Langton
     orcid: 0000-0002-1322-1553
     affiliation: 1
+  - name: Jon Bannister
+    orcid: 0000-0002-1350-510X
+    affiliation: 1
 affiliations:
  - name: Big Data Centre, Manchester Metropolitan University, Manchester, M15 6BH
    index: 1
-date: 13 August 2017
+date: 7 January 2020
 bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
