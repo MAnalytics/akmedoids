@@ -55,5 +55,3 @@ print(statPrint(clustr, traj, id_field=TRUE, reference = 1, N.quant = 8, type="s
 
 \code{Wickham H. (2016). Elegant graphics for Data Analysis. Spring-Verlag New York (2016)}
 }
-\keyword{clusters}
-\keyword{plot,}
