@@ -22,7 +22,6 @@
 #' The function can generate a line and an area stacked plot drawing from the functionalities of the \code{ggplot2} library. For a more customised visualisation, we recommend that users deploy \code{ggplot2} directly (\code{Wickham H. (2016)}).
 #' @return A plot showing group membership or sizes (proportion) and statistics.
 #' @references \code{1}. Adepeju, M. et al. (2019). Anchored k-medoids: A novel adaptation of k-means further refined to measure inequality in the exposure to crime across micro places (Submitted).
-#' @keywords plot, clusters
 #' @rawNamespace import(reshape2, ggplot2, stats)
 #' @references \code{Wickham H. (2016). Elegant graphics for Data Analysis. Spring-Verlag New York (2016)}
 #' @export
