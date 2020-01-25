@@ -135,7 +135,6 @@ library(clusterCrit)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
-
 col1 <- c("1", "2","3","4", "5")
 col2 <- c("`dataImputation`","`rates`", "`props`", "`outlierDetect`","`wSpaces`")
 col3 <- c("Data imputation for longitudinal data", "Conversion of 'counts' to 'rates'", "Conversion of 'counts' (or 'rates') to 'Proportion'", "Outlier detection and replacement","Whitespace removal")

@@ -1,6 +1,5 @@
 ---
-title: Akmedoids R package for generating directionally-homogeneous clusters of longitudinal
-  data sets
+title: Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets
 aas-journal: The Journal of Open Source Software
 date: "09 January 2020"
 bibliography: paper.bib
