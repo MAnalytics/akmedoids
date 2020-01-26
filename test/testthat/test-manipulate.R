@@ -20,12 +20,13 @@ test_that("column sum of proportions is equal to one, throw warnings", {
 
 df2 <- data.frame(a=c(2, NA, 5, 2, 0),
                  b=c(5, 1, Inf, 3, 1),
-                 c=c(5, 1, 4, 2, 7))
+                 c=c(5, 1, 4, 2, 4))
 
 output_df2 = dataImputation(df2, id_field = FALSE)
 
-test_that("throw warning if id_field is mis-specified & output incorrect", {
+test_that("check data imput recognises different missing types", {
   expect_equal(output_df2[2,1], 1)
+  expect_equal(output_df2[3,2], 4.5)
 })
 
 
