@@ -138,6 +138,7 @@ dataImputation <- function(traj, id_field = FALSE, method = 2, replace_with = 1,
       dat[k, known_1[,1]] <- round(newY, digits = 2)
 
     }
+    datF=dat
   }
 
   flush.console()
