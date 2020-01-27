@@ -30,3 +30,15 @@ test_that("check data imput recognises different missing entries", {
 })
 
 
+
+clust_ids <- c(1, 3, 2, 2, 1, 23, 2, 3)
+expect_clust_alpha = c("A", "C", "B", "B", "A", "W", "B", "C")
+clust_ids_char <- c(1, 3, 2, "2", 1, 23, 2, 3)
+
+test_that("input & output need be vector of numbers and characters, respct. ", {
+  expect_identical(alphaLabel(clust_ids), expect_clust_alpha)
+  expect_is(alphaLabel(clust_ids), "character")
+  #expect_equal(alphaLabel(clust_ids_char), rep(NA, 8))
+})
+
+#alphaLabel(expect_clust_alpha)
