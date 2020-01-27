@@ -23,6 +23,8 @@ props <- function(traj, id_field = TRUE, scale = 1, digits=4){
       prop <- (as.numeric(as.character(dat[,h]))/sum(as.numeric(as.character(dat[,h])))) * scale #
       props_[,h] <- round(prop, digits=digits)
     }
+    props_check = colSums(props_)
+    return(props_)
   }
 
   if(id_field==TRUE){
@@ -30,8 +32,10 @@ props <- function(traj, id_field = TRUE, scale = 1, digits=4){
       prop <- (as.numeric(as.character(dat[,h]))/sum(as.numeric(as.character(dat[,h])))) * scale
       props_[,h] <- round(prop, digits = digits)
     }
+    props_check = colSums(props_[ ,2:ncol(dat)])
+    return(props_)
   }
-  return(props_)
+  #return(props_)
 }
 
 
