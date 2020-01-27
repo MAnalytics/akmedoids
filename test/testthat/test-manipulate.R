@@ -24,7 +24,7 @@ df2 <- data.frame(a=c(2, NA, 5, 2, 0),
 
 output_df2 = dataImputation(df2, id_field = FALSE)
 
-test_that("check data imput recognises different missing types", {
+test_that("check data imput recognises different missing entries", {
   expect_equal(output_df2[2,1], 1)
   expect_equal(output_df2[3,2], 4.5)
 })
