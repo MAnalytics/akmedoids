@@ -129,7 +129,6 @@ We facilitate the easy use of `akmedoids` through an open-source package using `
 
 ```{r, echo=FALSE, include=FALSE}
 require(knitr)
-library(flextable)
 library(kableExtra)
 library(clusterCrit)
 ```
