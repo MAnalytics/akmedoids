@@ -18,7 +18,9 @@ Suggests:
     rmarkdown,
     flextable,
     kableExtra,
-    clusterCrit
+    clusterCrit,
+    testthat,
+    dplyr
 VignetteBuilder: knitr
 
 
