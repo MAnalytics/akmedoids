@@ -36,9 +36,34 @@ expect_clust_alpha = c("A", "C", "B", "B", "A", "W", "B", "C")
 clust_ids_char <- c(1, 3, 2, "2", 1, 23, 2, 3)
 
 test_that("input & output need be vector of numbers and characters, respct. ", {
-  expect_identical(alphaLabel(clust_ids), expect_clust_alpha)
-  expect_is(alphaLabel(clust_ids), "character")
-  #expect_equal(alphaLabel(clust_ids_char), rep(NA, 8))
+  expect_identical(alphaLabel(clust_ids),
+                   expect_clust_alpha)
+  expect_is(alphaLabel(clust_ids),
+            "character")
 })
 
-#alphaLabel(expect_clust_alpha)
+
+traj <- data.frame(id=factor(c(1:5)),
+                 a=c(2, 3, 5, 2, 3),
+                 b=c(5, 1, 5, 3, 1),
+                 c=c(5, 1, 4, 2, 7))
+
+pop <- data.frame(id=factor(c(1:5)),
+                   a=c(2, 3, 5, 2, 3),
+                   b=c(5, 1, 5, 3, 1),
+                   c=c(5, 1, 4, 2, 7))
+
+
+#expect_matrix2 <- structure(tmp_matrix, type = "test")
+rate_df = rates(traj, pop, id_field=TRUE, multiplier = 200)
+exp_rates = data.frame(id=c(1:5),
+                       a=c(rep(200, 5)),
+                       b=c(rep(200, 5)),
+                       c=c(rep(200, 5)))
+
+test_that("test inputs for 'rates' are properly specified", {
+  expect_true(identical(as.matrix(rate_df),
+                        as.matrix(exp_rates)))
+               })
+
+#attributes(rate_df)

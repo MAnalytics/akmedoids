@@ -82,7 +82,7 @@ rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
     }
   }
 
-  data_Fresh <- data.frame(cbind(keep_names, data_Fresh))
+  data_Fresh <- data.frame(cbind(as.factor(keep_names), data_Fresh))
   #colnames(data_Fresh) <- c("id_field", 1:(ncol(data_Fresh)-1))
   colnames(data_Fresh) <-  n_CL
   return(data_Fresh)
