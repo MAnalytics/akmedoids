@@ -146,7 +146,7 @@ if(method=="linear"){
       simil_ <- matrix(0, 100, length(c_count))
 
       #number of iterations #fixed as 20
-      for(z in 1:30){  #z<-2
+      for(z in 1:100){  #z<-2
 
         #recalculate the cluster centrure and do the affection
         if(z > 1){
