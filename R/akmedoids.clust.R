@@ -146,7 +146,7 @@ if(method=="linear"){
       simil_ <- matrix(0, 100, length(c_count))
 
       #number of iterations #fixed as 20
-      for(z in 1:100){  #z<-2
+      for(z in 1:30){  #z<-2
 
         #recalculate the cluster centrure and do the affection
         if(z > 1){
@@ -281,6 +281,9 @@ if(method=="linear"){
           geom_vline(xintercept = elbP$x, linetype="dashed", color = "red", size=0.5)
 
         qualiCriterion= paste("Quality criterion:", crit, sep=" ")
+
+        print(paste("Suggested optimal solution contains", round(elbP$x, digits=0), "clusters. Check the plot for better solution!", sep=" "))
+
         #----------------------------------
         flush.console()
         dev.new(width=3, height=3)
@@ -304,19 +307,20 @@ if(method=="linear"){
 
         #determine optimal solution
         optimal_solution <- result_[[(which(qualit[,2]==max(qualit))[1])]]
-      }
+
+        #combining the results
+        final_result <- list(plt,
+                             qualitycriterion =  qualiCriterion, membership_optimalSolution=optimal_solution, qualityCrit.List=qualit)
 
 
-      flush.console()
-      dev.new(width=3, height=3)
-      print(plt)
-
-      #combining the results
-      final_result <- list(plt,
-                           qualitycriterion =  qualiCriterion, membership_optimalSolution=optimal_solution, qualityCrit.List=qualit)
+        flush.console()
+        dev.new(width=3, height=3)
+        print(plt)
+        return(final_result)
+        }
 
 
-      return(final_result)
+
 
     }
 
