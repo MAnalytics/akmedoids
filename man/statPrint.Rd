@@ -10,6 +10,7 @@ statPrint(
   id_field = TRUE,
   reference = 1,
   N.quant = 4,
+  showplots = TRUE,
   type = "lines",
   y.scaling = "fixed"
 )
@@ -24,6 +25,8 @@ statPrint(
 \item{reference}{[numeric] Specifying the reference line from which the direction of each group is measured. Options are: \code{1}: slope of mean trajectory, \code{2}: slope of medoid trajectory, \code{3}: slope of a horizontal line (i.e. slope = 0). Default: \code{1}.}
 
 \item{N.quant}{[numeric] Number of equal intervals (quantiles) to create between the reference line \code{(R)} and the medoids \code{(M)} of the most-diverging groups of both sides of \code{(R)}. Default is \code{4} - meaning quartile subdivisions on each side of \code{(R)}. In this scenario, the function returns the quartile in which the medoid of each group falls. This result can be used to further categorise the groups into 'classes'. For example, groups that fall within the \code{1st} quartile may be classified as 'Stable' groups (Adepeju et al. 2019).}
+
+\item{showplots}{[TRUE or FALSE] To display cluster plots. Defaults \code{TRUE}}
 
 \item{type}{[character] plot type. Available options are: \code{"lines"} and \code{"stacked"}.}
 
