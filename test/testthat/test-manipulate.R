@@ -61,9 +61,8 @@ exp_rates = data.frame(id=c(1:5),
                        b=c(rep(200, 5)),
                        c=c(rep(200, 5)))
 
-test_that("test inputs for 'rates' are properly specified", {
+test_that("test inputs & output of 'rates' are correct", {
   expect_true(identical(as.matrix(rate_df),
                         as.matrix(exp_rates)))
+  expect_true(identical(attributes(rate_df)$class, "data.frame"))
                })
-
-#attributes(rate_df)
