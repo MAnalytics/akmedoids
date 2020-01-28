@@ -26,7 +26,7 @@ test_that("test clustr procedures and the output specification", {
 
 })
 
-
+#generate cluster stats
 clust1 <- as.vector(clust1$memberships)
 stats = statPrint(clust1, df, id_field=TRUE,
           type="lines", y.scaling="fixed", showplots=FALSE)
