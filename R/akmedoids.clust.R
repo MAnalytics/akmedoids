@@ -48,7 +48,7 @@ if(method=="linear"){
     if(k[1] < 3 | k[1] > nrow(traj) | k[2] > nrow(traj) |
        k[1] > 20 | k[2] > 20){
       flush.console()
-      print("Enter a number GREATER than 2 but NOT GREATER 20 or the number of trajectories.")
+      print("Enter a number GREATER than 2 but LESS THAN 20 or the total number of trajectories.")
     }
     if(k[1]>k[2]){
       flush.console()
@@ -167,7 +167,7 @@ if(method=="linear"){
           part2 <- affectIndivC((dat_slopp), linear_centers)
         }
 
-        #detetermine the similarity of consecutive solutions
+        #determine the similarity of consecutive solutions
         if(z > 1){
           for(y in 1:length(c_count)){  #y<-1
             #compare
