@@ -5,6 +5,8 @@ date: "9 January 2020"
 output: html_document
 ---
 
+5. New: showplots argument
+
 #Issues addressed in previous submission
 1. Non-standard files ('paper.md', 'paper.bib', 'cran-comments', 'LICENSE') removed from main package directory before compilation.
 2. Author's name ("Rousseeuw"") is spelt correctly. In other words, there is no spellin errors
