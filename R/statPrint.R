@@ -8,6 +8,7 @@
 #' @param y.scaling [character] works only if \code{type="lines"}. \code{y.scaling} set the vertical scales of the cluster panels. Options are: \code{"fixed"}: uses uniform scale for all panels, \code{"free"}: uses variable scales for panels.
 #' @param reference [numeric] Specifying the reference line from which the direction of each group is measured. Options are: \code{1}: slope of mean trajectory, \code{2}: slope of medoid trajectory, \code{3}: slope of a horizontal line (i.e. slope = 0). Default: \code{1}.
 #' @param N.quant [numeric] Number of equal intervals (quantiles) to create between the reference line \code{(R)} and the medoids \code{(M)} of the most-diverging groups of both sides of \code{(R)}. Default is \code{4} - meaning quartile subdivisions on each side of \code{(R)}. In this scenario, the function returns the quartile in which the medoid of each group falls. This result can be used to further categorise the groups into 'classes'. For example, groups that fall within the \code{1st} quartile may be classified as 'Stable' groups (Adepeju et al. 2019).
+#' @param showplots [TRUE or FALSE] To display cluster plots. Defaults \code{TRUE}
 #' @examples
 #' print(traj)
 #' traj <- dataImputation(traj, id_field = TRUE, method = 1, replace_with = 1,
@@ -26,7 +27,7 @@
 #' @references \code{Wickham H. (2016). Elegant graphics for Data Analysis. Spring-Verlag New York (2016)}
 #' @export
 
-statPrint <- function(clustr, traj, id_field=TRUE, reference = 1, N.quant = 4, type = "lines", y.scaling="fixed"){
+statPrint <- function(clustr, traj, id_field=TRUE, reference = 1, N.quant = 4, showplots=TRUE, type = "lines", y.scaling="fixed"){
 
   #joining the data with the clusters
   clustr <- data.frame(cbind(traj, clusters=clustr))
@@ -81,6 +82,8 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1, N.quant = 4, t
   }
   #change_ave_yr_ALL  #for generating various descriptive statistics
 
+
+if(showplots==TRUE){
   #----------------------------------------------------
   #plotting
   #----------------------------------------------------
@@ -132,6 +135,12 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1, N.quant = 4, t
   flush.console()
   dev.new(width=3, height=3)
   print(p)
+}
+
+#not show plot
+if(showplots==FALSE){
+ #Do nothing
+  }
   #----------------------------------------------------
 
   #----------------------------------------------------
