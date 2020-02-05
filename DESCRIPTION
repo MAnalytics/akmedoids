@@ -40,7 +40,8 @@ Suggests:
     kableExtra,
     clusterCrit,
     testthat,
-    dplyr
+    dplyr,
+    digest
 VignetteBuilder: knitr
 
 
