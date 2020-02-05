@@ -18,7 +18,7 @@ remotes::install_github("MAnalytics/akmedoids")
 ```
 Alternatively, from an R console, type `install.packages("akmedoids") to install the package. After download is complete type `library("akmdeoids")` to load the package.
 
-#Documentation
+### Documentation
 
 From an R console type `??akmedoids` for help on the package. The package page on CRAN is [here](https://cran.r-project.org/web/packages/akmedoids/index.html), package reference manual is [here](https://cran.r-project.org/web/packages/akmedoids/akmedoids.pdf), package vignette is [here](https://cran.r-project.org/web/packages/akmedoids/vignettes/akmedoids-vignette.html). 
 
@@ -26,7 +26,7 @@ Support and Contributions:
 
 For support and bug reports send an email to: monsuur2010@yahoo.com or open an issue [here](https://github.com/MAnalytics/akmedoids/issues). Code contributions to akmedoids are also very welcome.
 
-#References:
+### References:
 
 Rousseeuw, P. J. 1987. “Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis.” Journal of Computational and Applied Mathematics, no. 20: 53–6. [link](https://www.bibsonomy.org/bibtex/bc0f62c7895f91c787354d03f23da976)
 
