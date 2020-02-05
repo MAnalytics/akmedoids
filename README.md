@@ -20,7 +20,7 @@ Alternatively, from an R console, type `install.packages("akmedoids")` to instal
 
 ### Example usage:
 
-Given a longitudinal datasets, the following is an example of how `akmedoids` could be used to extract clusters of long-term  trend from the datasets. 
+Given a longitudinal datasets, the following is an example of how `akmedoids` could be used to extract clusters of trajectories with similar long-term trends over time. 
 
 ```{r}
 #generate some datasets
