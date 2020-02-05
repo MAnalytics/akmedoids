@@ -6,17 +6,47 @@ An R package for analysing and clustering longitudinal data
 
 The `akmedoids` package advances a set of R-functions for longitudinal clustering of long-term trajectories and determines the optimal solution based on either the `average silhouette width` (Rousseeuw P. J. (1987) or the `Caliński-Harabatz` criterion (Caliński and Harabasz 1974). The package also includes a set of functions for addressing common data issues, such as missing entries and outliers, prior to conducting advance longitudinal data analysis. One of the key objectives of this package is to facilitate easy replication of a recent paper which examined small area inequality in the crime drop (Adepeju et al. 2020). Many of the functions provided in the `akmedoids` package may be applied to longitudinal data in general. 
 
-#For more information and usability, check out details on [CRAN](https://cran.r-project.org/web/packages/akmedoids/index.html).
+**For more information and usability, check out details on [CRAN](https://cran.r-project.org/web/packages/akmedoids/index.html).**
 
-### Installation 
+### Getting Started 
 
 To install the development version of the package:
 
-```(r)
+```{r}
 remotes::install_github("MAnalytics/akmedoids")
 #please report any installation problems in the issues
 ```
-Alternatively, from an R console, type `install.packages("akmedoids") to install the package. After download is complete type `library("akmdeoids")` to load the package.
+Alternatively, from an R console, type `install.packages("akmedoids")` to install the package. After download is complete type `library("akmdeoids")` to load the package.
+
+### Example usage:
+
+Given a longitudinal datasets, the following is an example of how `akmedoids` could be used to extract clusters of long-term  trend from the datasets. 
+
+```{r}
+#generate some datasets
+
+#A group of escalating trajectories
+gr1 =  
+
+#A group of stable trajectories
+gr2 = 
+
+#A group of decreasing trajectories
+
+#Combine groups
+dat = rbind(gr1, gr2, gr3)
+
+#run clustering function
+
+
+#get group attributes
+
+stat
+
+
+
+
+```
 
 ### Documentation
 
