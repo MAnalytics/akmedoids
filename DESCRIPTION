@@ -2,16 +2,37 @@ Package: akmedoids
 Type: Package
 Title: Anchored Kmedoids for Longitudinal Data Clustering
 Version: 0.1.5
-Date: 2020-01-09
-Author: Monsuru Adepeju [cre, aut], Samuel Langton [aut], Jon Bannister [aut]
+Author: Monsuru Adepeju [cre, aut], 
+    Samuel Langton [aut], 
+    Jon Bannister [aut]
 Maintainer: Monsuru Adepeju <monsuur2010@yahoo.com> 
-Description: Advances a novel adaptation of longitudinal k-means clustering technique (Genolini et al. (2015) <doi:10.18637/jss.v065.i04>) for grouping trajectories based on the similarities of their long-term trends and determines the optimal solution based on either the average silhouette width (Rousseeuw P. J. 1987) or the Calinski-Harabatz criterion (Calinski and Harabatz (1974) <doi:10.1080/03610927408827101>). Includes functions to extract descriptive statistics and generate a visualisation of the resulting groups, drawing methods from the 'ggplot2' library (Wickham H. (2016) <doi:10.1007/978-3-319-24277-4>). The package also includes a number of other useful functions for exploring and manipulating longitudinal data prior to the clustering process.
-Depends: R (>= 3.5.0)
+Description: Advances a novel adaptation of longitudinal k-means clustering 
+    technique (Genolini et al. (2015) <doi:10.18637/jss.v065.i04>) 
+    for grouping trajectories based on the similarities of their 
+    long-term trends and determines the optimal solution based 
+    on either the average silhouette width (Rousseeuw P. J. 1987) 
+    or the Calinski-Harabatz criterion (Calinski and Harabatz (1974) 
+    <doi:10.1080/03610927408827101>). Includes functions to extract 
+    descriptive statistics and generate a visualisation of the 
+    resulting groups, drawing methods from the 'ggplot2' library (Wickham H. (2016) 
+    <doi:10.1007/978-3-319-24277-4>). The package also includes a number of 
+    other useful functions for exploring and manipulating longitudinal 
+    data prior to the clustering process.
 License: GPL-3
+URL: https://cran.r-project.org/web/packages/akmedoids/index.html 
+BugReports: https://github.com/MAnalytics/akmedoids/issues
+Depends: R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: true
-Imports: 
-   kml, Hmisc, ggplot2, utils, reshape2, longitudinalData, stats, signal
+Imports:
+    kml, 
+    Hmisc, 
+    ggplot2, 
+    utils, 
+    reshape2, 
+    longitudinalData, 
+    stats, 
+    signal
 RoxygenNote: 7.0.1
 Suggests:
     knitr,
