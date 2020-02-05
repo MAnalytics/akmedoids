@@ -12,7 +12,7 @@ The `akmedoids` package advances a set of R-functions for longitudinal clusterin
 
 To install the development version of the package:
 
-```{r}
+```R
 remotes::install_github("MAnalytics/akmedoids")
 #please report any installation problems in the issues
 ```
@@ -22,7 +22,7 @@ Alternatively, from an R console, type `install.packages("akmedoids")` to instal
 
 Given a longitudinal datasets, the following is an example of how `akmedoids` could be used to extract clusters of trajectories with similar long-term trends over time. 
 
-```{r}
+```R
 #generate some datasets
 
 #A group of escalating trajectories
@@ -42,9 +42,6 @@ dat = rbind(gr1, gr2, gr3)
 #get group attributes
 
 stat
-
-
-
 
 ```
 
