@@ -4,7 +4,7 @@ An R package for analysing and clustering longitudinal data
 
 ### Description
 
-The `akmedoids` package advances a set of R-functions for longitudinal clustering of long-term trajectories and determines the optimal solution based on either the `average silhouette width` (Rousseeuw P. J. (1987) or the `Caliński-Harabatz` criterion (Caliński and Harabasz 1974). The package also includes a set of functions for addressing common data issues, such as missing entries and outliers, prior to conducting advance longitudinal data analysis. One of the key objectives of this package is to facilitate easy replication of a recent paper which examined small area inequality in the crime drop (Adepeju et al. 2020). Many of the functions provided in the `akmedoids` package may be applied to longitudinal data in general. 
+The `akmedoids` package advances the clustering of longitudinal datasets in order to identify clusters of trajectories with similar long-term linear trends over time, providing an improved cluster identification as compared with the classic kmeans algorithm. The package also includes a set of functions for addressing common data issues, such as missing entries and outliers, prior to conducting advance longitudinal data analysis. One of the key objectives of this package is to facilitate easy replication of a recent paper which examined small area inequality in the crime drop (Adepeju et al. 2020). Many of the functions provided in the `akmedoids` package may be applied to longitudinal data in general. 
 
 **For more information and usability, check out details on [CRAN](https://cran.r-project.org/web/packages/akmedoids/index.html).**
 
@@ -23,15 +23,16 @@ Alternatively, from an R console, type `install.packages("akmedoids")` to instal
 Given a longitudinal datasets, the following is an example of how `akmedoids` could be used to extract clusters of trajectories with similar long-term trends over time. 
 
 ```R
-#generate some datasets
+#simulate some datasets
 
-#A group of escalating trajectories
-gr1 =  
+#group of escalating trajectories
+gr1 = data.frame  
 
-#A group of stable trajectories
+#group of stable trajectories
 gr2 = 
 
-#A group of decreasing trajectories
+#group of decreasing trajectories
+gr3 = 
 
 #Combine groups
 dat = rbind(gr1, gr2, gr3)
@@ -41,7 +42,7 @@ dat = rbind(gr1, gr2, gr3)
 
 #get group attributes
 
-stat
+statPrint()
 
 ```
 
