@@ -93,7 +93,7 @@ print(descrStats)
 
 From an R console type `??akmedoids` for help on the package. The package page on CRAN is [here](https://cran.r-project.org/web/packages/akmedoids/index.html), package reference manual is [here](https://cran.r-project.org/web/packages/akmedoids/akmedoids.pdf), package vignette is [here](https://cran.r-project.org/web/packages/akmedoids/vignettes/akmedoids-vignette.html). 
 
-Support and Contributions:
+### Support and Contributions:
 
 For support and bug reports send an email to: monsuur2010@yahoo.com or open an issue [here](https://github.com/MAnalytics/akmedoids/issues). Code contributions to akmedoids are also very welcome.
 
