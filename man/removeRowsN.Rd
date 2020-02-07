@@ -2,7 +2,7 @@
 % Please edit documentation in R/removeRowsN.R
 \name{removeRowsN}
 \alias{removeRowsN}
-\title{Removes rows that contain 'NA' and 'infinity' entries}
+\title{Removes rows that contain 'NA' and 'Inf' entries}
 \usage{
 removeRowsN(traj, id_field=TRUE)
 }
