@@ -62,7 +62,7 @@ if(method=="linear"){
   dat <- traj
 
   #check if there is id_field
-  #check if there is unique (id) field
+  #check if id field  is unique
   if(id_field==TRUE){
     n_CL <- colnames(dat)[1]
     col_names <- as.vector(dat[,1])
