@@ -23,162 +23,167 @@
 #' @return A dataframe with outlier observations replaced or removed.
 #' @export
 
-outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95, count = 1, replace_with = 1){
+outlierDetect <- function(traj, id_field = FALSE,
+                          method = 1, threshold = 0.95,
+                          count = 1, replace_with = 1){
 
-  dat <- traj
+dat <- traj
 
-  #back up data
-  b_dat <- dat    #when joining back... remember if the option is to remove some #then the crime rate,
-  #remove the id field
-  if(id_field ==  TRUE){
-    dat  <- dat[,2:ncol(dat)]
-    c_name <- colnames(traj)[1]
+#back up data
+b_dat <- dat
+#remove the id field
+if(id_field ==  TRUE){
+  dat  <- dat[,2:ncol(dat)]
+  c_name <- colnames(traj)[1]
+}
+
+#matrix to track the outlier incidents [TRUE or FALSE]
+outlier_mat <- matrix(FALSE, nrow(dat), ncol(dat))
+
+#------------------------------------
+#if method: "quantile"
+if(method==1){
+  #check if the value is in-between [0,1]
+  if(threshold < 0 | threshold > 1){
+    stop("*--Terminated!!!--*, The 'threshold' value should be between 0 and 1.")
   }
+#calculate the cut-off value based on the 'threshold'
+thres_ <- as.vector(round(quantile(as.vector(unlist(as.data.frame(dat))),
+                                       threshold), digits=5))
+id_ <- which(dat > thres_)
+  #update the outlier tracker
+  outlier_mat[id_] <- "TRUE"
+}
 
-  #matrix to track the outlier incidents [TRUE or FALSE]
-  outlier_mat <- matrix(FALSE, nrow(dat), ncol(dat))
+# method: "manual"
+#------------------------------------
+if(method==2){
+  id_ <- which(dat > threshold)
+  outlier_mat[id_] <- "TRUE"
+}
 
-  #------------------------------------
-  #if method: "quantile"
-  if(method==1){
-    #check if the value is in-between [0,1]
-    if(threshold < 0 | threshold > 1){
-      stop("*--Terminated!!!--*, The 'threshold' value should be between 0 and 1.")
-    }
-    #calculate the cut-off value based on the 'threshold'
-    thres_ <- as.vector(round(quantile(as.vector(unlist(as.data.frame(dat))), threshold), digits=5))
-    id_ <- which(dat > thres_)
-    #update the outlier tracker
-    outlier_mat[id_] <- "TRUE"
+#check if an entire row is ouliers...then terminate.
+c_out <- NULL
+for(n_ in 1:ncol(outlier_mat)){ #n_<-1
+  c_out <- rbind(c_out, cbind(n_, length(which(outlier_mat[,n_]==TRUE))))
+}
+
+if(replace_with == 1){
+  wc_out <- which(c_out[,2]==nrow(dat))
+  if(length(wc_out)!=0){
+    stop(paste("*--Function terminated!!!--* All observations on Column(s)",
+               wc_out, "are outliers!! Please, set a higher 'threshold' value!!", sep=" "))
   }
+}
 
-  # method: "manual"
-  #------------------------------------
-  if(method==2){  #threshold=17
-    id_ <- which(dat > threshold)
-    outlier_mat[id_] <- "TRUE"
+#check if an entire row is ouliers...then terminate.
+r_out <- NULL
+for(m_ in 1:nrow(outlier_mat)){ #m_<-1
+  r_out <- rbind(r_out, cbind(m_,length(which(outlier_mat[m_,]==TRUE))))
+}
+
+if(replace_with == 2){# check which trajectory has 100% outlier observations
+  w_out <- which(r_out[,2]==ncol(dat))
+  if(length(w_out)!=0){
+    stop(paste("*--Function terminated!!!--* All observations on Row(s)",
+               w_out, "are outliers!! Please, set a higher 'threshold' value OR manually remove these row(s)!!", sep=" "))
   }
+}
 
-  #check if an entire row is ouliers...then terminate.
-  c_out <- NULL
-  for(n_ in 1:ncol(outlier_mat)){ #n_<-1
-    c_out <- rbind(c_out, cbind(n_, length(which(outlier_mat[,n_]==TRUE))))
+#--------------------------------------------------
+#identify the rows in where outliers are found
+list_traj <- NULL
+for(j in 1:nrow(outlier_mat)){ #j<-1
+  w_ <- length(which(outlier_mat[j,]==TRUE))
+  if(w_ >= count){ #checking the count
+    list_traj <- rbind(list_traj, cbind(j,"TRUE"))
   }
-  if(replace_with == 1){
-    wc_out <- which(c_out[,2]==nrow(dat))
-    if(length(wc_out)!=0){
-      stop(paste("*--Function terminated!!!--* All observations on Column(s)", wc_out, "are outliers!! Please, set a higher 'threshold' value!!", sep=" "))
-    }
+}
+
+#to replace the outlier observation,
+if(!is.null(list_traj)){
+
+#replace with mean of col
+if(replace_with == 1){
+  for(k in 1:nrow(list_traj)){ #k<-1
+   idd_ <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
+
+  #loop through each column and remove the outlier in
+  #them before calculating the value of the mean column value
+  for(l_ in 1:length(idd_)){ #l_<-1
+    dat[as.numeric(as.character(list_traj[k,1])),idd_[l_]] <-
+      round(mean(dat[-which(outlier_mat[,idd_[l_]]==TRUE),idd_[l_]]), digits = 2)
   }
+ }
+}
 
+#replace with mean of row
+if(replace_with == 2){
+for(k in 1:nrow(list_traj)){ #k<-1
+ #use the non-outlier observation for the calculation
+ idd_nonOutlier <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==FALSE)
+ idd_Outlier <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
+ dat[list_traj[k,1],idd_Outlier] <-  round(mean(as.numeric(as.character(dat[list_traj[k,1],idd_nonOutlier]))), digits = 2)
+ }
+}
 
-  #check if an entire row is ouliers...then terminate.
-    r_out <- NULL
-    for(m_ in 1:nrow(outlier_mat)){ #m_<-1
-      r_out <- rbind(r_out, cbind(m_,length(which(outlier_mat[m_,]==TRUE))))
-    }
-    if(replace_with == 2){# check which trajectory has 100% outlier observations
-        w_out <- which(r_out[,2]==ncol(dat))
-        if(length(w_out)!=0){
-          stop(paste("*--Function terminated!!!--* All observations on Row(s)", w_out, "are outliers!! Please, set a higher 'threshold' value OR manually remove these row(s)!!", sep=" "))
-        }
-      }
+#to remove the outlier trajectory
+if(replace_with == 3){
+  dat <- dat[-as.numeric(as.character(list_traj[,1])),]  #as.numeric(as.character(
+}
 
+dat_ <- dat
 
-  #--------------------------------------------------
-  #identify the rows in where outliers are found
-  list_traj <- NULL
-  for(j in 1:nrow(outlier_mat)){ #j<-1
-    w_ <- length(which(outlier_mat[j,]==TRUE))
-    if(w_ >= count){ #checking the count
-      list_traj <- rbind(list_traj, cbind(j,"TRUE"))
-    }
-  }
+if(id_field ==  TRUE & replace_with != 3){
+ id <- data.frame(as.vector(b_dat[,1]))
+ colnames(id) <- c_name
+  b_dat <- cbind(id, dat)
+  dat_  <- b_dat
+}
 
-  #to replace the outlier observation,
-  if(!is.null(list_traj)){
+if(id_field ==  TRUE & replace_with == 3){
+  id <- data.frame(as.vector(b_dat[,1]))
+  colnames(id) <- c_name
+  #remove the oulier row from the column ids
+  id <- id[-as.numeric(as.character(list_traj[,1]))]
+  b_dat <-  b_dat[-as.numeric(as.character(list_traj[,1])),] #first remove the outlier observations
+  dat_  <- b_dat
+}
 
-    #replace with mean of col
-    if(replace_with == 1){
-      for(k in 1:nrow(list_traj)){ #k<-1
-
-        idd_ <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
-
-        #loop through each column and remove the outlier in them before calculating the value of the mean column value
-        for(l_ in 1:length(idd_)){ #l_<-1
-          dat[as.numeric(as.character(list_traj[k,1])),idd_[l_]] <- round(mean(dat[-which(outlier_mat[,idd_[l_]]==TRUE),idd_[l_]]), digits = 2)
-        }
-
-      }
-    }
-    #replace with mean of row
-    if(replace_with == 2){
-      for(k in 1:nrow(list_traj)){ #k<-1
-        #use the non-outlier observation for the calculation
-        idd_nonOutlier <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==FALSE)
-        idd_Outlier <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
-         dat[list_traj[k,1],idd_Outlier] <-  round(mean(as.numeric(as.character(dat[list_traj[k,1],idd_nonOutlier]))), digits = 2)
-      }
-    }
-
-    #to remove the outlier trajectory
-    if(replace_with == 3){
-      dat <- dat[-as.numeric(as.character(list_traj[,1])),]  #as.numeric(as.character(
-    }
-
-  #}
-
-  dat_ <- dat
-
-  if(id_field ==  TRUE & replace_with != 3){
-   id <- data.frame(as.vector(b_dat[,1]))
-   colnames(id) <- c_name
-   b_dat <- cbind(id, dat)
-   dat_  <- b_dat
-  }
-
-  if(id_field ==  TRUE & replace_with == 3){
-    id <- data.frame(as.vector(b_dat[,1]))
-    colnames(id) <- c_name
-    #remove the oulier row from the column ids
-    id <- id[-as.numeric(as.character(list_traj[,1]))]
-    b_dat <-  b_dat[-as.numeric(as.character(list_traj[,1])),] #first remove the outlier observations
-    #b_dat <- b_dat[-as.numeric(as.character(list_traj[,1])),]
-    #b_dat <- cbind(id, dat)
-    dat_  <- b_dat
-  }
-
-  #if 'replace_with' is 1 or 2
-  if(replace_with==1|replace_with==2){
+#if 'replace_with' is 1 or 2
+if(replace_with==1|replace_with==2){
+  flush.console()
+  print(paste(nrow(list_traj), "trajectories were found to contain outlier observations and replaced accordingly!", sep=" "))
+  print("Summary:")
+  for(u_ in seq_len(nrow(list_traj))){ #u_<-1
     flush.console()
-    print(paste(nrow(list_traj), "trajectories were found to contain outlier observations and replaced accordingly!", sep=" "))
-    print("Summary:")
-    for(u_ in 1:nrow(list_traj)){ #u_<-1
-      flush.console()
-      print(paste("*--Outlier observation(s) was found in trajectory ", list_traj[u_,1]," --*", sep=""))
+    print(paste("*--Outlier observation(s) was found in trajectory ",
+                list_traj[u_,1]," --*", sep=""))
     }
+}
+
+#if 'replace_with' is 3
+if(replace_with==3){
+ flush.console()
+ print(paste(nrow(list_traj),
+             "trajectory(s) identified as outliers and removed!", sep=" "))
+ print("Details:")
+ for(u_ in 1:nrow(list_traj)){ #u_<-1
+  flush.console()
+  print(paste("*----- trajectory ",
+              list_traj[u_,1], "removed"), sep=" ")
   }
+}
+}
 
-  #if 'replace_with' is 3
-  if(replace_with==3){
-    flush.console()
-    print(paste(nrow(list_traj), "trajectory(s) identified as outliers and removed!", sep=" "))
-    print("Details:")
-    for(u_ in 1:nrow(list_traj)){ #u_<-1
-      flush.console()
-      print(paste("*----- trajectory ", list_traj[u_,1], "removed"), sep=" ")
-    }
-  }
-  }
-
-  #for method 2, in which outlier may not be found
-  if(is.null(list_traj)){
-    dat_ <- b_dat
-    print("No outlier(s) found!")
-    }
+#for method 2, in which outlier may not be found
+if(is.null(list_traj)){
+  dat_ <- b_dat
+  print("No outlier(s) found!")
+}
 
 
-  return(dat_)
+return(dat_)
 
 }
 
