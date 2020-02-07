@@ -43,7 +43,7 @@ t_steps = c(0:20)
 i_gr = NULL
 for(i in 1:50){
 i_gr = rbind(i_gr,
-             sim_group(gr_baseline=(0.5*time),
+             sim_group(gr_baseline=(0.5*t_steps),
                        sd=1, time=t_steps))
 }
 
@@ -51,7 +51,7 @@ i_gr = rbind(i_gr,
 s_gr = NULL
 for(i in 1:50){
   s_gr = rbind(s_gr,
-               sim_group(gr_baseline=rep(3,length(time)),
+               sim_group(gr_baseline=rep(3,length(t_steps)),
                          sd=1, time=t_steps))
 }
 
@@ -59,7 +59,7 @@ for(i in 1:50){
 d_gr = NULL
 for(i in 1:50){
   d_gr = rbind(d_gr,
-               sim_group(gr_baseline=(10 - (0.5*time)),
+               sim_group(gr_baseline=(10 - (0.5*t_steps)),
                          sd=1, time=t_steps))
 }
 
