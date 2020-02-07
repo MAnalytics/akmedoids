@@ -15,7 +15,7 @@ alphaLabel <- function(x){
   combind_A <- LETTERS
   combind <-  combn(LETTERS, m=2, sep="")
   list_Letters <- NULL
-  for(cc in 1:ncol(combind)){#cc=1
+  for(cc in seq_len(ncol(combind))){#cc=1
     list_Letters <-c(list_Letters,  paste(combind[1,cc],
                                           combind[2,cc], sep=""))
   }
