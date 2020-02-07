@@ -134,10 +134,10 @@ library(clusterCrit)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
-col1 <- c("1", "2","3","4", "5")
-col2 <- c("`dataImputation`","`rates`", "`props`", "`outlierDetect`","`wSpaces`")
-col3 <- c("Data imputation for longitudinal data", "Conversion of 'counts' to 'rates'", "Conversion of 'counts' (or 'rates') to 'Proportion'", "Outlier detection and replacement","Whitespace removal")
-col4 <- c("Calculates any missing entries (`NA`, `Inf`, `null`) in a longitudinal data, according to a specified method","Calculates rates from observed 'counts' and its associated denominator data", "Converts 'counts' or 'rates' observation to 'proportion'", "Identifies outlier observations in the data, and replace or remove them","Removes all the leading and trailing whitespaces in a longitudinal data")
+col1 <- c("1", "2","3","4", "5", "6")
+col2 <- c("`dataImputation`","`rates`", "`props`", "`outlierDetect`","`wSpaces`", "`removeRowsN`")
+col3 <- c("Data imputation for longitudinal data", "Conversion of 'counts' to 'rates'", "Conversion of 'counts' (or 'rates') to 'Proportion'", "Outlier detection and replacement","Whitespace removal", "Incomplete rows removal")
+col4 <- c("Calculates any missing entries (`NA`, `Inf`, `null`) in a longitudinal data, according to a specified method","Calculates rates from observed 'counts' and its associated denominator data", "Converts 'counts' or 'rates' observation to 'proportion'", "Identifies outlier observations in the data, and replace or remove them","Removes all the leading and trailing whitespaces in a longitudinal data", "Removes rows which contain 'NA' and 'inf' entries")
 tble <- data.frame(col1, col2, col3, col4)
 tble <- tble
 ```
@@ -360,6 +360,12 @@ In line with the demonstration in Adepeju et al. (2019), we will use these `prop
 
 ### (iv) `"outlierDetect"` function
 This function is aimed at allowing users to identify any outlier observations in their longitudinal data, and replace or remove them accordingly. The first step towards identifying outliers in any data is to visualise the data. A user can then decide a cut-off value for isolating the outliers. The `outlierDetect` function provides two options for doing this: (`i`) a `quantile` method, which isolates any observations with values higher than a specified quantile of the data values distribution, and (`ii`) a `manual` method, in which a user specifies the cut-off value. The '`replace_with`' argument is used to determine whether an outlier value should be replaced with the mean value of the row or the mean value of the column in which the outlier is located. The user also has the option to simply remove the trajectory that contains an outlier value. In deciding whether a trajectory contains outlier or not, the `count` argument allows the user to set an horizontal threshold (i.e. number of outlier values that must occur in a trajectory) in order for the trajectory to be considered as having outlier observations. Below, we demonstrate the utility of the `outlierDetect` function using the `imp_traj` data above. 
+
+### (v) `"wSpaces"` function
+Given a matrix suspected to contain whitespaces, this function removes all the whitespaces and returns a cleaned data. ’Whitespaces’ are white characters often introduced during data entry, for instance by wrongly pressing the spacebar. For example, neither " A" nor "A " equates "A" because of the whitespaces that exist in them. They can also result from systematic errors in data recording devices.
+
+### (vi) `"removeRowsN"` function
+This function removes any rows in which an 'NA' or an 'Inf' entry is found.
 
 
 ```{r figs2, echo=TRUE, fig.width=6,fig.height=3,fig.align="center", fig.cap=fig$cap("figs2", "Identifying outliers")}
