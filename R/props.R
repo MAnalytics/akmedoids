@@ -1,4 +1,3 @@
-
 #' @title Conversion of counts (or rates) to 'Proportion'
 #' @description This function converts counts or rates to proportions.
 #' @param traj [matrix (numeric)]: longitudinal data. Each row represents an individual trajectory (of observations). The columns show the observations at consecutive time points.
@@ -16,26 +15,29 @@
 #' @export
 
 props <- function(traj, id_field = TRUE, scale = 1, digits=4){
-  dat <- traj
-  props_ <- dat
-  if(id_field==FALSE){
-    for(h in 1:ncol(dat)){ #h<-6
-      prop <- (as.numeric(as.character(dat[,h]))/sum(as.numeric(as.character(dat[,h])))) * scale #
-      props_[,h] <- round(prop, digits=digits)
-    }
-    props_check = colSums(props_)
-    return(props_)
-  }
 
-  if(id_field==TRUE){
-    for(h in 2:ncol(dat)){ #h<-2
-      prop <- (as.numeric(as.character(dat[,h]))/sum(as.numeric(as.character(dat[,h])))) * scale
-      props_[,h] <- round(prop, digits = digits)
-    }
-    props_check = colSums(props_[ ,2:ncol(dat)])
-    return(props_)
+dat <- traj
+props_ <- dat
+if(id_field==FALSE){
+  for(h in 1:ncol(dat)){
+    prop <- (as.numeric(as.character(dat[,h]))/
+               sum(as.numeric(as.character(dat[,h])))) * scale #
+    props_[,h] <- round(prop, digits=digits)
   }
-  #return(props_)
+props_check = colSums(props_)
+return(props_)
+}
+
+if(id_field==TRUE){
+  for(h in 2:ncol(dat)){ #h<-2
+    prop <- (as.numeric(as.character(dat[,h]))/
+               sum(as.numeric(as.character(dat[,h])))) * scale
+    props_[,h] <- round(prop, digits = digits)
+  }
+props_check = colSums(props_[ ,2:ncol(dat)])
+return(props_)
+}
+
 }
 
 
