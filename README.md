@@ -25,24 +25,6 @@ Given a longitudinal datasets, the following is an example of how `akmedoids` co
 ```R
 #simulate some datasets
 
-#group of escalating trajectories
-gr1 = data.frame  
-
-#group of stable trajectories
-gr2 = 
-
-#group of decreasing trajectories
-gr3 = 
-
-#Combine groups
-dat = rbind(gr1, gr2, gr3)
-
-#run clustering function
-
-
-#get group attributes
-
-statPrint()
 
 ```
 
