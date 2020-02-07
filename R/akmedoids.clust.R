@@ -91,7 +91,7 @@ if(method=="linear"){
 
   #-----------------------------------------------------------
   #split the slopes into 'k' partitions to determine
-  #the medioids for different value of k
+  #the medoids for different value of k
   all_cluster_center_List <- list()
   i_counter <- 0
   for(s_ in k[1]:k[2]){   #s_<-3
@@ -108,25 +108,26 @@ if(method=="linear"){
     #generate regression lines based on the medoid
     #slopes (to create the initial centroids)
     centers_List <- NULL
-    for(m in 1:nrow(median_slopes_)){ #m<-1
+    for(m in seq_len(nrow(median_slopes_))){ #m<-1
       centers_List <- rbind(centers_List,
                               (0 + (median_slopes_[[m,1]]*
-                                      (1:ncol(dat)))))
+                                      (seq(ncol(dat))))))
     }
     centers_List <- as.data.frame(centers_List)
     all_cluster_center_List[[i_counter]] <- centers_List
     }
 
-    #Generate the linear trendlines for all
+    #Generate the trendlines for all
     #trajectories (dropping all intersects)
     dat_slopp<- NULL
-    for(n in 1:nrow(sl_List)){ #k<-1
+    for(n in seq_len(nrow(sl_List))){ #k<-1
       dat_slopp <- rbind(dat_slopp, (0 + (sl_List[n,3]*
-                                            (1:ncol(dat)))))
+                                            (seq_len(ncol(dat))))))
     }
 
-  #looping through list of k and calculate the
-  #Calinski and Harabasz criterion
+  #looping through list of k,
+  #get the clusters,
+  #and calculate two quality criteria (Silhouette $ Calinski_Harabatz)
   final_result <- list()
     #initialise holders
     criterValue1 <- NULL
@@ -134,18 +135,24 @@ if(method=="linear"){
     #calinski_1d <- NULL
     result_ <- list()
 
-    #loop through k
-    for(r_ in 1:length(k_)){ #r_<-1
+    #loop through k,
+    #compute the clusters for all values of k
+    for(r_ in seq_len(length(k_))){
+
       #1st iteration
       part2 <- affectIndivC(dat_slopp,
                             all_cluster_center_List[[r_]])
-      #temporary holder for a preceeding solution
+      #temporary holder for immediate past solution
       distF_backup <- list()
-      #get a list of unique cluster labels
+
+      #get the unique cluster labels
       c_count <- unique(part2)[order(unique(part2))]
-      #a vector of time steps
-      time_1 <- 1:ncol(traj)
-      #variable to store the similarity scores
+
+      #get the vector of time steps
+      time_1 <- seq_len(ncol(traj))
+
+      #matrix to store the similarity scores
+      #for 100 iterations
       simil_ <- matrix(0, 100, length(c_count))
       #number of iterations #fixed as 20
       for(z in 1:100){  #z<-2
@@ -154,7 +161,7 @@ if(method=="linear"){
           #pick the last
           #sort the median of the slopes of all the groups
           centers <- NULL
-          for(h_ in 1:length(c_count)){
+          for(h_ in seq_len(length(c_count))){
             dat_slopp_ <- as.data.frame(dat_slopp)[which(part2==c_count[h_]),]
             #sort the last column to determine the medoid trajectory
             indexSort_ <- order(dat_slopp_[,ncol(dat_slopp_)])
@@ -163,34 +170,36 @@ if(method=="linear"){
             centers <- rbind(centers, dat_slopp_[le_, ])
           }
           linear_centers <- as.data.frame(centers)
+
           #determine the affection of each trajectory to the medoids
+          #for next iteration
           part2 <- affectIndivC((dat_slopp), linear_centers)
         }
         #determine the similarity of consecutive solutions
         if(z > 1){
-          for(y in 1:length(c_count)){
+          for(y in seq_len(length(c_count))){
             #compare
             simil_[z,y] <- (length(distF_backup[[y]]%in%
                                      which(part2==c_count[y]))/
                                        length(which(part2==c_count[y])))*100
           }
         }
-        #executed only in the 1st iteration
+        #only executed for 1st iteration
         if(z==1){
-          for(y in 1:length(c_count)){
+          for(y in seq_len(length(c_count))){
             distF_backup[[y]] <- which(part2==c_count[y])
           }
         }
         #back up the current solution
         if(z > 1){
-          for(y in 1:length(c_count)){
+          for(y in seq_len(length(c_count))){
             distF_backup[[y]] <- which(part2==c_count[y])
           }
         }
       }
-      #solution
+      #convert cluster labels to alphabets
       sol_k <- alphaLabel(part2)
-      sol_k_integers <- part2  #integers solution
+      sol_k_integers <- part2
       attr(sol_k,"k") <- k_[r_]
       result_[[r_]] <- sol_k
       #-------------------------------------
@@ -200,28 +209,25 @@ if(method=="linear"){
 
       f_cal <- matrix(cbind(slp_x, slp_),,2)
       cl <- as.integer(sol_k_integers)
-
+      #compute quality criterion 1
       vals1 <- as.numeric(clusterCrit::intCriteria(f_cal,cl,
                                                    "Silhouette"))
       criterValue1 <- c(criterValue1, vals1)
-
+      #compute quality criterion 2
       vals2 <- as.numeric(clusterCrit::intCriteria(f_cal,cl,
                                                    "Calinski_Harabasz"))
       criterValue2 <- c(criterValue2, vals2)
       #-------------------------------------
-
       flush.console()
       print(paste("solution of k =", k_[r_], "determined!"))
 
     }
 
-    #return the solution if a single value of k is provided
+    #return solution if a single value of k is set
     if(k[1]==k[2]){
       solution_ <- list()
       solution_[[1]] <- result_[[1]]
-
       final_result <- list(memberships=solution_[[1]])
-
       return(final_result)
     }
 
@@ -265,15 +271,12 @@ if(method=="linear"){
           geom_vline(xintercept = elbP$x, linetype="dashed", color = "red", size=0.5)
         qualiCriterion= paste("Quality criterion:", crit, sep=" ")
         print(paste("Suggested optimal solution contains", round(elbP$x, digits=0),
-                    "clusters. Check the plot for better solution!", sep=" "))
-
+                    "clusters. See the plot for further examination!", sep=" "))
         #----------------------------------
         flush.console()
         dev.new(width=3, height=3)
         print(plt)
-
       }
-
 
       #for 'Calinski_Harabasz' criterion. Generate quality plot
       if(crit=="Calinski_Harabasz"){
@@ -294,13 +297,11 @@ if(method=="linear"){
         #determine optimal solution
         optimal_solution <- result_[[(which(qualit[,2]==max(qualit))[1])]]
 
-        #combining the results
+        #combine the results
         final_result <- list(plt,
                              qualitycriterion =  qualiCriterion,
                              membership_optimalSolution=optimal_solution,
                              qualityCrit.List=qualit)
-
-
         flush.console()
         dev.new(width=3, height=3)
         print(plt)
