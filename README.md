@@ -8,15 +8,15 @@ The `akmedoids` package advances the clustering of longitudinal datasets in orde
 
 **For more information and usability, check out details on [CRAN](https://cran.r-project.org/web/packages/akmedoids/index.html).**
 
-### Getting Started 
-
-To install the development version of the package:
+### Installation 
 
 ```R
-remotes::install_github("MAnalytics/akmedoids")
-#please report any installation problems in the issues
+#installation from `CRAN`
+#From an R console, type:
+install.packages("akmedoids")
+library(akmedoids)
 ```
-Alternatively, from an R console, type `install.packages("akmedoids")` to install the package. After download is complete type `library("akmdeoids")` to load the package.
+To install the development version of the package, type `remotes::install_github("MAnalytics/akmedoids")`. Please, report any installation problems in the issues.
 
 ### Example usage:
 
