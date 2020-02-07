@@ -24,13 +24,14 @@
 #' @export
 
 
-akmedoids.clust <- function(traj, id_field = FALSE, method = "linear", k = c(3,6), crit = "Silhouette"){ #TRUE #k<-3
-
-  #traj = crime_per_000_people
+akmedoids.clust <- function(traj, id_field = FALSE,
+                            method = "linear", k = c(3,6),
+                            crit = "Silhouette"){ #TRUE #k<-3
 
 qualityCrit <- 0
 
-#create a vector if an interger of k if provided.
+#create a vector of two elements,
+#if k is a single value
   if(length(k)==1){
     k <- rep(k, 2)
   }
@@ -38,11 +39,12 @@ qualityCrit <- 0
 #linear medoid method
 if(method=="linear"){
 
-  #check if unaccepted value of k in inputted
+  #expand k
   k_ <- k[1]:k[2]
-  #checks
+
+  #check if unacceptable value of k in inputted
   if(k[1] < 3 | k[1] > nrow(traj) | k[2] > nrow(traj) |
-     k[1] > 20 | k[2] > 20 | k[1]>k[2]){
+     k[1] > 20 | k[2] > 20 | k[1]> k[2]){
     flush.console()
     print("*******Error!********")
     if(k[1] < 3 | k[1] > nrow(traj) | k[2] > nrow(traj) |
@@ -57,104 +59,102 @@ if(method=="linear"){
     stop("(: Program terminated!!! :)")
   } else {
 
-    dat <- traj
-    #check if there is id_field
-    #check if there is unique(id) field
-    if(id_field==TRUE){
-      n_CL <- colnames(dat)[1]
-      col_names <- as.vector(dat[,1])
-      dat <- dat[,2:ncol(dat)]
-      #check if the 'id_field' is a unique field
-      if(!length(col_names)==length(unique(col_names))){
-        stop("(: The 'id_field' is not a unique field. Function terminated!!! :)")
-      }
+  dat <- traj
+
+  #check if there is id_field
+  #check if there is unique (id) field
+  if(id_field==TRUE){
+    n_CL <- colnames(dat)[1]
+    col_names <- as.vector(dat[,1])
+    dat <- dat[,2:ncol(dat)]
+    #check if the 'id_field' is a unique field
+    if(!length(col_names)==length(unique(col_names))){
+      stop("(: The 'id_field' does not contain unique elements. Function terminated!!! :)")
+    }
     }
 
+  #get the 'time' vector
+  time = 1:ncol(dat)
+  #-----------------------------------------------------
+  #get the linear coefficients
+  sl_List <- NULL
+  time <- as.numeric(1:ncol(dat))
+  for(i in seq_len(nrow(dat))){ #i<-1
+    b=coefficients(lm(as.numeric(as.character(dat[i,]))~
+                          as.numeric(as.character(time))))
+    sl_List <- rbind(sl_List, cbind(as.numeric(b[1]),
+                                      as.numeric(b[2])))
+  }
 
-    #create a time list
-    time = 1:ncol(dat) #clean.time   #mode(time)
-    #-----------------------------------------------------
-    #looping through to calculate the coefficients
-    sl_List <- NULL
-    time <- as.numeric(1:ncol(dat))
-    for(i in 1:nrow(dat)){ #i<-1
-      b=coefficients(lm(as.numeric(as.character(dat[i,]))~as.numeric(as.character(time))))
-      sl_List <- rbind(sl_List, cbind(as.numeric(b[1]), as.numeric(b[2])))
+  sl_List <- as.data.frame(cbind(1:nrow(sl_List), sl_List))
+  colnames(sl_List) <- c("sn", "intersect","slope")
+
+  #-----------------------------------------------------------
+  #split the slopes into 'k' partitions to determine
+  #the medioids for different value of k
+  all_cluster_center_List <- list()
+  i_counter <- 0
+  for(s_ in k[1]:k[2]){   #s_<-3
+    i_counter <- i_counter + 1
+    split_slopes <- split(sl_List, cut2(sl_List$slope, g=s_))
+
+    #collate the medoids
+    median_slopes_ <- list()
+    for(j in seq_len(length(split_slopes))){ #j=1
+      m_dty<-median(split_slopes[j][[1]]$slope)
+      median_slopes_ <- rbind(median_slopes_, m_dty)
     }
 
-    sl_List <- as.data.frame(cbind(1:nrow(sl_List), sl_List))
-    colnames(sl_List) <- c("sn", "intersect","slope")  #head(sl_List)
+    #generate regression lines based on the medoid
+    #slopes (to create the initial centroids)
+    centers_List <- NULL
+    for(m in 1:nrow(median_slopes_)){ #m<-1
+      centers_List <- rbind(centers_List,
+                              (0 + (median_slopes_[[m,1]]*
+                                      (1:ncol(dat)))))
+    }
+    centers_List <- as.data.frame(centers_List)
+    all_cluster_center_List[[i_counter]] <- centers_List
+    }
 
-    #-----------------------------------------------------------
-    #split the slopes into 'k' partitions to determine the medioids for different value of k
-    all_cluster_center_List <- list()
-    i_counter <- 0
-    for(s_ in k[1]:k[2]){   #s_<-3
-      i_counter <- i_counter + 1
-      split_slopes <- split(sl_List, cut2(sl_List$slope, g=s_))
-
-      #collate the medoids
-      median_slopes_ <- list()
-      for(j in 1:length(split_slopes)){ #j=1
-        m_dty<-median(split_slopes[j][[1]]$slope)
-        median_slopes_ <- rbind(median_slopes_, m_dty)
-      }
-
-      #generate regression lines based on the medoid slopes (to create the initial centroids)
-      centers_List <- NULL
-      for(m in 1:nrow(median_slopes_)){ #m<-1
-        centers_List <- rbind(centers_List, (0 + (median_slopes_[[m,1]]*(1:ncol(dat)))))  #mean_Slopes[k,1]
-      }
-      centers_List <- as.data.frame(centers_List)
-
-      all_cluster_center_List[[i_counter]] <- centers_List
-
-    }#
-
-    #Generate the linear trendlines for all trajectories (dropping all intersects)
+    #Generate the linear trendlines for all
+    #trajectories (dropping all intersects)
     dat_slopp<- NULL
     for(n in 1:nrow(sl_List)){ #k<-1
-      dat_slopp <- rbind(dat_slopp, (0 + (sl_List[n,3]*(1:ncol(dat)))))  #head(dat_slopp)
+      dat_slopp <- rbind(dat_slopp, (0 + (sl_List[n,3]*
+                                            (1:ncol(dat)))))
     }
 
-  #looping through list of k and calculate the Calinski and Harabasz criterion
+  #looping through list of k and calculate the
+  #Calinski and Harabasz criterion
   final_result <- list()
-
-
     #initialise holders
-    criterValue1 <- NULL  #holder for the quality scores
+    criterValue1 <- NULL
     criterValue2 <- NULL
     #calinski_1d <- NULL
-    result_ <- list() #holder for the results
+    result_ <- list()
 
     #loop through k
     for(r_ in 1:length(k_)){ #r_<-1
-
       #1st iteration
-      part2 <- affectIndivC(dat_slopp, all_cluster_center_List[[r_]])
-
+      part2 <- affectIndivC(dat_slopp,
+                            all_cluster_center_List[[r_]])
       #temporary holder for a preceeding solution
       distF_backup <- list()
-
       #get a list of unique cluster labels
       c_count <- unique(part2)[order(unique(part2))]
-
       #a vector of time steps
       time_1 <- 1:ncol(traj)
-
       #variable to store the similarity scores
       simil_ <- matrix(0, 100, length(c_count))
-
       #number of iterations #fixed as 20
       for(z in 1:100){  #z<-2
-
         #recalculate the cluster centrure and do the affection
         if(z > 1){
-
           #pick the last
           #sort the median of the slopes of all the groups
           centers <- NULL
-          for(h_ in 1:length(c_count)){#
+          for(h_ in 1:length(c_count)){
             dat_slopp_ <- as.data.frame(dat_slopp)[which(part2==c_count[h_]),]
             #sort the last column to determine the medoid trajectory
             indexSort_ <- order(dat_slopp_[,ncol(dat_slopp_)])
@@ -166,63 +166,54 @@ if(method=="linear"){
           #determine the affection of each trajectory to the medoids
           part2 <- affectIndivC((dat_slopp), linear_centers)
         }
-
         #determine the similarity of consecutive solutions
         if(z > 1){
-          for(y in 1:length(c_count)){  #y<-1
+          for(y in 1:length(c_count)){
             #compare
-            simil_[z,y] <- (length(distF_backup[[y]]%in%which(part2==c_count[y]))/length(which(part2==c_count[y])))*100
+            simil_[z,y] <- (length(distF_backup[[y]]%in%
+                                     which(part2==c_count[y]))/
+                                       length(which(part2==c_count[y])))*100
           }
         }
-
         #executed only in the 1st iteration
         if(z==1){
           for(y in 1:length(c_count)){
             distF_backup[[y]] <- which(part2==c_count[y])
           }
         }
-
         #back up the current solution
         if(z > 1){
-          for(y in 1:length(c_count)){  #
-            distF_backup[[y]] <- which(part2==c_count[y]) ##---yes, using x and y here is okay.
+          for(y in 1:length(c_count)){
+            distF_backup[[y]] <- which(part2==c_count[y])
           }
         }
       }
-
       #solution
       sol_k <- alphaLabel(part2)
       sol_k_integers <- part2  #integers solution
-
       attr(sol_k,"k") <- k_[r_]
-
       result_[[r_]] <- sol_k
-      #uncomment to use 2-d calinski
-      #get the longitudinal trends #Calinski
-      ##ld <- longData((dat_slopp)) #convert to longitudinal data
-      ##part3 <- partition(part2)
-      ##cr1 <- qualityCriterion(ld,part3) #calculate the quality
-      ##calinski <- c(calinski, round(cr1$criters[1], digits=4))
-
       #-------------------------------------
-      #get the slope #using 1d calinski
+      #get the slopes
       slp_ <- sl_List$slope #slopes
       slp_x <- rep(0, length(slp_))
 
       f_cal <- matrix(cbind(slp_x, slp_),,2)
       cl <- as.integer(sol_k_integers)
 
-      vals1 <- as.numeric(clusterCrit::intCriteria(f_cal,cl, "Silhouette"))
+      vals1 <- as.numeric(clusterCrit::intCriteria(f_cal,cl,
+                                                   "Silhouette"))
       criterValue1 <- c(criterValue1, vals1)
 
-      vals2 <- as.numeric(clusterCrit::intCriteria(f_cal,cl, "Calinski_Harabasz"))
+      vals2 <- as.numeric(clusterCrit::intCriteria(f_cal,cl,
+                                                   "Calinski_Harabasz"))
       criterValue2 <- c(criterValue2, vals2)
       #-------------------------------------
 
       flush.console()
       print(paste("solution of k =", k_[r_], "determined!"))
 
-    }#
+    }
 
     #return the solution if a single value of k is provided
     if(k[1]==k[2]){
@@ -242,14 +233,6 @@ if(method=="linear"){
         crit=="Silhouette"
       }
 
-      #check if "Silhouette" score is chosen, but at least a solution returned a null score.
-      # if((crit==1 | crit=="Silhouette") & length(which(is.nan(criterValue1)))!=0){
-      #   flush.console()
-      #   print("*-----Quality measure switched to 'Calinski_Harabasz', due to non-applicability of 'Silhouette' to one (or more) cluster solution(s)-----*")
-      #   criterValues <- criterValue2
-      #   crit = "Calinski_Harabasz"
-      # }
-
       #"Calinski_Harabasz" is always applicable!
       if(crit=="Calinski_Harabasz"){
         criterValues <- criterValue2
@@ -259,7 +242,8 @@ if(method=="linear"){
       #if no valid criterion is specified. terminate!!
       if(!crit %in% c("Silhouette", "Calinski_Harabasz")){
         flush.console()
-        stop("*------------*(: Quality criterion specified is NOT RECOGNISED!! Execution terminated!!! :)*------------*")
+        stop("*------------*(: Quality criterion specified is NOT RECOGNISED!!
+             Execution terminated!!! :)*------------*")
       }
 
       #for 'Silhouette' criterion. Generate quality plot
@@ -268,21 +252,20 @@ if(method=="linear"){
 
         #terminate if missing or infinite values exist
         if(any(is.na(qualit$qualityCrit))){
-          stop("*------------*(: 'Silhouette' criterion is not applicable!. Try 'Calinski_Harabasz':)*------------*")
+          stop("*------------*(: 'Silhouette' criterion is not applicable!.
+               Try 'Calinski_Harabasz':)*------------*")
         }
 
         #determine the 'elbow' point, using 'linearity' method
         elbP <- elbowPoint(qualit$k,qualit$qualityCrit)
-        #abline(v=elbP, col="red", pch=20, cex=3)
-        #plot
         plt <- ggplot(qualit, aes(x = k, y = qualityCrit)) +
           geom_line(linetype = "dotdash") + geom_point(shape=0)+
-          ggtitle(paste("Optimal solution based on the", crit, "criterion: k = ", round(elbP$x, digits=0), sep=" ")) +
+          ggtitle(paste("Optimal solution based on the", crit, "criterion: k = ",
+                        round(elbP$x, digits=0), sep=" ")) +
           geom_vline(xintercept = elbP$x, linetype="dashed", color = "red", size=0.5)
-
         qualiCriterion= paste("Quality criterion:", crit, sep=" ")
-
-        print(paste("Suggested optimal solution contains", round(elbP$x, digits=0), "clusters. Check the plot for better solution!", sep=" "))
+        print(paste("Suggested optimal solution contains", round(elbP$x, digits=0),
+                    "clusters. Check the plot for better solution!", sep=" "))
 
         #----------------------------------
         flush.console()
@@ -294,14 +277,17 @@ if(method=="linear"){
 
       #for 'Calinski_Harabasz' criterion. Generate quality plot
       if(crit=="Calinski_Harabasz"){
-      qualit <- data.frame(k=k[1]:k[2], qualityCrit=criterValues)
+      qualit <- data.frame(k=k[1]:k[2],
+                           qualityCrit=criterValues)
       id_opt <- (which(qualit[,2]==max(qualit))[1] + (k[1]-1))
 
       #plot
       plt <- ggplot(qualit, aes(x = k, y = qualityCrit)) +
         geom_line(linetype = "dotdash") + geom_point(shape=0)+
-        ggtitle(paste("Optimal solution based on the", crit, "criterion: k = ", id_opt, sep=" ")) +
-        geom_vline(xintercept = (which(qualit[,2]==max(qualit))[1] +(k[1]-1)), linetype="dashed", color = "red", size=0.5)
+        ggtitle(paste("Optimal solution based on the", crit,
+                      "criterion: k = ", id_opt, sep=" ")) +
+        geom_vline(xintercept = (which(qualit[,2]==max(qualit))[1] +(k[1]-1)),
+                   linetype="dashed", color = "red", size=0.5)
 
         qualiCriterion= paste("Quality criterion:", crit, sep=" ")
 
@@ -310,7 +296,9 @@ if(method=="linear"){
 
         #combining the results
         final_result <- list(plt,
-                             qualitycriterion =  qualiCriterion, membership_optimalSolution=optimal_solution, qualityCrit.List=qualit)
+                             qualitycriterion =  qualiCriterion,
+                             membership_optimalSolution=optimal_solution,
+                             qualityCrit.List=qualit)
 
 
         flush.console()
@@ -318,14 +306,7 @@ if(method=="linear"){
         print(plt)
         return(final_result)
         }
-
-
-
-
     }
-
-
-  } #end of else if
+  }
 }
-
-} #end of function
+}
