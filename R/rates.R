@@ -30,32 +30,34 @@
 
 rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
 
-  dat1 <- traj
-  dat2 <- denomin
-  #compare the number of columns
-  if(ncol(traj)!=ncol(denomin)){
-    stop("*---Number of columns must be the same---*")
-  }
+dat1 <- traj
+dat2 <- denomin
 
-  #compare the number of columns
-  if(id_field==FALSE){
-    stop("*---unique field must be set as 'TRUE'!---*")
-  }
-  #check uniqueness of the fields
-  if(id_field==TRUE){
-    n_CL <- colnames(dat1)
-    col_names1 <- as.vector(as.character(dat1[,1]))
-    col_names2 <- as.vector(as.character(dat2[,1]))
+#compare the number of columns
+if(ncol(traj)!=ncol(denomin)){
+  stop("*---Number of columns must be the same---*")
+}
 
-    #dat <- dat[,2:ncol(dat)]
-    #check if the "id_field" is a unique field
-    if(!length(col_names1)==length(unique(col_names1))){
-      stop("(: The 'id_field' of the 'traj' object is not a unique field. Function terminated!!! :)")
-    }
-    if(!length(col_names2)==length(unique(col_names2))){
+#compare the number of columns
+if(id_field==FALSE){
+  stop("*---unique field must be set as 'TRUE'!---*")
+}
+
+#check uniqueness of the fields
+if(id_field==TRUE){
+  n_CL <- colnames(dat1)
+  col_names1 <- as.vector(as.character(dat1[,1]))
+  col_names2 <- as.vector(as.character(dat2[,1]))
+
+  #dat <- dat[,2:ncol(dat)]
+  #check if the "id_field" is a unique field
+  if(!length(col_names1)==length(unique(col_names1))){
+    stop("(: The 'id_field' of the 'traj' object is not a unique field. Function terminated!!! :)")
+  }
+  if(!length(col_names2)==length(unique(col_names2))){
       stop("(: The 'id_field' of the 'denominator' object is not a unique field. Function terminated!!! :)")
-    }
   }
+}
 
   data1 <- apply(dat1[,2:ncol(dat1)], 2, as.numeric)#head(data1)
   data1 <- cbind(1:nrow(data1), data1)
