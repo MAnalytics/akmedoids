@@ -4,7 +4,9 @@
 \name{traj}
 \alias{traj}
 \title{Longitudinal dataset}
-\format{A matrix}
+\format{
+A matrix
+}
 \usage{
 traj
 }

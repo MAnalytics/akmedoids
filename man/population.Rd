@@ -4,7 +4,9 @@
 \name{population}
 \alias{population}
 \title{sample population (denominator) data}
-\format{A matrix}
+\format{
+A matrix
+}
 \usage{
 population
 }

@@ -310,4 +310,16 @@ if(method=="linear"){
     }
   }
 }
+
+# final_result$traj <- traj
+# class(final_result) <-
+#   c(
+#     class(final_result),
+#     'akClustr'
+#   )
+#
+# return(final_result)
+
 }
+
+
