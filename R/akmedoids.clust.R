@@ -74,13 +74,13 @@ if(method=="linear"){
     }
 
   #get the 'time' vector
-  time = 1:ncol(dat)
+  time <- 1:ncol(dat)
   #-----------------------------------------------------
   #get the linear coefficients
   sl_List <- NULL
   time <- as.numeric(1:ncol(dat))
   for(i in seq_len(nrow(dat))){ #i<-1
-    b=coefficients(lm(as.numeric(as.character(dat[i,]))~
+    b<-coefficients(lm(as.numeric(as.character(dat[i,]))~
                           as.numeric(as.character(time))))
     sl_List <- rbind(sl_List, cbind(as.numeric(b[1]),
                                       as.numeric(b[2])))
@@ -242,7 +242,7 @@ if(method=="linear"){
       #"Calinski_Harabasz" is always applicable!
       if(crit=="Calinski_Harabasz"){
         criterValues <- criterValue2
-        crit = "Calinski_Harabasz"
+        crit <- "Calinski_Harabasz"
       }
 
       #if no valid criterion is specified. terminate!!
@@ -269,7 +269,7 @@ if(method=="linear"){
           ggtitle(paste("Optimal solution based on the", crit, "criterion: k = ",
                         round(elbP$x, digits=0), sep=" ")) +
           geom_vline(xintercept = elbP$x, linetype="dashed", color = "red", size=0.5)
-        qualiCriterion= paste("Quality criterion:", crit, sep=" ")
+        qualiCriterion<- paste("Quality criterion:", crit, sep=" ")
         print(paste("Suggested optimal solution contains", round(elbP$x, digits=0),
                     "clusters. See the plot for further examination!", sep=" "))
         #----------------------------------
