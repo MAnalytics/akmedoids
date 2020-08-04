@@ -3,7 +3,7 @@
 #' @param traj [matrix (numeric)]: longitudinal data. Each row represents an individual trajectory (of observations). The columns show the observations at consecutive time points.
 #' @param id_field [numeric or character] Whether the first column of the \code{traj} is a unique (\code{id}) field. Default: \code{FALSE}. If \code{TRUE} the function recognises the second column as the first time step.
 #' @param digits [numeric] Specifying number of digits to approximate the output to. Default: \code{4}.
-#' @param scale [numeric] To scale the 'propotion' measures. Default: \code{1}
+#' @param scale [numeric] To scale the 'proportion' measures. Default: \code{1}
 #' @usage props(traj, id_field = TRUE, scale = 1, digits = 4)
 #' @examples
 #' traj <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
@@ -24,7 +24,7 @@ if(id_field==FALSE){
                sum(as.numeric(as.character(dat[,h])))) * scale #
     props_[,h] <- round(prop, digits=digits)
   }
-props_check = colSums(props_)
+props_check <- colSums(props_)
 return(props_)
 }
 
@@ -34,7 +34,7 @@ if(id_field==TRUE){
                sum(as.numeric(as.character(dat[,h])))) * scale
     props_[,h] <- round(prop, digits = digits)
   }
-props_check = colSums(props_[ ,2:ncol(dat)])
+props_check <- colSums(props_[ ,2:ncol(dat)])
 return(props_)
 }
 
