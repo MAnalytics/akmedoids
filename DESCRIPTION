@@ -18,6 +18,7 @@ Description: Advances a novel adaptation of longitudinal k-means clustering
     <doi:10.1007/978-3-319-24277-4>). The package also includes a number of 
     other useful functions for exploring and manipulating longitudinal 
     data prior to the clustering process.
+Language: en-US
 License: GPL-3
 URL: https://cran.r-project.org/web/packages/akmedoids/index.html 
 BugReports: https://github.com/MAnalytics/akmedoids/issues
