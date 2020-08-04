@@ -99,7 +99,7 @@ elbowPoint <- function(x, y) {
       # Interpolation function
       f <- approxfun(new.x, curvature, rule=1)
       # Minimize |f(new.x) - max(curvature)| over range of new.x
-      cutoff.x = optimize(function(new.x) abs(f(new.x) - max(curvature)), range(new.x))$minimum
+      cutoff.x <- optimize(function(new.x) abs(f(new.x) - max(curvature)), range(new.x))$minimum
     }
 
    if (is.na(cutoff.x)) {
