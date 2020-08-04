@@ -1,11 +1,11 @@
 
 #' @title Anchored k-medoids clustering
-#' @description Given a list of trajectories and a functional method, this function clusters the trajectories into a \code{k} number of groups. If a vector of two numbers is given, the function determines the best solution from those options based on the Calinski-Harabasz criterion.
+#' @description Given a list of trajectories and a functional method, this function clusters the trajectories into a \code{k} number of groups. If a vector of two numbers is given, the function determines the best solution from those options based on the Caliński-Harabasz criterion.
 #' @param traj [matrix (numeric)]: longitudinal data. Each row represents an individual trajectory (of observations). The columns show the observations at consecutive time steps.
-#' @param id_field [numeric or character] Whether the first column of the \code{traj} is a unique (\code{id}) field. Default: \code{FALSE}. If \code{TRUE} the function recognises the second column as the first time points.
-#' @param method [character] The parametric initialisation strategy. Currently, the only available method is a \code{linear} method, set as \code{"linear"}. This uses the time-dependent linear regression lines and the resulting groups are order in the order on increasing slopes.
+#' @param id_field [numeric or character] Whether the first column of the \code{traj} is a unique (\code{id}) field. Default: \code{FALSE}. If \code{TRUE} the function recognizes the second column as the first time points.
+#' @param method [character] The parametric initialization strategy. Currently, the only available method is a \code{linear} method, set as \code{"linear"}. This uses the time-dependent linear regression lines and the resulting groups are order in the order on increasing slopes.
 #' @param k [integer or vector (numeric)] either an exact integer number of clusters, or a vector of length two specifying the minimum and maximum numbers of clusters to be examined from which the best solution will be determined. In either case, the minimum number of clusters is \code{3}. The default is \code{c(3,6)}.
-#' @param crit [character] a string specifying the type of the criterion to use for assessing the quality of the cluster solutions, when \code{k} is a vector of two values (as above). Default:\code{crit="Silhouette"}, use the average Silhouette width (\code{Rousseeuw P. J. 1987}). Using the \code{"Silhouette"} criterion, the optimal value of \code{k} can be determined as the elbow point of the curve. Other valid criterion is the "Calinski_Harabatz" (\code{Calinski T. & Harabatz J. 1974}) in which the maximum score represent the point of optimality. Having determined the optimal \code{k}, the function can then be re-run, using the exact (optimal) value of \code{k}.
+#' @param crit [character] a string specifying the type of the criterion to use for assessing the quality of the cluster solutions, when \code{k} is a vector of two values (as above). Default:\code{crit="Silhouette"}, use the average Silhouette width (\code{Rousseeuw P. J. 1987}). Using the \code{"Silhouette"} criterion, the optimal value of \code{k} can be determined as the elbow point of the curve. Other valid criterion is the "Caliński_Harabasz" (\code{Caliński T. & Harabasz J. 1974}) in which the maximum score represents the point of optimality. Having determined the optimal \code{k}, the function can then be re-run, using the exact (optimal) value of \code{k}.
 #' @usage akmedoids.clust(traj, id_field = FALSE, method = "linear", k = c(3,6), crit="Silhouette")
 #' @details This function works by first approximating the trajectories based on the chosen parametric forms (e.g. linear), and then partitions the original trajectories based on the form groupings, in similar fashion to k-means clustering \code{(Genolini et al. 2015)}. The key distinction of \code{akmedoids} compared with existing longitudinal approaches is that both the initial starting points as well as the subsequent cluster centers (as the iteration progresses) are based the selection of observations (medoids) as oppose to centroids.
 #' @examples
@@ -19,7 +19,7 @@
 #' @return If \code{k} is a vector of two numbers (see param. \code{k} details above), the output is a graphical plot of the quality scores of the cluster solutions. If \code{k} is an exact integer number of clusters, the function returns trajectory labels indicating the group membership of the corresponding trajectory in the \code{traj} object.
 #' @references \code{1}. Genolini, C. et al. (2015) kml and kml3d: R Packages to Cluster Longitudinal Data. Journal of Statistical Software, 65(4), 1-34. URL http://www.jstatsoft.org/v65/i04/.
 #' \code{2}. Rousseeuw P. J. (1987) Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. J. Comput. Appl. Math 20:53–65.
-#' \code{3}. Calinski T, Harabasz J (1974) A dendrite method for cluster analysis. Commun Stat 3:1-27.
+#' \code{3}. Caliński T, Harabasz J (1974) A dendrite method for cluster analysis. Commun. Stat. 3:1-27.
 #' @rawNamespace import(kml, grDevices, reshape2, Hmisc, stats, utils, ggplot2, longitudinalData)
 #' @export
 
@@ -127,9 +127,9 @@ if(method=="linear"){
 
   #looping through list of k,
   #get the clusters,
-  #and calculate two quality criteria (Silhouette $ Calinski_Harabatz)
+  #and calculate two quality criteria (Silhouette $ Caliński_Harabasz)
   final_result <- list()
-    #initialise holders
+    #initialize holders
     criterValue1 <- NULL
     criterValue2 <- NULL
     #calinski_1d <- NULL
@@ -215,7 +215,7 @@ if(method=="linear"){
       criterValue1 <- c(criterValue1, vals1)
       #compute quality criterion 2
       vals2 <- as.numeric(clusterCrit::intCriteria(f_cal,cl,
-                                                   "Calinski_Harabasz"))
+                                                   "Caliński_Harabasz"))
       criterValue2 <- c(criterValue2, vals2)
       #-------------------------------------
       flush.console()
@@ -239,14 +239,14 @@ if(method=="linear"){
         crit=="Silhouette"
       }
 
-      #"Calinski_Harabasz" is always applicable!
-      if(crit=="Calinski_Harabasz"){
+      #"Caliński_Harabasz" is always applicable!
+      if(crit=="Caliński_Harabasz"){
         criterValues <- criterValue2
-        crit <- "Calinski_Harabasz"
+        crit <- "Caliński_Harabasz"
       }
 
       #if no valid criterion is specified. terminate!!
-      if(!crit %in% c("Silhouette", "Calinski_Harabasz")){
+      if(!crit %in% c("Silhouette", "Caliński_Harabasz")){
         flush.console()
         stop("*------------*(: Quality criterion specified is NOT RECOGNISED!!
              Execution terminated!!! :)*------------*")
@@ -259,7 +259,7 @@ if(method=="linear"){
         #terminate if missing or infinite values exist
         if(any(is.na(qualit$qualityCrit))){
           stop("*------------*(: 'Silhouette' criterion is not applicable!.
-               Try 'Calinski_Harabasz':)*------------*")
+               Try 'Caliński_Harabasz':)*------------*")
         }
 
         #determine the 'elbow' point, using 'linearity' method
@@ -279,7 +279,7 @@ if(method=="linear"){
       }
 
       #for 'Calinski_Harabasz' criterion. Generate quality plot
-      if(crit=="Calinski_Harabasz"){
+      if(crit=="Caliński_Harabasz"){
       qualit <- data.frame(k=k[1]:k[2],
                            qualityCrit=criterValues)
       id_opt <- (which(qualit[,2]==max(qualit))[1] + (k[1]-1))
