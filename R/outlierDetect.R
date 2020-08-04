@@ -182,7 +182,6 @@ if(is.null(list_traj)){
   print("No outlier(s) found!")
 }
 
-
 return(dat_)
 
 }
