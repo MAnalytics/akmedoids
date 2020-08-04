@@ -1,13 +1,13 @@
 
 #' @title Descriptive (Change) statistics and plots
 #' @description This function perform two tasks: (i) it generate the descriptive and change statistics of groups, particularly suited for the outputs form the \code{\link{akmedoids.clust}} function, and (ii) generates the plots of the groups (performances).
-#' @param clustr [vector (charater)] A vector of cluster membership (labels). For instance, the result extracted from the \code{\link{akmedoids.clust}} function.
+#' @param clustr [vector (character)] A vector of cluster membership (labels). For instance, the result extracted from the \code{\link{akmedoids.clust}} function.
 #' @param traj [matrix (numeric)]: corresponding longitudinal data used to generate \code{clustr} (with rows corresponding to each label of \code{clustr}). For example, the first label of \code{clustr} is the group label of the first row of \code{traj} matrix, and so on.
 #' @param id_field [numeric or character] Whether the first column of the \code{traj} is a unique (\code{id}) field. Default: \code{FALSE}. If \code{TRUE} the function recognises the second column as the first time step.
 #' @param type [character] plot type. Available options are: \code{"lines"} and \code{"stacked"}.
 #' @param y.scaling [character] works only if \code{type="lines"}. \code{y.scaling} set the vertical scales of the cluster panels. Options are: \code{"fixed"}: uses uniform scale for all panels, \code{"free"}: uses variable scales for panels.
 #' @param reference [numeric] Specifying the reference line from which the direction of each group is measured. Options are: \code{1}: slope of mean trajectory, \code{2}: slope of medoid trajectory, \code{3}: slope of a horizontal line (i.e. slope = 0). Default: \code{1}.
-#' @param N.quant [numeric] Number of equal intervals (quantiles) to create between the reference line \code{(R)} and the medoids \code{(M)} of the most-diverging groups of both sides of \code{(R)}. Default is \code{4} - meaning quartile subdivisions on each side of \code{(R)}. In this scenario, the function returns the quartile in which the medoid of each group falls. This result can be used to further categorise the groups into 'classes'. For example, groups that fall within the \code{1st} quartile may be classified as 'Stable' groups (Adepeju et al. 2019).
+#' @param N.quant [numeric] Number of equal intervals (quantiles) to create between the reference line \code{(R)} and the medoids \code{(M)} of the most-diverging groups of both sides of \code{(R)}. Default is \code{4} - meaning quartile subdivisions on each side of \code{(R)}. In this scenario, the function returns the quartile in which the medoid of each group falls. This result can be used to further categorize the groups into 'classes'. For example, groups that fall within the \code{1st} quartile may be classified as 'Stable' groups (Adepeju et al. 2019).
 #' @param showplots [TRUE or FALSE] To display cluster plots. Defaults \code{TRUE}
 #' @examples
 #' print(traj)
@@ -20,7 +20,7 @@
 #' print(statPrint(clustr, traj, id_field=TRUE, type="lines", y.scaling="fixed"))
 #' print(statPrint(clustr, traj, id_field=TRUE, reference = 1, N.quant = 8, type="stacked"))
 #' @details Generates the descriptive and change statistics of the trajectory groupings. Given a vector of group membership (labels) and the corresponding data matrix (or data.frame) indexed in the same order, this function generates all the descriptive and change statistics of all the groups.
-#' The function can generate a line and an area stacked plot drawing from the functionalities of the \code{ggplot2} library. For a more customised visualisation, we recommend that users deploy \code{ggplot2} directly (\code{Wickham H. (2016)}).
+#' The function can generate a line and an area stacked plot drawing from the functionalities of the \code{ggplot2} library. For a more customized visualisation, we recommend that users deploy \code{ggplot2} directly (\code{Wickham H. (2016)}).
 #' @return A plot showing group membership or sizes (proportion) and statistics.
 #' @references \code{1}. Adepeju, M. et al. (2019). Anchored k-medoids: A novel adaptation of k-means further refined to measure inequality in the exposure to crime across micro places (Submitted).
 #' @rawNamespace import(reshape2, ggplot2, stats)
@@ -310,9 +310,9 @@ rank_negative <- c("1st (-ve)", "2nd (-ve)", "3rd (-ve)",
                    "7th (-ve)", "8th (-ve)", "9th (-ve)",
                    "10th (-ve)")
 
-class1=rank_negative[intervals_fall]
-  class2=rank_positive[intervals_rise]
-  class = c(class1, class2)
+class1<-rank_negative[intervals_fall]
+  class2<-rank_positive[intervals_rise]
+  class <- c(class1, class2)
   class <- data.frame(class)
   colnames(class) <- c(paste("Qtl:","1st-",N.quant, "th", sep=""))
   if(N.quant==2){
