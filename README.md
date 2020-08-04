@@ -1,6 +1,6 @@
 ## 'akmedoids' package
 
-An R package for analysing and clustering longitudinal data
+An R package for analyzing and clustering longitudinal data
 
 ### Description
 
