@@ -134,7 +134,7 @@ if(method==2){
   #add to the original data.
   dat[k, known_1[,1]] <- round(newY, digits = 2)
  }
-  datF=dat
+  datF <- dat
 }
 
 flush.console()

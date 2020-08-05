@@ -80,7 +80,7 @@ if(method=="linear"){
   sl_List <- NULL
   time <- as.numeric(1:ncol(dat))
   for(i in seq_len(nrow(dat))){ #i<-1
-    b<-coefficients(lm(as.numeric(as.character(dat[i,]))~
+    b <- coefficients(lm(as.numeric(as.character(dat[i,]))~
                           as.numeric(as.character(time))))
     sl_List <- rbind(sl_List, cbind(as.numeric(b[1]),
                                       as.numeric(b[2])))
@@ -101,7 +101,7 @@ if(method=="linear"){
     #collate the medoids
     median_slopes_ <- list()
     for(j in seq_len(length(split_slopes))){ #j=1
-      m_dty<-median(split_slopes[j][[1]]$slope)
+      m_dty <- median(split_slopes[j][[1]]$slope)
       median_slopes_ <- rbind(median_slopes_, m_dty)
     }
 
@@ -119,7 +119,7 @@ if(method=="linear"){
 
     #Generate the trendlines for all
     #trajectories (dropping all intersects)
-    dat_slopp<- NULL
+    dat_slopp <- NULL
     for(n in seq_len(nrow(sl_List))){ #k<-1
       dat_slopp <- rbind(dat_slopp, (0 + (sl_List[n,3]*
                                             (seq_len(ncol(dat))))))
@@ -142,6 +142,7 @@ if(method=="linear"){
       #1st iteration
       part2 <- affectIndivC(dat_slopp,
                             all_cluster_center_List[[r_]])
+
       #temporary holder for immediate past solution
       distF_backup <- list()
 
@@ -169,6 +170,7 @@ if(method=="linear"){
             #pull out the medoid trajectory
             centers <- rbind(centers, dat_slopp_[le_, ])
           }
+
           linear_centers <- as.data.frame(centers)
 
           #determine the affection of each trajectory to the medoids
@@ -292,7 +294,7 @@ if(method=="linear"){
         geom_vline(xintercept = (which(qualit[,2]==max(qualit))[1] +(k[1]-1)),
                    linetype="dashed", color = "red", size=0.5)
 
-        qualiCriterion= paste("Quality criterion:", crit, sep=" ")
+        qualiCriterion <- paste("Quality criterion:", crit, sep=" ")
 
         #determine optimal solution
         optimal_solution <- result_[[(which(qualit[,2]==max(qualit))[1])]]
