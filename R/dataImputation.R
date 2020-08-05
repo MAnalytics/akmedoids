@@ -76,7 +76,7 @@ if(method==1){
     }
   }
 
- #Use row values in order to determine the new value.
+ #Employ the row values in order to determine the new value.
  if(replace_with==4 | replace_with==5 | replace_with==6){
   fill_count <- 0
   for(g in seq_len(nrow(null_mat))){ #g<-2
