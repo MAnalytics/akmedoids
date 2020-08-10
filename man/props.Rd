@@ -11,7 +11,7 @@ props(traj, id_field = TRUE, scale = 1, digits = 4)
 
 \item{id_field}{[numeric or character] Whether the first column of the \code{traj} is a unique (\code{id}) field. Default: \code{FALSE}. If \code{TRUE} the function recognises the second column as the first time step.}
 
-\item{scale}{[numeric] To scale the 'propotion' measures. Default: \code{1}}
+\item{scale}{[numeric] To scale the 'proportion' measures. Default: \code{1}}
 
 \item{digits}{[numeric] Specifying number of digits to approximate the output to. Default: \code{4}.}
 }
