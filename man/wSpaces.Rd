@@ -7,16 +7,26 @@
 wSpaces(traj)
 }
 \arguments{
-\item{traj}{[matrix (numeric)]: longitudinal data. Each row represents an individual trajectory (of observations). The columns show the observations at consecutive time points.}
+\item{traj}{[matrix (numeric)]: longitudinal data. Each row
+represents an individual trajectory (of observations).
+The columns show the observations at consecutive time points.}
 }
 \value{
 A matrix with all whitespaces (if any) removed.
 }
 \description{
-This function removes all the leading and the trailing whitespaces in data
+This function removes all the leading and the
+trailing whitespaces in data
 }
 \details{
-Given a matrix suspected to contain whitespaces, this function removes all the whitespaces and returns a cleaned data. ’Whitespaces’ are white characters often introduced into data during data entry, for instance by wrongly pressing the spacebar. For example, neither " A" nor "A " equates "A" because of the whitespaces that exist in them. They can also result from systematic errors in data recording devices.
+Given a matrix suspected to contain whitespaces,
+this function removes all the whitespaces and returns a
+cleaned data. ’Whitespaces’ are white characters often
+introduced into data during data entry, for instance by
+wrongly pressing the spacebar. For example, neither " A"
+nor "A " equates "A" because of the whitespaces that
+exist in them. They can also result from systematic
+errors in data recording devices.
 }
 \examples{
 traj <- traj
