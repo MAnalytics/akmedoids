@@ -42,5 +42,5 @@ Suggests:
     clusterCrit,
     testthat,
     dplyr,
-    digest
+    digest,
 VignetteBuilder: knitr
