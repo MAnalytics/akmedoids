@@ -127,7 +127,7 @@ if(method=="linear"){
 
   #looping through list of k,
   #get the clusters,
-  #and calculate two quality criteria (Silhouette $ Caliński_Harabasz)
+  #and calculate two quality criteria (Silhouette $ Calinski_Harabasz)
   final_result <- list()
     #initialize holders
     criterValue1 <- NULL
@@ -217,7 +217,7 @@ if(method=="linear"){
       criterValue1 <- c(criterValue1, vals1)
       #compute quality criterion 2
       vals2 <- as.numeric(clusterCrit::intCriteria(f_cal,cl,
-                                                   "Caliński_Harabasz"))
+                                                   "Calinski_Harabasz"))
       criterValue2 <- c(criterValue2, vals2)
       #-------------------------------------
       flush.console()
@@ -241,14 +241,14 @@ if(method=="linear"){
         crit=="Silhouette"
       }
 
-      #"Caliński_Harabasz" is always applicable!
-      if(crit=="Caliński_Harabasz"){
+      #"Calinski_Harabasz" is always applicable!
+      if(crit=="Calinski_Harabasz"){
         criterValues <- criterValue2
-        crit <- "Caliński_Harabasz"
+        crit <- "Calinski_Harabasz"
       }
 
       #if no valid criterion is specified. terminate!!
-      if(!crit %in% c("Silhouette", "Caliński_Harabasz")){
+      if(!crit %in% c("Silhouette", "Calinski_Harabasz")){
         flush.console()
         stop("*------------*(: Quality criterion specified is NOT RECOGNISED!!
              Execution terminated!!! :)*------------*")
@@ -261,7 +261,7 @@ if(method=="linear"){
         #terminate if missing or infinite values exist
         if(any(is.na(qualit$qualityCrit))){
           stop("*------------*(: 'Silhouette' criterion is not applicable!.
-               Try 'Caliński_Harabasz':)*------------*")
+               Try 'Calinski_Harabasz':)*------------*")
         }
 
         #determine the 'elbow' point, using 'linearity' method
@@ -281,7 +281,7 @@ if(method=="linear"){
       }
 
       #for 'Calinski_Harabasz' criterion. Generate quality plot
-      if(crit=="Caliński_Harabasz"){
+      if(crit=="Calinski_Harabasz"){
       qualit <- data.frame(k=k[1]:k[2],
                            qualityCrit=criterValues)
       id_opt <- (which(qualit[,2]==max(qualit))[1] + (k[1]-1))
