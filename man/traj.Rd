@@ -11,6 +11,7 @@ A matrix
 traj
 }
 \description{
-Simulated longitudinal datasets with missing values (\code{NA}, \code{Inf}, \code{null})
+Simulated longitudinal datasets with
+missing values (\code{NA}, \code{Inf}, \code{null})
 }
 \keyword{datasets}
