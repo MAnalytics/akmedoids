@@ -5,9 +5,12 @@
 #' @param traj [matrix (numeric)]: longitudinal data. Each row
 #' represents an individual trajectory (of observations).
 #' The columns show the observations at consecutive time points.
+#' @param remove [character]: Type of whitespace to remove.
+#' That is, "Left" (leading), (2) "Right" (trailing), or "Both"
+#' (both leading and trailing whitespaces). Default: "Both".
 #' @usage wSpaces(traj)
 #' @details Given a matrix suspected to contain whitespaces,
-#' this function removes all the whitespaces and returns a
+#' this function removes the type of the whitespaces specified and returns a
 #' cleaned data. ’Whitespaces’ are white characters often
 #' introduced into data during data entry, for instance by
 #' wrongly pressing the spacebar. For example, neither " A"
@@ -21,7 +24,7 @@
 #' wSpaces(traj)
 #' @export
 
-wSpaces <- function(traj){
+wSpaces <- function(traj, remove="Both"){
 
   dat <- traj
 
@@ -29,28 +32,61 @@ wSpaces <- function(traj){
 
   coln_ <- colnames(dat_Cleaned)
 
-  count_ <- 0 #keep the count of whitespace removed.
+  count_trailing <- 0 #keep the count of whitespace removed.
+  count_leading <- 0 #keep the count of whitespace removed.
 
-  for(q in 1:seq_len(ncol(dat_Cleaned))){
+  for(q in seq_len(ncol(dat_Cleaned))){
 
-    vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="right")
+    #dat_Cleaned=test.data1
 
-    count_ <- count_ + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+    if(remove="Right"){
+      #remove trailing whitespaces
+      vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="right")
+      #count the number of trailing whitespaces
+      count_trailing <- count_trailing + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+    }
 
-    vec_Name2 <- trimws(vec_Name1, which="left")
+    if(remove="Left"){
+      #remove leading whitespaces
+      vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="left")
+      #count the number of leading whitespaces
+      count_leading <- count_leading + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+    }
 
-    count_ <- count_ + length(which(!vec_Name2%in%vec_Name1))
+    if(remove="Both"){
+      #remove trailing whitespaces
+      vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="right")
+      #count the number of trailing whitespaces
+      count_trailing <- count_trailing + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+      #remove leading whitespaces
+      vec_Name2 <- trimws(vec_Name1, which="left")
+      #count the number of leading whitespaces
+      count_leading <- count_leading + length(which(!vec_Name2%in%vec_Name1))
+      vec_Name1 = vec_Name2
+    }
 
-    vec_Name2 <- matrix(vec_Name2,,1)
+    vec_Name1 <- matrix(vec_Name1,,1)
 
-    colnames(vec_Name2) <- coln_[q]
+    colnames(vec_Name1) <- coln_[q]
 
-    dat_Cleaned[,q] <- vec_Name2
+    dat_Cleaned[,q] <- vec_Name1
   }
 
   flush.console()
 
-  print(paste(count_, "whitespaces found/removed!"))
+  if(remove="Right"){
+    print(paste(count_trailing, "trailing whitespaces found/removed!"))
+  }
+
+  if(remove="Left"){
+    print(paste(count_leading, "leading whitespaces found/removed!"))
+  }
+
+  if(remove="Both"){
+    print(paste((count_leading + count_trailing), "leading whitespaces found/removed!"))
+  }
+
+  dat_Cleaned = data.frame(dat_Cleaned)
 
   return(dat_Cleaned)
 
