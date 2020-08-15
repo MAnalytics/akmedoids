@@ -9,14 +9,16 @@ col4 <- as.character(c(" 23 ", " 45 ", " 23 ")) #trailing and leading
 
 test.data1 <- data.frame(sn, col1, col2, col3, col4)
 
-test_that('data types are correct', {
-  expect_is(traj,'data.frame')
-  expect_is(colnames(traj), 'character')
-  #expect_is(testing_data$letters, 'character') #this one fails; they're factors
+check_1 = wSpaces(test.data1, remove="Right")
+check_2 = wSpaces(test.data1, remove="Left")
+check_3 = wSpaces(test.data1, remove="Both")
+
+test_that('number of whitespaces removed correct', {
+  expect_equal(check_1$NumberOfWhiteSpacesRemoved, 6)
+  expect_equal(check_2$NumberOfWhiteSpacesRemoved, 6)
+  expect_equal(check_3$NumberOfWhiteSpacesRemoved, 12)
+  expect_false(isTRUE(all.equal(check_1$CleanData, check_2$CleanData)))
+  expect_false(isTRUE(all.equal(check_1$CleanData, check_3$CleanData)))
+  expect_false(isTRUE(all.equal(check_2$CleanData, check_3$CleanData)))
 })
 
-
-
-#hh=wSpaces(test.data1)
-
-#hh[2,2]+1
