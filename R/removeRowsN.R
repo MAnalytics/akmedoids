@@ -8,19 +8,24 @@
 #' of the \code{traj} is a unique (\code{id}) field.
 #' Default: \code{FALSE}. If \code{TRUE} the function recognises
 #' the second column as the first time step.
-#' @usage removeRowsN(traj, id_field=TRUE)
+#' @param remove [integer] Type of missing entries to remove.
+#' \code{1} for 'NA', \code{2} for 'Inf', and \code{3} for both.
+#' Default:\code{1}.
+#' @usage removeRowsN(traj, id_field=TRUE, remove=1)
 #' @details Given a matrix (or a dataframe) containing an 'NA' or
 #' an 'Inf' entry, the function returns only rows with
 #' complete observations.
 #' @return A matrix with complete observations
 #' @examples
 #' traj <- traj
-#' removeRowsN(traj, id_field=TRUE)
+#' removeRowsN(traj, id_field=TRUE, remove=3)
 #' @export
 
-removeRowsN <- function(traj, id_field=TRUE){
+removeRowsN <- function(traj, id_field=TRUE, remove=1){
 
-  id_Toremove <- NULL
+  id_ToremoveNA <- NULL
+  id_ToremoveInf <- NULL
+  solution <- list()
 
   if(id_field==TRUE){
 
@@ -30,26 +35,57 @@ removeRowsN <- function(traj, id_field=TRUE){
     traj <- traj[,2:ncol(traj)]
   }
 
-  #collate all 'Inf' entries
+  #collate all 'na' & 'Inf' entries
   for(h in seq_len(ncol(traj))){ #h=1
 
-    id_Toremove<-c(id_Toremove,
-                which(is.infinite(as.numeric(as.character(traj[,h])))))
-    id_Toremove<-c(id_Toremove,
-                 which(is.na(as.numeric(as.character(traj[,h])))))
+
+    id_ToremoveNA <- c(id_ToremoveNA,
+                       which(is.na(as.numeric(as.character(traj[,h])))))
+
+    id_ToremoveInf <- c(id_ToremoveInf,
+                   which(is.infinite(as.numeric(as.character(traj[,h])))))
+
   }
 
-  #if rows contain 'NA' or 'Inf'
-  if(length(unique(id_Toremove))!=0){
+  if(remove == 1){
+    id_Toremove = id_ToremoveNA
 
-    traj <- traj[-unique(id_Toremove),]
-    flush.console()
-    print(paste("Message:", length(unique(id_Toremove)), "row(s) removed!", sep=" "))
+    if(length(unique(id_Toremove))!=0){
+      traj <- traj[-unique(id_Toremove),]
+      flush.console()
+      print(paste("Message:", length(unique(id_Toremove)),
+                  "row(s) containing 'NA' entries removed!", sep=" "))
+    }
+    totalRemoved <- length(unique(id_Toremove))
+  }
+
+
+  if(remove == 2){
+    id_Toremove = id_ToremoveInf
+
+    if(length(unique(id_Toremove))!=0){
+      traj <- traj[-unique(id_Toremove),]
+      flush.console()
+      print(paste("Message:", length(unique(id_Toremove)),
+                  "row(s) containing 'Inf' entries removed!", sep=" "))
+    }
+    totalRemoved  <- length(unique(id_Toremove))
+  }
+
+  if(remove == 3){
+    id_Toremove = c(id_ToremoveNA, id_ToremoveInf)
+
+    if(length(unique(id_Toremove))!=0){
+      traj <- traj[-unique(id_Toremove),]
+      flush.console()
+      print(paste("Message:", length(unique(id_Toremove)),
+                  "row(s) containing 'NA' or 'Inf' entries removed!", sep=" "))
+    }
+    totalRemoved <- length(unique(id_Toremove))
   }
 
   #append id_field
   if(id_field==TRUE && length(unique(id_Toremove))!=0){
-
     id_field_list <- matrix(id_field_list[-unique(id_Toremove),],,1)
     colnames(id_field_list) <- id_title1
     colnames(traj) <- id_title_rest
@@ -58,7 +94,6 @@ removeRowsN <- function(traj, id_field=TRUE){
   }
 
   if(id_field==TRUE && length(unique(id_Toremove))==0){
-
     colnames(id_field_list) = id_title1
     colnames(traj) <- id_title_rest
     #traj <- traj[-unique(id_Toremove),]
@@ -66,7 +101,8 @@ removeRowsN <- function(traj, id_field=TRUE){
     print("**---No row(s) contains either 'NA' or 'Inf' entries---**")
   }
 
-  return(traj)
+  solution <- list(totalRowsRemoved=totalRemoved, CleanData=traj)
+  return(solution)
 
 }
 
