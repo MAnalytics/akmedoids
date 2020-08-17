@@ -7,3 +7,7 @@ test_that('data types, dimension of test data', {
   expect_equal(ncol(traj), 10)
 })
 
+test_that('id_field complete and unique', {
+  expect_equal(length(unique(traj$location_id)), 10)
+})
+
