@@ -23,7 +23,7 @@ list_ <- c(2, 3, 5, 6, 7, 9, 10) #vector of missing years
 pop_imp_result <- dataImputation(pop2, id_field = TRUE, method = 2,
   replace_with = 1, fill_zeros = FALSE)
 
-crime_rates <- rates(traj=traj2, denomin=pop_imp_result,
+crime_rates <- rates(traj=traj2$CompleteData, denomin=pop_imp_result$CompleteData,
   multiplier = 200)
 
 test_that('dimension of test data', {
@@ -47,12 +47,21 @@ test_that('no missing values in the solution', {
   expect_identical(crime_rates$rates_data, na.omit(crime_rates$rates_data))
 })
 
-test_that('no missing values in the solution', {
-  expect_identical(crime_rates$rates_data, na.omit(crime_rates$rates_data))
+test_that('uniqueness of solutions', {
+  expect_false(isTRUE(all.equal(crime_rates$common_ids,
+                                crime_rates$noncommon_ids_from_trajectories)))
+  expect_false(isTRUE(all.equal(crime_rates$common_ids,
+                                crime_rates$noncommon_ids_from_denominator)))
+  expect_false(isTRUE(all.equal(crime_rates$noncommon_ids_from_trajectories,
+                                crime_rates$noncommon_ids_from_denominator)))
 })
 
+test_that('output correct error messages', {
+  expect_error(rates(traj=traj2, denomin=pop_imp_result,id_field=FALSE,
+   prints_text("*---unique field must be set as 'TRUE'!---*")))
+  expect_error(rates(traj=traj2, denomin=population,id_field=TRUE,
+   prints_text("(: The 'id_field' of the 'traj' object is not a unique field. Function terminated!!! :)")))
 
+})
 
-
-##test non uniqueness of the three fields..... ...
 
