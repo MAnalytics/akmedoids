@@ -1,8 +1,10 @@
 #' @title Determine the elbow point on a curve
-#' @description Given a list of x, y coordinates on a curve, function determines the elbow point of the curve.
+#' @description Given a list of x, y coordinates on a curve,
+#' function determines the elbow point of the curve.
 #' @param x vector of x coordinates of points on the curve
 #' @param y vector of y coordinates of points on the curve
-#' @details highlight the maximum curvature to identify the elbow point (credit: 'github.com/agentlans')
+#' @details highlight the maximum curvature to identify the
+#' elbow point (credit: 'github.com/agentlans')
 #' @examples
 #' # Generate some curve
 #' x <- runif(100, min=-2, max=3)
@@ -12,8 +14,12 @@
 #' abline(v=elbowPoint(x,y)$y, col="blue", pch=20, cex=3)
 #' @return an x, y coordinates of the elbow point.
 #' @export
+
+
 elbowPoint <- function(x, y) {
 
+  input_x = x
+  input_y = y
   # check for non-numeric or infinite values in the inputs
   is.invalid <- function(x) {
     any((!is.numeric(x)) | is.infinite(x))
@@ -27,9 +33,11 @@ elbowPoint <- function(x, y) {
 
   # generate value of curve at equally-spaced points
   new.x <- seq(from=min(x), to=max(x), length.out=length(x))
+
   # Smooths out noise using a spline
   sp <- smooth.spline(x, y)
-  new.y <- predict(sp, new.x)$y
+  new.yPred <- predict(sp, new.x)
+  new.y <- new.yPred$y
 
   # Finds largest odd number below given number
   largest.odd.num.lte <- function(x) {
@@ -85,7 +93,10 @@ elbowPoint <- function(x, y) {
   # flip the results back
   if ((x.sign == -1) || (y.sign == -1)) {
     results <- elbowPoint(x.sign * x, y.sign * y)
-    return(list(x = x.sign * results$x, y = y.sign * results$y))
+    solution = list(input.x=input_x, input.y=input_y, fittedSpline = new.yPred, first.deriv = first.deriv,
+                    second.deriv = second.deriv, x = x.sign * results$x,
+                    y = y.sign * results$y)
+    return(solution)
   }
 
   # Find cutoff point for x
@@ -107,8 +118,15 @@ elbowPoint <- function(x, y) {
     list(x=NA, y=NA)
     } else {
     # Return cutoff point on curve
-    approx(new.x, new.y, cutoff.x)
+    # approx(new.x, new.y, cutoff.x)
+    solution <- list(input.x=input_x, input.y=input_y, fittedSpline = new.yPred, first.deriv = first.deriv,
+                     second.deriv = second.deriv, x=approx(new.x, new.y, cutoff.x)$x,
+                     y=approx(new.x, new.y, cutoff.x)$y)
+    return(solution)
   }
 }
+
+
+
 
 
