@@ -108,6 +108,7 @@ rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
   }
 
   #list of trajectory ids common to both 'traj' and 'denonm'
+  id <- NULL
   common_ids <- keep_names
   common_ids_join <- data.frame(id=keep_names_id, id_name=keep_names)
   noncommon_ids_traj <- as.vector(as.character(traj[,1]))
