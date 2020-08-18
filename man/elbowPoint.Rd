@@ -15,10 +15,12 @@ elbowPoint(x, y)
 an x, y coordinates of the elbow point.
 }
 \description{
-Given a list of x, y coordinates on a curve, function determines the elbow point of the curve.
+Given a list of x, y coordinates on a curve,
+function determines the elbow point of the curve.
 }
 \details{
-highlight the maximum curvature to identify the elbow point (credit: 'github.com/agentlans')
+highlight the maximum curvature to identify the
+elbow point (credit: 'github.com/agentlans')
 }
 \examples{
 # Generate some curve
