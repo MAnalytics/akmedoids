@@ -7,23 +7,35 @@
 rates(traj, denomin, id_field, multiplier)
 }
 \arguments{
-\item{traj}{[matrix (numeric)] longitudinal (e.g. observed count) data (\code{m x n}). Each row represents an individual trajectory (of observations). The columns show the observations at consecutive time steps.}
+\item{traj}{[matrix (numeric)] longitudinal (e.g.
+observed count) data (\code{m x n}). Each row represents an
+individual trajectory (of observations). The columns show the
+observations at consecutive time steps.}
 
-\item{denomin}{[matrix (numeric)] longitudinal (denominator) data of the same column as `traj` (\code{n}).}
+\item{denomin}{[matrix (numeric)] longitudinal (denominator)
+data of the same column as `traj` (\code{n}).}
 
-\item{id_field}{[numeric or character] Default is \code{TRUE}. The first column of both the `traj` and the `denomin` object must be the unique (\code{id}) field. If \code{FALSE}, the function will terminate. The assumption is that columns of both the \code{traj} and \code{denominat} corresponds. That is, column2, column3, ... represent time points 2, 3, ..., respectively, in each object.}
+\item{id_field}{[numeric or character] Default is \code{TRUE}.
+The first column of both the `traj` and the `denomin` object
+must be the unique (\code{id}) field. If \code{FALSE}, the function
+will terminate. The assumption is that columns of both the
+\code{traj} and \code{denominat} corresponds. That is, column2,
+column3, ... represent time points 2, 3, ..., respectively, in
+each object.}
 
-\item{multiplier}{[numeric] A quantify by which to the ratio \code{traj/denomin} is expressed. Default is \code{100}.}
+\item{multiplier}{[numeric] A quantify by which to the ratio
+\code{traj/denomin} is expressed. Default is \code{100}.}
 }
 \value{
 A matrix of 'rates' measures
 }
 \description{
-Calculates rates from 'observed' count and a denominator data
+Calculates rates from 'observed' count and a
+denominator data
 }
 \examples{
-traj2 <- traj
-traj2 <- dataImputation(traj2, id_field = TRUE, method = 2, replace_with = 1, fill_zeros = FALSE)
+traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
+replace_with = 1, fill_zeros = FALSE)
 pop <- population #read denominator data
 pop2 <- as.data.frame(matrix(0, nrow(population), ncol(traj)))
 colnames(pop2) <- names(traj2)
@@ -39,5 +51,6 @@ for(u_ in 1:length(list_)){
 pop_imp_result <- dataImputation(pop2, id_field = TRUE, method = 2,
 replace_with = 1, fill_zeros = FALSE)
 #calculate rates i.e. crimes per 200 population
-crime_rates <- rates(traj2, denomin=pop_imp_result, id_field=TRUE, multiplier = 200)
+crime_rates <- rates(traj2, denomin=pop_imp_result, id_field=TRUE,
+multiplier = 200)
 }
