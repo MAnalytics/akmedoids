@@ -150,7 +150,7 @@ akmedoids.clust <- function(traj, id_field = FALSE, method = "linear",
 
     #get the 'time' vector
 
-    time <- 1:ncol(dat)
+    time <- seq_len(ncol(dat))
     #-----------------------------------------------------
     #get the linear coefficients
 
@@ -164,7 +164,7 @@ akmedoids.clust <- function(traj, id_field = FALSE, method = "linear",
                                       as.numeric(b[2])))
     }
 
-    sl_List <- as.data.frame(cbind(1:nrow(sl_List), sl_List))
+    sl_List <- as.data.frame(cbind(seq_len(nrow(sl_List)), sl_List))
     colnames(sl_List) <- c("sn", "intersect","slope")
 
     #-----------------------------------------------------------
