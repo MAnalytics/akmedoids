@@ -20,8 +20,11 @@
 #' @return A matrix with all whitespaces (if any) removed.
 #' @references \url{https://en.wikipedia.org/wiki/Whitespace_character}
 #' @examples
+#'
 #' traj <- traj
+#'
 #' wSpaces(traj, remove="Both")
+#' @importFrom utils flush.console
 #' @export
 
 wSpaces <- function(traj, remove="Both"){
