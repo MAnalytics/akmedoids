@@ -41,24 +41,25 @@
 #' @param showplots [TRUE or FALSE] To display cluster plots.
 #' Defaults \code{TRUE}
 #' @examples
+#'
 #' print(traj)
 #'
-#' traj <- dataImputation(traj, id_field = TRUE, method = 1,
+#' trajectry <- dataImputation(traj, id_field = TRUE, method = 1,
 #' replace_with = 1, fill_zeros = FALSE)
 #'
-#' print(traj)
+#' print(trajectry$CompleteData)
 #'
-#' traj <- props(traj, id_field = TRUE)
+#' trajectry <- props(trajectry$CompleteData, id_field = TRUE)
 #'
-#' clustr <- akmedoids.clust(traj, id_field = TRUE,
+#' clusters <- akmedoids.clust(trajectry, id_field = TRUE,
 #' method = "linear", k = 5)
 #'
-#' clustr <- as.vector(clustr$memberships)
+#' clusters <- as.vector(clusters$memberships)$alphabetic_Labels
 #'
-#' print(statPrint(clustr, traj, id_field=TRUE,
+#' print(statPrint(clusters, trajectry, id_field=TRUE,
 #' type="lines", y.scaling="fixed"))
 #'
-#' print(statPrint(clustr, traj, id_field=TRUE, reference = 1,
+#' print(statPrint(clusters, trajectry, id_field=TRUE, reference = 1,
 #' N.quant = 8, type="stacked"))
 #'
 #' @details Generates the descriptive and change statistics
@@ -76,7 +77,12 @@
 #' @references \code{1}. Adepeju, M. et al. (2019). Anchored k-medoids:
 #' A novel adaptation of k-means further refined to measure
 #' inequality in the exposure to crime across micro places (Submitted).
-#' @rawNamespace import(reshape2, ggplot2, stats)
+#' @importFrom reshape2 melt
+#' @importFrom stats quantile
+#' @importFrom utils flush.console
+#' @importFrom grDevices dev.new
+#' @importFrom ggplot2 stat_summary scale_colour_brewer theme_light
+#' theme geom_area scale_x_continuous scale_fill_brewer facet_wrap
 #' @references \code{Wickham H. (2016). Elegant graphics for
 #' Data Analysis. Spring-Verlag New York (2016)}
 #' @export
@@ -87,7 +93,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
 
   #testing that data and clusters have equal number of elements
   if(length(clustr)!=nrow(traj)){
-    stop("*-------Unequal number of clusters elements and trajectories-------*")
+    stop("*----Unequal number of clusters elements and trajectories----*")
   }
 
   #joining the data with clusters
@@ -98,7 +104,8 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
   N.quant <- round(N.quant, digits = 0)
 
   if(N.quant < 2 | N.quant > 10){
-    stop("*-------Please, enter an integer between 2 and 10 for the 'N.quant' argument'!!!-------*")
+    stop(paste("*----Please, enter an integer between 2",
+    "and 10 for the 'N.quant' argument'!!!----*", sep=" "))
   }
 
   #test id_field is included for traj
@@ -109,7 +116,8 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
 
     #test if id field  is unique
     if(!length(col_names)==length(unique(col_names))){
-      stop("(: The 'id_field' is not a unique field. Function terminated!!! :)")
+      stop(paste("(: The 'id_field' is not a unique field.",
+                 "Function terminated!!! :)", sep=" "))
     }
   }
 
