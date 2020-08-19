@@ -1,3 +1,4 @@
+context("Testing rates.R function");
 
 #utilise trajectory data ('traj.rda')
 traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
