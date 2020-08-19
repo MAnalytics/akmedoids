@@ -1,3 +1,5 @@
+context("Testing props.R function");
+
 sn <- c('sn1','sn2','sn3', 'sn4')
 set.seed(1)
 col1 <- sample(1:10, 4)
