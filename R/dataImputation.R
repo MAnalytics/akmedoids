@@ -172,7 +172,7 @@ dataImputation <- function(traj, id_field = FALSE, method = 2,
     fill_count <- 0
     for(k in seq_len(nrow(dat))){ #k<-10
       y <- suppressWarnings(as.numeric(as.character(dat[k,])))
-      x <- 1:length(y)
+      x <- seq_len(length(y))
       known <- data.frame(x, y)
 
       #check which data points are missing,
