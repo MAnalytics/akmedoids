@@ -65,7 +65,10 @@ corresponding rows or columns, or to use a regression method to
 estimate the missing values.
 }
 \examples{
+
 print(traj)
+
 dataImputation(traj, id_field = TRUE, method = 1, replace_with = 1,
 fill_zeros = FALSE)
+
 }
