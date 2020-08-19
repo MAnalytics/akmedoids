@@ -1,44 +1,63 @@
-context("Testing statPrint function");
+context("Testing statPrint.R function");
 
+set.seed(12)
+#sample trajectories
+df <- data.frame(id=c("1","2","3","4","5","6","7","8","9","10"),
+                 t1=sample(0:10, 10, replace = TRUE),
+                 t2=sample(0:10, 10, replace = TRUE),
+                 t3=sample(0:10, 10, replace = TRUE),
+                 t4=sample(0:10, 10, replace = TRUE),
+                 t5=sample(0:10, 10, replace = TRUE),
+                 t6=sample(0:10, 10, replace = TRUE),
+                 t7=sample(0:10, 10, replace = TRUE))
+df
 
-# #2.checking that no data are missing..
-test_that('no missing values', {
-    expect_identical(clustr, na.omit(clustr))
- })
+#non_unique id field
+df2 <- df
+df2$id[3] <- 2
 
-#
-test_that('cluster label matches traj length', {
-  expect_equal(length(clustr), 10)
-  expect_is(clustr, 'character')
+clusterng <- akmedoids.clust(df, k = c(3))
+
+#generate cluster stats
+clust_list <- as.vector(clusterng$memberships)$alphabetic_Labels
+
+#derive cluster stats
+statistics = statPrint(clust_list, df, showplots=FALSE)
+
+test_that('check error msgs output correctly', {
+  #non-matching lengths
+  expect_error(statPrint(cluster_list[1:9], df, showplots=FALSE, N.quant = 2,
+       prints_text(paste("*----Unequal number of clusters",
+                         "elements and trajectories----*", sep=" "))))
+  #invalid quantile value
+  expect_error(statPrint(cluster_list, df, showplots=FALSE, N.quant = 1,
+       prints_text(paste("*----Please, enter an integer between 2",
+       "and 10 for the 'N.quant' argument'!!!----*", sep=" "))))
+
+  #invalid quantile value
+  expect_error(statPrint(cluster_list, df, showplots=FALSE, N.quant = 11,
+       prints_text(paste("*----Please, enter an integer between 2",
+       "and 10 for the 'N.quant' argument'!!!----*", sep=" "))))
+
+  #invalid quantile value
+  expect_error(statPrint(cluster_list, df, showplots=FALSE, N.quant = 2,
+       prints_text(paste("(: The 'id_field' is not a unique field.",
+                         "Function terminated!!! :)", sep=" "))))
 
 })
 
+test_that('output clusters counts are accurate', {
+   expect_equal(sum(as.numeric(statistics$descriptiveStats$n)), 10)
+   expect_equal(sum(as.numeric(statistics$descriptiveStats$`n(%)`)), 100)
+   expect_equal(sum(as.numeric(statistics$changeStats$`%+ve Traj.`[1]),
+                    as.numeric(statistics$changeStats$`%-ve Traj.`[1])), 100)
+   expect_equal(sum(as.numeric(statistics$changeStats$`%+ve Traj.`[2]),
+                    as.numeric(statistics$changeStats$`%-ve Traj.`[2])), 100)
+   expect_equal(sum(as.numeric(statistics$changeStats$`%+ve Traj.`[3]),
+                    as.numeric(statistics$changeStats$`%-ve Traj.`[3])), 100)
+})
 
-df <- data.frame(id=c("u","v","w","x","y"),
-                 a=c(2, 3, 5, 2, 0),
-                 b=c(5, 1, 0, 3, 1),
-                 c=c(5, 1, 4, 2, 7))
-
-df_non_unique <- data.frame(id=c("u","u","w","x","y"),
-                            a=c(2, 3, 5, 2, 0),
-                            b=c(5, 1, 0, 3, 1),
-                            c=c(5, 1, 4, 2, 7))
-
-expct_clust <- c("C", "A", "A", "A", "B")
-
-clust1 <- akmedoids.clust(df, k = c(3))
-
-
-#generate cluster stats
-clust1 <- as.vector(clust1$memberships)
-stats = statPrint(clust1, df, id_field=TRUE,
-                  type="lines", y.scaling="fixed", showplots=FALSE)
-
-gr1 <- as.numeric(as.character(stats$descriptiveStats$n))[1]
-gr2 <- as.numeric(as.character(stats$descriptiveStats$n))[2]
-gr3 <- as.numeric(as.character(stats$descriptiveStats$n))[3]
-
-#test increment of clust
+#ordering of clusters
 incr = function(a, b){
   if(a>=b){
     check = 1}
@@ -48,18 +67,12 @@ incr = function(a, b){
   return(check)
 }
 
-st1 <- as.numeric(as.character(stats$changeStats$`%+ve Traj.`))[1]
-st2 <- as.numeric(as.character(stats$changeStats$`%+ve Traj.`))[2]
-st3 <- as.numeric(as.character(stats$changeStats$`%+ve Traj.`))[3]
-
-test_that("test cluster stats routine is okay", {
-  expect_equal(gr1, 3)
-  expect_equal(gr2, 1)
-  expect_equal(gr3, 1)
-
-  expect_equal(incr(st2, st1), 1)
-  expect_equal(incr(st3, st1), 1)
-  expect_equal(incr(st3, st2), 1)
+test_that('testing cluster categories', {
+  expect_equal(incr(as.numeric(statistics$changeStats$`%-ve Traj.`[1]),
+                  as.numeric(statistics$changeStats$`%+ve Traj.`[1])), 1)
+  expect_equal(incr(as.numeric(statistics$changeStats$`%+ve Traj.`[3]),
+                    as.numeric(statistics$changeStats$`%-ve Traj.`[3])), 1)
 
 })
+
 
