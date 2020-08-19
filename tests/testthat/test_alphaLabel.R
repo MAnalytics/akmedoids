@@ -1,8 +1,9 @@
+context("Testing alphaLabel.R function");
 
 set.seed(7)
 ids1 <- sample(1:100, 10, replace=FALSE)
 ids2 <- sample(1:500, 400, replace=TRUE)
-ids3 <- sample("AZ", "F", "EA", "R")
+ids3 <- c("AZ", "F", "EA", "R")
 #ids_alphab <- alphaLabel(ids2)
 
 test_that('terminate upon errors', {
@@ -14,5 +15,7 @@ test_that('terminate upon errors', {
 })
 
 
-# x vector
-# less than 350
+test_that('correct dimension', {
+  expect_equal(length(ids2),
+                   length(alphaLabel(ids2)$alphabetic_Labels))
+})
