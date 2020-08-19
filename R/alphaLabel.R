@@ -8,10 +8,12 @@
 #' It combines alphabets for ids greater than 26.
 #' @return A vector of alphabetical ids.
 #' @examples
+#'
 #' set.seed(10)
 #' ids <- sample(1:100, 10, replace=FALSE)
+#'
 #' ids_alphab <- alphaLabel(ids)
-#' @rawNamespace import(utils)
+#' @importFrom utils combn
 #' @export
 
 alphaLabel <- function(x){
