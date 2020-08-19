@@ -13,10 +13,14 @@
 #' Default: \code{1}
 #' @usage props(traj, id_field = TRUE, scale = 1, digits = 4)
 #' @examples
-#' traj <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
+#'
+#' trajectry <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
 #' fill_zeros = FALSE) #filling the missing values
-#' traj <- props(traj, id_field = TRUE, scale=1, digits=4)
-#' print(traj)
+#'
+#' trajectry <- props(trajectry$CompleteData, id_field = TRUE, scale=1, digits=4)
+#'
+#' print(trajectry)
+#'
 #' @details Given a matrix of observations (counts or rates), this
 #' function converts each observation to a proportion equivalent to
 #' the sum of each column. In other words, each observation is divided
