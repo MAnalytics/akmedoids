@@ -216,7 +216,7 @@ dat <- dat[,2:ncol(dat)]
 #head(dat)
 for(k in seq_len(nrow(dat))){ #k<-2
   y <- suppressWarnings(as.numeric(as.character(dat[k,])))
-  x <- 1:length(y)
+  x <- seq_len(length(y))
   known <- data.frame(x, y)
   known_1 <- data.frame(known[is.na(known[,2])|is.infinite(known[,2]),])  #
   known_2 <- data.frame(known[!is.na(known[,2])&!is.infinite(known[,2]),])
@@ -286,7 +286,7 @@ pop[,1] <- as.vector(as.character(population[,1]))
 pop[,4] <- as.vector(as.character(population[,2]))
 pop[,8] <- as.vector(as.character(population[,3]))
 list_ <- c(2, 3, 5, 6, 7, 9, 10)
-for(u_ in 1:length(list_)){ #u_<-1
+for(u_ in seq_len(length(list_))){ #u_<-1
   pop[,list_[u_]] <- "NA"
 }
 
