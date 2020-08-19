@@ -26,21 +26,21 @@ Depends: R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: true
 Imports:
-    kml, 
-    Hmisc, 
-    ggplot2, 
-    utils, 
-    reshape2, 
-    longitudinalData, 
-    stats, 
-    signal
+    kml,
+    Hmisc,
+    reshape2,
+    stats,
+    utils,
+    signal,
+    grDevices,
+    ggplot2,
+    clusterCrit
 RoxygenNote: 7.1.0
 Suggests:
     knitr,
     rmarkdown,
     kableExtra,
-    clusterCrit,
     testthat,
     dplyr,
-    digest,
+    digest
 VignetteBuilder: knitr
