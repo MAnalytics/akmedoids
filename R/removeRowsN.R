@@ -17,8 +17,11 @@
 #' complete observations.
 #' @return A matrix with complete observations
 #' @examples
+#'
 #' traj <- traj
+#'
 #' removeRowsN(traj, id_field=TRUE, remove=3)
+#' @importFrom utils flush.console
 #' @export
 
 removeRowsN <- function(traj, id_field=TRUE, remove=1){
