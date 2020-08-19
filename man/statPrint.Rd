@@ -83,24 +83,25 @@ For a more customized visualisation, we recommend that users
 deploy \code{ggplot2} directly (\code{Wickham H. (2016)}).
 }
 \examples{
+
 print(traj)
 
-traj <- dataImputation(traj, id_field = TRUE, method = 1,
+trajectry <- dataImputation(traj, id_field = TRUE, method = 1,
 replace_with = 1, fill_zeros = FALSE)
 
-print(traj)
+print(trajectry$CompleteData)
 
-traj <- props(traj, id_field = TRUE)
+trajectry <- props(trajectry$CompleteData, id_field = TRUE)
 
-clustr <- akmedoids.clust(traj, id_field = TRUE,
+clusters <- akmedoids.clust(trajectry, id_field = TRUE,
 method = "linear", k = 5)
 
-clustr <- as.vector(clustr$memberships)
+clusters <- as.vector(clusters$memberships)$alphabetic_Labels
 
-print(statPrint(clustr, traj, id_field=TRUE,
+print(statPrint(clusters, trajectry, id_field=TRUE,
 type="lines", y.scaling="fixed"))
 
-print(statPrint(clustr, traj, id_field=TRUE, reference = 1,
+print(statPrint(clusters, trajectry, id_field=TRUE, reference = 1,
 N.quant = 8, type="stacked"))
 
 }
