@@ -37,14 +37,21 @@
 #' in which the outlier observation is located. Option is also provided to
 #' remove the trajectories (containing the outlier) from the data.
 #' @examples
+#'
 #' traj <- traj
-#' traj <- dataImputation(traj, id_field=TRUE, method = 1, replace_with = 1)
-#' traj <- props(traj, id_field=TRUE)#remove this later
-#' outlierDetect(traj, id_field = TRUE, method = 1, threshold = 0.95,
+#'
+#' trajectry <- dataImputation(traj, id_field=TRUE, method = 1, replace_with = 1)
+#'
+#' trajectry <- props(trajectry$CompleteData, id_field=TRUE)
+#'
+#' outlierDetect(trajectry, id_field = TRUE, method = 1, threshold = 0.95,
 #' count = 1, replace_with = 1)
-#' outlierDetect(traj, id_field = TRUE, method = 2, threshold = 15,
+#'
+#' outlierDetect(trajectry, id_field = TRUE, method = 2, threshold = 15,
 #' count = 4, replace_with = 3)
+#'
 #' @return A dataframe with outlier observations replaced or removed.
+#' @importFrom utils flush.console
 #' @export
 
 outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
@@ -221,7 +228,7 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
   solution <- list(Outlier_Observations=outlier_obs_id,
                    Non_Outlier_Observations=non_outlier_obs_id,
                    Threshold=threshold_estimated,
-                   Outliers_Replaced = dat)
+                   Outliers_Replaced = dat_)
   return(solution)
 
 }
