@@ -123,17 +123,17 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
 
   #test if id_field is excluded for traj
   if(id_field==FALSE){
-    clustr <- cbind(1:nrow(clustr), clustr)
+    clustr <- cbind(seq_len(nrow(clustr)), clustr)
   }
 
   #collect cluster list
   clusters <- as.vector(clustr[,ncol(clustr)])
 
-  data_subset <- clustr[,1:(ncol(clustr)-1)]
+  data_subset <- clustr[,seq_len((ncol(clustr))-1)]
 
   data_subset <- as.data.frame(data_subset)
 
-  colnames(data_subset) <- c("code", 1:(ncol(data_subset)-1))
+  colnames(data_subset) <- c("code", seq_len((ncol(data_subset))-1))
 
   data.subset.melted <- suppressWarnings(melt(data_subset, id="code"))
 
@@ -207,7 +207,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
     if(type=="stacked"){
       change_ave_yr_ALL_transpose <- t(change_ave_yr_ALL)
       grp.dat<-data.frame(change_ave_yr_ALL_transpose,
-                      row.names=1:nrow(change_ave_yr_ALL_transpose))
+                      row.names=seq_len(nrow(change_ave_yr_ALL_transpose)))
       names(grp.dat)<-clusters_uni
       p.dat<-data.frame(Year=row.names(grp.dat),grp.dat,stringsAsFactors=F)
       p.dat<-melt(p.dat,id='Year')
@@ -258,7 +258,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
 
   colnames(desc_Stats) <- c("n","n(%)","%Prop.time1",
                             "%Prop.timeT", "Change", "%Change")
-  rownames(desc_Stats) <- 1:nrow(desc_Stats)
+  rownames(desc_Stats) <- seq_len(nrow(desc_Stats))
   desc_Stats <- as.data.frame(cbind(group, desc_Stats))
   attrib1 <- c("'n'->size (number of traj.); 'n(%)'->%size;
                '%Prop.time1'->% proportion of obs. at time 1;
@@ -318,7 +318,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
   dat_slopp<- NULL
 
   for(n in seq_len(nrow(sl_List))){ #k<-1
-    dat_slopp <- rbind(dat_slopp, (0 + (sl_List[n,3]*(1:ncol(dat)))))
+    dat_slopp <- rbind(dat_slopp, (0 + (sl_List[n,3]*(seq_len(ncol(dat))))))
   }
 
   change_Stats <- NULL
@@ -329,7 +329,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
 
     slope_sign_ <- NULL
 
-    for(v in 1:2){ #v=1
+    for(v in seq_len(2)){ #v=1
 
       if(v==1){
         all_1 <- round((length(which(dat_slopp[ids_, ncol(dat_slopp)]>
@@ -350,7 +350,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
   }
 
   colnames(change_Stats) <- c("sn","%+ve Traj.","%-ve Traj.")
-  rownames(change_Stats) <- 1:nrow(change_Stats)
+  rownames(change_Stats) <- seq_len(nrow(change_Stats))
   change_Stats <- as.data.frame(cbind(group, change_Stats))
   attrib2 <- c("'%+ve Traj.'-> % of trajectories with positive slopes;
              '%+ve Traj.'-> % of trajectories with negative slopes")
