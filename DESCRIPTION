@@ -41,6 +41,6 @@ Suggests:
     rmarkdown,
     kableExtra,
     testthat,
-    dplyr,
-    digest
+    digest,
+    dplyr
 VignetteBuilder: knitr
