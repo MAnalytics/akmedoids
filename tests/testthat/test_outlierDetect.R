@@ -1,3 +1,5 @@
+context("Testing outlierDetect.R function");
+
 sn <- c('sn1','sn2','sn3', 'sn4', 'sn5')
 set.seed(1)
 col1 <- sample(1:10, 5)
@@ -39,14 +41,14 @@ test_that('output dimensions are correct', {
   expect_equal(length(outlier_detection$Non_Outlier_Observations), 4)
   expect_equal(length(outlier_detection$Threshold), 1)
   expect_equal(nrow(outlier_detection$Outliers_Replaced), 5)
-  expect_equal(ncol(outlier_detection$Outliers_Replaced), 6)
+  expect_equal(ncol(outlier_detection$Outliers_Replaced), 7)
 })
 
 outlier_detection2 <- outlierDetect(test.data5, id_field = TRUE)
 
 test_that('output values correct and complete', {
   expect_equal(outlier_detection2$Threshold, 45.1)
-  expect_equal(outlier_detection2$Outliers_Replaced[3,3], 13)
+  expect_equal(outlier_detection2$Outliers_Replaced[3,4], 13)
 })
 
 outlier_detection3 <- outlierDetect(test.data5, id_field = TRUE,
@@ -57,6 +59,6 @@ test_that('remove outliers', {
   expect_equal(length(outlier_detection3$Non_Outlier_Observations), 1)
   expect_equal(length(outlier_detection3$Threshold), 1)
   expect_equal(nrow(outlier_detection3$Outliers_Replaced), 2)
-  expect_equal(ncol(outlier_detection3$Outliers_Replaced), 6)
+  expect_equal(ncol(outlier_detection3$Outliers_Replaced), 7)
 })
 
