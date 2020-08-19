@@ -1,4 +1,4 @@
-context("Tests for data types");
+context("Testing traj.R function");
 
 test_that('data types, dimension of test data', {
   expect_is(traj,'data.frame')
