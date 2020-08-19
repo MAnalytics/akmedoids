@@ -255,7 +255,7 @@ akmedoids.clust <- function(traj, id_field = FALSE, method = "linear",
 
       #number of iterations #fixed as 20
 
-      for(z in 1:100){  #z<-2
+      for(z in seq_len(100)){  #z<-2
 
         #recalculate the cluster centrure and do the affection
 
