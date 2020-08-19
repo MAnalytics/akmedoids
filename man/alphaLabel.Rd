@@ -13,12 +13,18 @@ alphaLabel(x)
 A vector of alphabetical ids.
 }
 \description{
-Function to transform a list of numeric ids to alphabetic ids
+Function to transform a list of numeric ids
+to alphabetic ids
 }
 \details{
-Given a vector of numeric cluster ids, `alphaLabel` converts each id to its corresponding alphabets. It combines alphabets for ids greater than 26.
+Given a vector of numeric cluster ids,
+`alphaLabel` converts each id to its corresponding alphabets.
+It combines alphabets for ids greater than 26.
 }
 \examples{
+
+set.seed(10)
 ids <- sample(1:100, 10, replace=FALSE)
+
 ids_alphab <- alphaLabel(ids)
 }
