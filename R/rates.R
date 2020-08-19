@@ -37,7 +37,7 @@
 #' list_ <- c(2, 3, 5, 6, 7, 9, 10) #vector of missing years
 #'
 #' #fill the missing fields with 'NA'
-#' for(u_ in 1:length(list_)){
+#' for(u_ in seq_len(length(list_))){
 #'     pop2[,list_[u_]] <- "NA"
 #' }
 #'
