@@ -36,8 +36,12 @@ by the sum of the column where it is located, i.e.
 \code{prop = [a cell value] / sum[corresponding column]}
 }
 \examples{
-traj <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
+
+trajectry <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
 fill_zeros = FALSE) #filling the missing values
-traj <- props(traj, id_field = TRUE, scale=1, digits=4)
-print(traj)
+
+trajectry <- props(trajectry$CompleteData, id_field = TRUE, scale=1, digits=4)
+
+print(trajectry)
+
 }
