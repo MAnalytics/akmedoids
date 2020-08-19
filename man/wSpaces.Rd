@@ -33,7 +33,9 @@ exist in them. They can also result from systematic
 errors in data recording devices.
 }
 \examples{
+
 traj <- traj
+
 wSpaces(traj, remove="Both")
 }
 \references{
