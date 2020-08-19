@@ -18,25 +18,37 @@
 #' \code{traj/denomin} is expressed. Default is \code{100}.
 #' @usage rates(traj, denomin, id_field, multiplier)
 #' @examples
+#'
 #' traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
 #' replace_with = 1, fill_zeros = FALSE)
+#'
 #' pop <- population #read denominator data
+#'
 #' pop2 <- as.data.frame(matrix(0, nrow(population), ncol(traj)))
-#' colnames(pop2) <- names(traj2)
+#'
+#' colnames(pop2) <- names(traj2$CompleteData)
+#'
 #' pop2[,1] <- as.vector(as.character(pop[,1]))
+#'
 #' pop2[,4] <- as.vector(as.character(pop[,2]))
+#'
 #' pop2[,8] <- as.vector(as.character(pop[,3]))
+#'
 #' list_ <- c(2, 3, 5, 6, 7, 9, 10) #vector of missing years
+#'
 #' #fill the missing fields with 'NA'
 #' for(u_ in 1:length(list_)){
 #'     pop2[,list_[u_]] <- "NA"
 #' }
+#'
 #' #estimate missing fields
 #' pop_imp_result <- dataImputation(pop2, id_field = TRUE, method = 2,
 #' replace_with = 1, fill_zeros = FALSE)
+#'
 #' #calculate rates i.e. crimes per 200 population
-#' crime_rates <- rates(traj2, denomin=pop_imp_result, id_field=TRUE,
-#' multiplier = 200)
+#' crime_rates <- rates(traj2$CompleteData, denomin=pop_imp_result$CompleteData,
+#' id_field=TRUE, multiplier = 200)
+#'
 #' @return A matrix of 'rates' measures
 #' @export
 
