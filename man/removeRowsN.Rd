@@ -33,6 +33,8 @@ an 'Inf' entry, the function returns only rows with
 complete observations.
 }
 \examples{
+
 traj <- traj
+
 removeRowsN(traj, id_field=TRUE, remove=3)
 }
