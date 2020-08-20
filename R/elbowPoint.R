@@ -25,8 +25,8 @@
 
 elbowPoint <- function(x, y) {
 
-  input_x = x
-  input_y = y
+  input_x <- x
+  input_y <- y
   # check for non-numeric or infinite values in the inputs
   is.invalid <- function(x) {
     any((!is.numeric(x)) | is.infinite(x))
@@ -100,7 +100,7 @@ elbowPoint <- function(x, y) {
   # flip the results back
   if ((x.sign == -1) || (y.sign == -1)) {
     results <- elbowPoint(x.sign * x, y.sign * y)
-    solution = list(input.x=input_x, input.y=input_y, fittedSpline = new.yPred, first.deriv = first.deriv,
+    solution <- list(input.x=input_x, input.y=input_y, fittedSpline = new.yPred, first.deriv = first.deriv,
                     second.deriv = second.deriv, x = x.sign * results$x,
                     y = y.sign * results$y)
     return(solution)
@@ -112,7 +112,7 @@ elbowPoint <- function(x, y) {
     curvature <- abs(second.deriv) / (1 + first.deriv^2)^(3/2)
 
     if (max(curvature) < min(curvature) | max(curvature) < max(curvature)) {
-      cutoff.x = NA
+      cutoff.x <- NA
     } else {
       # Interpolation function
       f <- approxfun(new.x, curvature, rule=1)
