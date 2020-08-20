@@ -1,4 +1,4 @@
-context("Testing statPrint.R function");
+context("Testing statPrint.R function")
 
 set.seed(12)
 #sample trajectories
