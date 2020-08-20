@@ -67,7 +67,7 @@ wSpaces <- function(traj, remove="Both"){
       vec_Name2 <- trimws(vec_Name1, which="left")
       #count the number of leading whitespaces
       count_leading <- count_leading + length(which(!vec_Name2%in%vec_Name1))
-      vec_Name1 = vec_Name2
+      vec_Name1 <- vec_Name2
     }
 
     vec_Name1 <- matrix(vec_Name1,,1)
