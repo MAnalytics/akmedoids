@@ -1,4 +1,4 @@
-context("Testing props.R function");
+context("Testing props.R function")
 
 sn <- c('sn1','sn2','sn3', 'sn4')
 set.seed(1)
