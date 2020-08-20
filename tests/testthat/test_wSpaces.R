@@ -9,9 +9,9 @@ col4 <- as.character(c(" 23 ", " 45 ", " 23 ")) #trailing and leading
 
 test.data1 <- data.frame(sn, col1, col2, col3, col4)
 
-check_1 = wSpaces(test.data1, remove="Right")
-check_2 = wSpaces(test.data1, remove="Left")
-check_3 = wSpaces(test.data1, remove="Both")
+check_1 <- wSpaces(test.data1, remove="Right")
+check_2 <- wSpaces(test.data1, remove="Left")
+check_3 <- wSpaces(test.data1, remove="Both")
 
 test_that('number of whitespaces removed correct', {
   expect_equal(check_1$NumberOfWhiteSpacesRemoved, 6)
