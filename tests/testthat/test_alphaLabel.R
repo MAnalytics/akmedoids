@@ -1,4 +1,4 @@
-context("Testing alphaLabel.R function");
+context("Testing alphaLabel.R function")
 
 set.seed(7)
 ids1 <- sample(1:100, 10, replace=FALSE)
