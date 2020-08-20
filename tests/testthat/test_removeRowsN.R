@@ -1,4 +1,4 @@
-context("Testing removeRowsN.R function");
+context("Testing removeRowsN.R function")
 
 test.data2 <- traj
 
