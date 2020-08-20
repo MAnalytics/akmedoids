@@ -46,7 +46,7 @@ test_that('check error msgs output correctly', {
 })
 
 
-output = akmedoids.clust(test.data8, id_field = TRUE, k = c(3:5),
+output <- akmedoids.clust(test.data8, id_field = TRUE, k = c(3:5),
                          crit = "Calinski_Harabasz")
 
 test_that('check that output is complete', {
