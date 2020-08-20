@@ -1,4 +1,4 @@
-context("Testing elbowPoint.R function");
+context("Testing elbowPoint.R function")
 
 x <- runif(100, min=-2, max=3)
 y <- -exp(-x) * (1+rnorm(100)/3)
