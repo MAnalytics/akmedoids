@@ -22,7 +22,7 @@ clusterng <- akmedoids.clust(df, k = c(3))
 clust_list <- as.vector(clusterng$memberships)$alphabetic_Labels
 
 #derive cluster stats
-statistics = statPrint(clust_list, df, showplots=FALSE)
+statistics <- statPrint(clust_list, df, showplots=FALSE)
 
 test_that('check error msgs output correctly', {
   #non-matching lengths
@@ -58,11 +58,11 @@ test_that('output clusters counts are accurate', {
 })
 
 #ordering of clusters
-incr = function(a, b){
+incr <- function(a, b){
   if(a>=b){
-    check = 1}
+    check <- 1}
   else{
-    check = 2
+    check <- 2
   }
   return(check)
 }
