@@ -26,7 +26,7 @@ Given a longitudinal datasets, the following is an example of how `akmedoids` co
 #simulate some datasets
 
 #function for creating longitudinal noise
-noise_fn = function(x=3, time){
+noise_fn <- function(x=3, time){
   rnorm(length(time), mean=0, x)}
 
 #function for simulating a trajectory group
@@ -37,34 +37,34 @@ sim_group <- function(gr_baseline, sd, time){
 }
 
 #time steps
-t_steps = c(0:20)
+t_steps <- c(0:20)
 
 #increasing group
-i_gr = NULL
-for(i in 1:50){
-i_gr = rbind(i_gr,
+i_gr <- NULL
+for(i in seq_len(50)){
+i_gr <- rbind(i_gr,
              sim_group(gr_baseline=(0.5*t_steps),
                        sd=1, time=t_steps))
 }
 
 #stable group
-s_gr = NULL
-for(i in 1:50){
-  s_gr = rbind(s_gr,
+s_gr <- NULL
+for(i in seq_len(50)){
+  s_gr <- rbind(s_gr,
                sim_group(gr_baseline=rep(3,length(t_steps)),
                          sd=1, time=t_steps))
 }
 
 #decreasing group
-d_gr = NULL
-for(i in 1:50){
-  d_gr = rbind(d_gr,
+d_gr <- NULL
+for(i in seq_len(50)){
+  d_gr <- rbind(d_gr,
                sim_group(gr_baseline=(10 - (0.5*t_steps)),
                          sd=1, time=t_steps))
 }
 
 #combine groups
-all_traj = data.frame(rbind(i_gr, s_gr, d_gr))
+all_traj <- data.frame(rbind(i_gr, s_gr, d_gr))
 
 #load library
 library(akmedoids)
@@ -74,15 +74,15 @@ akmedoids.clust(all_traj, k=c(3,10), crit = "Silhouette")
 
 #Optimal number of clusters, k
 #---------#
-# k = 3   #
+# k <- 3   #
 #---------#
 
 #get the optimal cluster solution
-clustr = akmedoids.clust(all_traj, k=3)
-clustr = clustr$memberships
+clustr <- akmedoids.clust(all_traj, k=3)
+clustr <- as.vector(clustr$memberships)$alphabetic_Labels
 
 ##get group statistics
-descrStats = statPrint(clustr, all_traj,
+descrStats <- statPrint(clustr, all_traj,
                        id_field = FALSE, showplots=FALSE)
 
 print(descrStats)
