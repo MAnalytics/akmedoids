@@ -1,4 +1,4 @@
-context("Testing wSpaces.R function");
+context("Testing wSpaces.R function")
 
 #simulating different whitespaces
 sn <- c('sn1','sn2','sn3')
