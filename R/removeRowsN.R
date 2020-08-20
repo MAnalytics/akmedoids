@@ -51,7 +51,7 @@ removeRowsN <- function(traj, id_field=TRUE, remove=1){
   }
 
   if(remove == 1){
-    id_Toremove = id_ToremoveNA
+    id_Toremove <- id_ToremoveNA
 
     if(length(unique(id_Toremove))!=0){
       traj <- traj[-unique(id_Toremove),]
@@ -64,7 +64,7 @@ removeRowsN <- function(traj, id_field=TRUE, remove=1){
 
 
   if(remove == 2){
-    id_Toremove = id_ToremoveInf
+    id_Toremove <- id_ToremoveInf
 
     if(length(unique(id_Toremove))!=0){
       traj <- traj[-unique(id_Toremove),]
@@ -76,7 +76,7 @@ removeRowsN <- function(traj, id_field=TRUE, remove=1){
   }
 
   if(remove == 3){
-    id_Toremove = c(id_ToremoveNA, id_ToremoveInf)
+    id_Toremove <- c(id_ToremoveNA, id_ToremoveInf)
 
     if(length(unique(id_Toremove))!=0){
       traj <- traj[-unique(id_Toremove),]
@@ -97,7 +97,7 @@ removeRowsN <- function(traj, id_field=TRUE, remove=1){
   }
 
   if(id_field==TRUE && length(unique(id_Toremove))==0){
-    colnames(id_field_list) = id_title1
+    colnames(id_field_list) <- id_title1
     colnames(traj) <- id_title_rest
     #traj <- traj[-unique(id_Toremove),]
     traj <- cbind(id_field_list, traj)
