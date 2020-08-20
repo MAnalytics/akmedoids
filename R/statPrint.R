@@ -275,7 +275,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
   time <- as.numeric(seq_len(ncol(dat)))
 
   for(i in seq_len(nrow(dat))){ #i<-1
-    b=coefficients(lm(as.numeric(as.character(dat[i,]))~
+    b <- coefficients(lm(as.numeric(as.character(dat[i,]))~
                       as.numeric(as.character(time))))
     sl_List <- rbind(sl_List, cbind(as.numeric(b[1]),
                                   as.numeric(b[2])))
