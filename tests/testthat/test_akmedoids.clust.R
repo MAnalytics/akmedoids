@@ -1,4 +1,4 @@
-context("Testing akmedoids.clust.R function");
+context("Testing akmedoids.clust.R function")
 
 #simulate dataset
 sn <- c('sn1','sn2','sn3', 'sn4', 'sn5')
@@ -22,7 +22,6 @@ test_that('print the right message post clustering', {
   expect_that(akmedoids.clust(test.data8, id_field = TRUE, k = c(3)),
               prints_text("solution of k = 3 determined!"))
 })
-context("Testing akmedoids.clust.R function");
 
 test_that('check error msgs output correctly', {
   #cluster number cannot be less than 3
