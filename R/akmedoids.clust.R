@@ -58,7 +58,8 @@
 #' output <- akmedoids.clust(trajectry, id_field = TRUE,
 #' method = "linear", k = c(3))
 #'
-#' print(output)  #type 'as.vector(output$memberships)'
+#' print(output)
+#' #type 'as.vector(clusters$memberships)$alphabetic_Labels'
 #'
 #' @return If \code{k} is a vector of two numbers (see param.
 #' \code{k} details above), the output is a graphical plot of
