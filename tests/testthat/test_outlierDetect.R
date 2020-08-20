@@ -1,4 +1,4 @@
-context("Testing outlierDetect.R function");
+context("Testing outlierDetect.R function")
 
 sn <- c('sn1','sn2','sn3', 'sn4', 'sn5')
 set.seed(1)
