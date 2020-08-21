@@ -81,10 +81,12 @@ rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
     id_names2 <- as.vector(as.character(dat2[,1]))
 
     if(!length(id_names1)==length(unique(id_names1))){
-      stop("(: The 'id_field' of the 'traj' object is not a unique field. Function terminated!!! :)")
+      stop(paste("(: The 'id_field' of the 'traj' object is not a",
+                 "unique field. Function terminated!!! :)", sep= " "))
     }
     if(!length(id_names2)==length(unique(id_names2))){
-      stop("(: The 'id_field' of the 'denominator' object is not a unique field. Function terminated!!! :)")
+      stop(paste("(: The 'id_field' of the 'denominator' object is not",
+           "a unique field. Function terminated!!! :)", sep=" "))
     }
   }
 
@@ -124,15 +126,18 @@ rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
   common_ids <- keep_names
   common_ids_join <- data.frame(id=keep_names_id, id_name=keep_names)
   noncommon_ids_traj <- as.vector(as.character(traj[,1]))
-  noncommon_ids_traj <- noncommon_ids_traj[which(!noncommon_ids_traj%in% keep_names)]
+  noncommon_ids_traj <-
+    noncommon_ids_traj[which(!noncommon_ids_traj%in% keep_names)]
 
   noncommon_ids_denom <- as.vector(as.character(denomin[,1]))
-  noncommon_ids_denom <- noncommon_ids_denom[which(!noncommon_ids_denom%in% keep_names)]
+  noncommon_ids_denom <-
+    noncommon_ids_denom[which(!noncommon_ids_denom%in% keep_names)]
 
   #rates data
   data_Fresh <- data.frame(cbind(as.factor(keep_names), data_Fresh))
 
-  data_Fresh <- dplyr::left_join(common_ids_join, data_Fresh, by = c("id" = "X1"))
+  data_Fresh <- dplyr::left_join(common_ids_join, data_Fresh,
+                                 by = c("id" = "X1"))
   data_Fresh <- dplyr::select(data_Fresh, -c(id))
 
   colnames(data_Fresh) <-  n_CL
