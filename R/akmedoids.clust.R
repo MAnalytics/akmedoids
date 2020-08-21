@@ -381,12 +381,16 @@ akmedoids.clust <- function(traj, id_field = FALSE, method = "linear",
         elbP <- elbowPoint(qualit$k,qualit$qualityCrit)
         plt <- ggplot(qualit, aes(x = k, y = qualityCrit)) +
           geom_line(linetype = "dotdash") + geom_point(shape=0)+
-          ggtitle(paste("Optimal solution based on the", crit, "criterion: k = ",
+          ggtitle(paste("Optimal solution based on the", crit,
+                        "criterion: k = ",
                         round(elbP$x, digits=0), sep=" ")) +
-          geom_vline(xintercept = elbP$x, linetype="dashed", color = "red", size=0.5)
+          geom_vline(xintercept = elbP$x, linetype="dashed",
+                     color = "red", size=0.5)
         qualiCriterion<- paste("Quality criterion:", crit, sep=" ")
-        print(paste("Suggested optimal solution contains", round(elbP$x, digits=0),
-                    "clusters. See the plot for further examination!", sep=" "))
+        print(paste("Suggested optimal solution contains",
+                    round(elbP$x, digits=0),
+                    "clusters. See the plot for further examination!",
+                    sep=" "))
         #----------------------------------
         flush.console()
         dev.new(width=3, height=3)
