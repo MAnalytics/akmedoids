@@ -43,7 +43,8 @@ test_that('checking output is complete and dimensions correct', {
 })
 
 test_that('detecting singular entry', {
-  expect_error(dataImputation(test.data7, id_field = TRUE, method = 2, replace_with = 1,
+  expect_error(dataImputation(test.data7, id_field = TRUE,
+                              method = 2, replace_with = 1,
   prints_text(paste("Trajectory has only one data point.",
                     "Unable to inter/extrapolate between points.",
                     "Program terminated!!", sep=" "))))
