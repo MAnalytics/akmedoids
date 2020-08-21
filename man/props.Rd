@@ -37,10 +37,11 @@ by the sum of the column where it is located, i.e.
 }
 \examples{
 
-trajectry <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
-fill_zeros = FALSE) #filling the missing values
+trajectry <- dataImputation(traj, id_field = TRUE, method = 2,
+replace_with = 1, fill_zeros = FALSE) #filling the missing values
 
-trajectry <- props(trajectry$CompleteData, id_field = TRUE, scale=1, digits=4)
+trajectry <- props(trajectry$CompleteData, id_field = TRUE,
+scale=1, digits=4)
 
 print(trajectry)
 
