@@ -39,9 +39,9 @@ test_that('check error msgs output correctly', {
          prints_text(paste("*----*(: Quality criterion specified is NOT",
          "RECOGNISED!! Execution terminated!!! :)*----*", sep= " "))))
   expect_error(akmedoids.clust(test.data8, id_field = TRUE, k = c(3:5),
-         crit="Silhouette",
-         prints_text(paste("*----*(: 'Silhouette' criterion is not applicable!.",
-         "Try 'Calinski_Harabasz':)*----*", sep=" "))))
+      crit="Silhouette",
+      prints_text(paste("*----*(: 'Silhouette' criterion is not applicable!.",
+      "Try 'Calinski_Harabasz':)*----*", sep=" "))))
 })
 
 
