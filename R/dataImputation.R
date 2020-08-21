@@ -179,13 +179,15 @@ dataImputation <- function(traj, id_field = FALSE, method = 2,
       #then remove them from the data point
       #include zeros
       if(fill_zeros==FALSE){
-        known_1 <- data.frame(known[is.na(known[,2])|is.infinite(known[,2]),])  #
+        known_1 <- data.frame(known[is.na(known[,2])|is.infinite(known[,2]),])
         known_2 <- data.frame(known[!is.na(known[,2])&!is.infinite(known[,2]),])
       }
 
       if(fill_zeros==TRUE){
-        known_1 <- data.frame(known[is.na(known[,2])|is.infinite(known[,2])|(known[,2]==0),])  #
-        known_2 <- data.frame(known[!is.na(known[,2])&!is.infinite(known[,2])&!(known[,2]==0),])
+        known_1 <- data.frame(known[is.na(known[,2])|
+                                      is.infinite(known[,2])|(known[,2]==0),])
+        known_2 <- data.frame(known[!is.na(known[,2])&
+                                      !is.infinite(known[,2])&!(known[,2]==0),])
       }
 
       fill_count <- fill_count + nrow(known_1)
