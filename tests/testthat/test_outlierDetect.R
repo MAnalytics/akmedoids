@@ -25,10 +25,13 @@ test.data5[3,2:7] <- sample(40:50,6)#all outliers
 
 test_that('output correct error messages', {
   expect_error(outlierDetect(test.data4, id_field = TRUE, threshold = 1.8,
-   prints_text("*--Terminated!!!--*, The 'threshold' value should be between 0 and 1")))
-  expect_error(outlierDetect(test.data4, id_field = TRUE, threshold = 0.8, replace_with=1,
+   prints_text(paste("*--Terminated!!!--*, The 'threshold'",
+                     "value should be between 0 and 1", sep=" "))))
+  expect_error(outlierDetect(test.data4, id_field = TRUE,
+                             threshold = 0.8, replace_with=1,
    prints_text("*--Outlier observation(s) was found in trajectory 3 --*")))
-  expect_error(outlierDetect(test.data4, id_field = TRUE, threshold = 0.8, replace_with=2,
+  expect_error(outlierDetect(test.data4, id_field = TRUE,
+                             threshold = 0.8, replace_with=2,
    prints_text("*--Outlier observation(s) was found in trajectory 3 --*")))
 
 })
