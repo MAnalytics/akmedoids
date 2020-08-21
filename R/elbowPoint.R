@@ -58,7 +58,8 @@ elbowPoint <- function(x, y) {
 
   # Use Savitzky-Golay filter to get derivatives
   smoothen <- function(y, p=p, filt.length=NULL, ...) {
-    # Time scaling factor so that the derivatives are on same scale as original data
+    # Time scaling factor so that the derivatives are
+    #on same scale as original data
     ts <- (max(new.x) - min(new.x)) / length(new.x)
     p <- 3 # Degree of polynomial to estimate curve
     # Set filter length to be fraction of length of data
@@ -100,7 +101,8 @@ elbowPoint <- function(x, y) {
   # flip the results back
   if ((x.sign == -1) || (y.sign == -1)) {
     results <- elbowPoint(x.sign * x, y.sign * y)
-    solution <- list(input.x=input_x, input.y=input_y, fittedSpline = new.yPred, first.deriv = first.deriv,
+    solution <- list(input.x=input_x, input.y=input_y,
+                     fittedSpline = new.yPred, first.deriv = first.deriv,
                     second.deriv = second.deriv, x = x.sign * results$x,
                     y = y.sign * results$y)
     return(solution)
@@ -111,13 +113,14 @@ elbowPoint <- function(x, y) {
     # Find x where curvature is maximum
     curvature <- abs(second.deriv) / (1 + first.deriv^2)^(3/2)
 
-    if (max(curvature) < min(curvature) | max(curvature) < max(curvature)) {
+    if (max(curvature) < min(curvature) | max(curvature) < max(curvature)){
       cutoff.x <- NA
     } else {
       # Interpolation function
       f <- approxfun(new.x, curvature, rule=1)
       # Minimize |f(new.x) - max(curvature)| over range of new.x
-      cutoff.x <- optimize(function(new.x) abs(f(new.x) - max(curvature)), range(new.x))$minimum
+      cutoff.x <- optimize(function(new.x) abs(f(new.x) - max(curvature)),
+                           range(new.x))$minimum
     }
 
    if (is.na(cutoff.x)) {
@@ -126,8 +129,10 @@ elbowPoint <- function(x, y) {
     } else {
     # Return cutoff point on curve
     # approx(new.x, new.y, cutoff.x)
-    solution <- list(input.x=input_x, input.y=input_y, fittedSpline = new.yPred, first.deriv = first.deriv,
-                     second.deriv = second.deriv, x=approx(new.x, new.y, cutoff.x)$x,
+    solution <- list(input.x=input_x, input.y=input_y,
+                     fittedSpline = new.yPred, first.deriv = first.deriv,
+                     second.deriv = second.deriv,
+                     x=approx(new.x, new.y, cutoff.x)$x,
                      y=approx(new.x, new.y, cutoff.x)$y)
     return(solution)
   }
