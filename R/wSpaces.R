@@ -48,21 +48,24 @@ wSpaces <- function(traj, remove="Both"){
       #remove trailing whitespaces
       vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="right")
       #count the number of trailing whitespaces
-      count_trailing <- count_trailing + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+      count_trailing <- count_trailing +
+        length(which(!vec_Name1%in%dat_Cleaned[,q]))
     }
 
     if(remove=="Left"){
       #remove leading whitespaces
       vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="left")
       #count the number of leading whitespaces
-      count_leading <- count_leading + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+      count_leading <- count_leading +
+        length(which(!vec_Name1%in%dat_Cleaned[,q]))
     }
 
     if(remove=="Both"){
       #remove trailing whitespaces
       vec_Name1 <- trimws(as.vector(dat_Cleaned[,q]), which="right")
       #count the number of trailing whitespaces
-      count_trailing <- count_trailing + length(which(!vec_Name1%in%dat_Cleaned[,q]))
+      count_trailing <- count_trailing +
+        length(which(!vec_Name1%in%dat_Cleaned[,q]))
       #remove leading whitespaces
       vec_Name2 <- trimws(vec_Name1, which="left")
       #count the number of leading whitespaces
@@ -90,7 +93,8 @@ wSpaces <- function(traj, remove="Both"){
   }
 
   if(remove=="Both"){
-    print(paste((count_leading + count_trailing), "leading whitespaces found/removed!"))
+    print(paste((count_leading + count_trailing),
+                "leading whitespaces found/removed!"))
     Removed <- count_leading + count_trailing
   }
 
