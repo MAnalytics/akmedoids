@@ -28,7 +28,8 @@
 #' located are used to calculate the replacement.
 #' The replacement options are: \code{'1'}: Mean value of the column,
 #' \code{'2'}: Mean value of the row and \code{'3'}: remove the row
-#' (trajectory) completely from the data. Default value is the \code{'1'} option.
+#' (trajectory) completely from the data. Default value is the
+#' \code{'1'} option.
 #' @usage outlierDetect(traj, id_field = FALSE, method = 1, threshold = 0.95,
 #' count = 1, replace_with = 1)
 #' @details Given a matrix, this function identifies outliers that
@@ -40,7 +41,8 @@
 #'
 #' traj <- traj
 #'
-#' trajectry <- dataImputation(traj, id_field=TRUE, method = 1, replace_with = 1)
+#' trajectry <- dataImputation(traj, id_field=TRUE, method = 1,
+#' replace_with = 1)
 #'
 #' trajectry <- props(trajectry$CompleteData, id_field=TRUE)
 #'
@@ -78,7 +80,8 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
   if(method==1){
     #check if the value is in-between [0,1]
     if(threshold < 0 | threshold > 1){
-      stop("*--Terminated!!!--*, The 'threshold' value should be between 0 and 1")
+      stop(paste("*--Terminated!!!--*, The 'threshold'",
+      "value should be between 0 and 1", sep=" "))
     }
     #calculate the cut-off value based on the 'threshold'
     thres_ <- as.vector(round(quantile(as.vector(unlist(as.data.frame(dat))),
@@ -140,13 +143,15 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
     #replace with mean of col
     if(replace_with == 1){
       for(k in seq_len(nrow(list_traj))){ #k<-1
-        idd_ <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
+      idd_ <-
+        which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
 
         #loop through each column and remove the outlier in
         #them before calculating the value of the mean column value
         for(l_ in seq_len(length(idd_))){ #l_<-1
           dat[as.numeric(as.character(list_traj[k,1])),idd_[l_]] <-
-          round(mean(dat[-which(outlier_mat[,idd_[l_]]==TRUE),idd_[l_]]), digits = 2)
+          round(mean(dat[-which(outlier_mat[,idd_[l_]]==TRUE),idd_[l_]]),
+                digits = 2)
         }
       }
     }
@@ -155,10 +160,13 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
     if(replace_with == 2){
       for(k in seq_len(nrow(list_traj))){ #k<-1
         #use the non-outlier observation for the calculation
-        idd_nonOutlier <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==FALSE)
-        idd_Outlier <- which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
+        idd_nonOutlier <-
+          which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==FALSE)
+        idd_Outlier <-
+          which(outlier_mat[as.numeric(as.character(list_traj[k,1])),]==TRUE)
         dat[list_traj[k,1],idd_Outlier] <-
-          round(mean(as.numeric(as.character(dat[list_traj[k,1],idd_nonOutlier]))), digits = 2)
+      round(mean(as.numeric(as.character(dat[list_traj[k,1],idd_nonOutlier]))),
+                digits = 2)
       }
     }
 
@@ -181,7 +189,7 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
       colnames(id) <- c_name
       #remove the oulier row from the column ids
       id <- id[-as.numeric(as.character(list_traj[,1]))]
-      b_dat <-  b_dat[-as.numeric(as.character(list_traj[,1])),] #first remove the outlier observations
+      b_dat <-  b_dat[-as.numeric(as.character(list_traj[,1])),]
       dat_  <- b_dat
     }
 
@@ -189,7 +197,8 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
     if(replace_with==1|replace_with==2){
       flush.console()
       print(paste(nrow(list_traj),
-      "trajectories were found to contain outlier observations and replaced accordingly!",
+      paste("trajectories were found to contain outlier",
+            "observations and replaced accordingly!", sep=" "),
         sep=" "))
       print("Summary:")
 
@@ -223,7 +232,8 @@ outlierDetect <- function(traj, id_field = FALSE, method = 1, threshold = 0.95,
 
   #indexes of traj where outliers are found
   outlier_obs_id <- as.numeric(as.character(list_traj[,1]))
-  non_outlier_obs_id <- seq_len(nrow(dat))[!seq_len(nrow(dat)) %in% outlier_obs_id]
+  non_outlier_obs_id <-
+    seq_len(nrow(dat))[!seq_len(nrow(dat)) %in% outlier_obs_id]
   threshold_estimated <- thres_
   solution <- list(Outlier_Observations=outlier_obs_id,
                    Non_Outlier_Observations=non_outlier_obs_id,
