@@ -38,7 +38,8 @@ observations on the row or the column in which the outlier observation is
 located are used to calculate the replacement.
 The replacement options are: \code{'1'}: Mean value of the column,
 \code{'2'}: Mean value of the row and \code{'3'}: remove the row
-(trajectory) completely from the data. Default value is the \code{'1'} option.}
+(trajectory) completely from the data. Default value is the
+\code{'1'} option.}
 }
 \value{
 A dataframe with outlier observations replaced or removed.
@@ -59,7 +60,8 @@ remove the trajectories (containing the outlier) from the data.
 
 traj <- traj
 
-trajectry <- dataImputation(traj, id_field=TRUE, method = 1, replace_with = 1)
+trajectry <- dataImputation(traj, id_field=TRUE, method = 1,
+replace_with = 1)
 
 trajectry <- props(trajectry$CompleteData, id_field=TRUE)
 
