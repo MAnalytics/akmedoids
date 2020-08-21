@@ -146,7 +146,8 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
   #preparing the data to generate descriptive statitics
   year_uni <- as.vector(unique(data.subset.melted$Year))
   order_Cluster <- as.vector(unique(data.subset.melted$clusters))
-  clusters_uni <- order_Cluster[order(as.vector(unique(data.subset.melted$clusters)))]
+  clusters_uni <-
+    order_Cluster[order(as.vector(unique(data.subset.melted$clusters)))]
 
   change_ave_yr_ALL <- NULL
 
@@ -214,9 +215,10 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
       p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
       class(p.dat$Year)
 
-      p <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none") +
+      p <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
       geom_area(aes(fill=variable), colour = "gray30", position='fill') +
-      scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)), labels=Year) +
+      scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
+                     labels=Year)+
       scale_fill_brewer(palette = "Set1") +
       theme_light())
     }
@@ -250,7 +252,7 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
     a3 <- round((change_ave_yr_ALL[n,1] /
                  sum(change_ave_yr_ALL[,1]))*100, digits = 1)
     a4 <- round((change_ave_yr_ALL[n,ncol(change_ave_yr_ALL)]/
-                 sum(change_ave_yr_ALL[,ncol(change_ave_yr_ALL)]))*100, digits = 1)
+      sum(change_ave_yr_ALL[,ncol(change_ave_yr_ALL)]))*100, digits = 1)
     a5 <- round((a4-a3), digits=1)
     a6 <- round(((a4-a3)/a4)*100, digits=1)
     desc_Stats <-  rbind(desc_Stats, cbind(a1, a2, a3, a4, a5, a6))
@@ -333,14 +335,14 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
 
       if(v==1){
         all_1 <- round((length(which(dat_slopp[ids_, ncol(dat_slopp)]>
-                                       as.numeric(as.character(ref_slope$slope))))/
-                                        length(ids_))*100, digits = 1)
+                          as.numeric(as.character(ref_slope$slope))))/
+                          length(ids_))*100, digits = 1)
       }
 
     if(v==2){
       all_2 <- round((length(which(dat_slopp[ids_, ncol(dat_slopp)]<
-                                       as.numeric(as.character(ref_slope$slope))))/
-                                        length(ids_))*100, digits = 1)
+                          as.numeric(as.character(ref_slope$slope))))/
+                          length(ids_))*100, digits = 1)
       }
     }
 
@@ -362,9 +364,9 @@ statPrint <- function(clustr, traj, id_field=TRUE, reference = 1,
   gr_medoid <- NULL
 
   for(h_ in seq_len(length(clusters_uni))){
-    gr_medoid <- rbind(gr_medoid, cbind(clusters_uni[h_],
-                          round(median(as.vector(sl_List$slope)[which(clusters==clusters_uni[h_])]),
-                                digits=8)))
+  gr_medoid <- rbind(gr_medoid, cbind(clusters_uni[h_],
+  round(median(as.vector(sl_List$slope)[which(clusters==clusters_uni[h_])]),
+  digits=8)))
   }
 
   gr_medoid <- data.frame(gr_medoid)
