@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+
+# Extra miscellaneous support files/directories.
+cran-comments.md
+paper.bib
+paper.md
