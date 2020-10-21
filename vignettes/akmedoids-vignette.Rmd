@@ -167,7 +167,7 @@ Calculates any missing entries in a data, according to a chosen method. This fun
 
 #installing the `akmedoids` packages
 #install.packages("devtools")
-#devtools::install_github("manalytics/packages/akmedoids")
+#devtools::install_github("manalytics/akmedoids")
 
 ```
 
