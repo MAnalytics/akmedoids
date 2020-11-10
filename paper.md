@@ -36,7 +36,7 @@ The main clustering function in the `Akmedoids` package  implements a medoid-bas
 
 # Clustering and cluster representations
 
-The main clustering function of akmedoids is `akmedoids.clust`. The function captures directionally homogeneous clusters within any given longitudinal dataset using the procedure detailed above. For crime inequality studies, the package includes the `props` function for converting the absolute (or rate) measures of individual trajectories into a relative measure over time. The `statPrint` function draws from the `ggplot2` library [@ggplot:2016] in order to visualise the resulting clusters in either a line or an areal-stacked graph format, alongside descriptive cluster statistics.
+The main clustering function of akmedoids is `akClustr`. The function captures directionally homogeneous clusters within any given longitudinal dataset using the procedure detailed above. For crime inequality studies, the package includes the `props` function for converting the absolute (or rate) measures of individual trajectories into a relative measure over time. The `statPrint` function draws from the `ggplot2` library [@ggplot:2016] in order to visualise the resulting clusters in either a line or an areal-stacked graph format, alongside descriptive cluster statistics.
 
 # Acknowledgment
 
