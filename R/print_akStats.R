@@ -191,8 +191,6 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
   }
 
   #whether to plot the clusters
-  if(show_Plots==TRUE){
-
     #----------------------------------------------------
     #plotting
     #----------------------------------------------------
@@ -202,7 +200,7 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
     #plot option 1:
     if(type=="lines"){
       if(y.scaling=="fixed"){
-        p <- (ggplot(data.subset.melted, aes(x=Year, y=value,
+        plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
                                             group=id, color=clusters)) +
             geom_line() +
             stat_summary(fun.y=mean, geom="line", aes(group=clusters),
@@ -213,7 +211,7 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
       }
 
       if(y.scaling=="free"){
-        p <- (ggplot(data.subset.melted, aes(x=Year, y=value,
+        plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
                                          group=id, color=clusters)) +
             geom_line() +
             stat_summary(fun.y=mean, geom="line", aes(group=clusters),
@@ -237,7 +235,7 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
       p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
       class(p.dat$Year)
 
-      p <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
+      plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
       geom_area(aes(fill=variable), colour = "gray30", position='fill') +
       scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
                      labels=Year)+
@@ -245,10 +243,11 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
       theme_light())
     }
 
+  if(show_Plots==TRUE){
     #plot
     flush.console()
     dev.new(width=3, height=3)
-    print(p)
+    print(plt)
   }
 
   #not show plot
@@ -461,7 +460,7 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
   change_Stats <- cbind(change_Stats, class)
 
   all_statistics <- list(descriptiveStats = desc_Stats,
-                       changeStats = change_Stats)
+                       changeStats = change_Stats, cluster_Plot = plt)
 
   #-------------------
     return(all_statistics)
