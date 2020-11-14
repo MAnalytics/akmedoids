@@ -23,7 +23,7 @@ Default: \code{1}}
 approximate the output to. Default: \code{4}.}
 }
 \value{
-A matrix of proportion measures
+A dataframe of proportion measures
 }
 \description{
 This function converts counts or rates to proportions.

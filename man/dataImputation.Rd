@@ -5,7 +5,7 @@
 \title{Data imputation for longitudinal data}
 \usage{
 dataImputation(traj, id_field = FALSE, method = 2,
-replace_with = 1, fill_zeros = FALSE)
+replace_with = 1, fill_zeros = FALSE, verbose=TRUE)
 }
 \arguments{
 \item{traj}{[\code{matrix (numeric)}]: longitudinal data. Each
@@ -47,6 +47,9 @@ value of the corresponding column}
 \item{fill_zeros}{[TRUE or FALSE] whether to consider zeros \code{0}
 as missing values when \code{2: regression} method is used. The default
 is \code{FALSE}.}
+
+\item{verbose}{to suppress printing output messages (to the console).
+Default: \code{TRUE}.}
 }
 \value{
 A data.frame with missing values (\code{NA}, \code{Inf},
@@ -66,9 +69,9 @@ estimate the missing values.
 }
 \examples{
 
-print(traj)
+# Using the example 'traj' datasets
 
-dataImputation(traj, id_field = TRUE, method = 1, replace_with = 1,
-fill_zeros = FALSE)
+imp_data <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
+fill_zeros = FALSE, verbose=FALSE)
 
 }

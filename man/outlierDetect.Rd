@@ -5,7 +5,7 @@
 \title{Outlier detection and replacement}
 \usage{
 outlierDetect(traj, id_field = FALSE, method = 1, threshold = 0.95,
-count = 1, replace_with = 1)
+count = 1, replace_with = 1, verbose=TRUE)
 }
 \arguments{
 \item{traj}{[matrix (numeric)]: longitudinal data. Each row
@@ -40,6 +40,9 @@ The replacement options are: \code{'1'}: Mean value of the column,
 \code{'2'}: Mean value of the row and \code{'3'}: remove the row
 (trajectory) completely from the data. Default value is the
 \code{'1'} option.}
+
+\item{verbose}{to suppress output messages (to the console).
+Default: \code{TRUE}.}
 }
 \value{
 A dataframe with outlier observations replaced or removed.
@@ -58,17 +61,17 @@ remove the trajectories (containing the outlier) from the data.
 }
 \examples{
 
-traj <- traj
+data(traj)
 
 trajectry <- dataImputation(traj, id_field=TRUE, method = 1,
-replace_with = 1)
+   replace_with = 1, verbose=FALSE)
 
 trajectry <- props(trajectry$CompleteData, id_field=TRUE)
 
-outlierDetect(trajectry, id_field = TRUE, method = 1, threshold = 0.95,
-count = 1, replace_with = 1)
+outp <- outlierDetect(trajectry, id_field = TRUE, method = 1, threshold = 0.95,
+   count = 1, replace_with = 1, verbose=TRUE)
 
-outlierDetect(trajectry, id_field = TRUE, method = 2, threshold = 15,
-count = 4, replace_with = 3)
+outp <- outlierDetect(trajectry, id_field = TRUE, method = 2, threshold = 15,
+  count = 4, replace_with = 3, verbose=TRUE)
 
 }

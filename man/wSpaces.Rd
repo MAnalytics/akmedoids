@@ -4,7 +4,7 @@
 \alias{wSpaces}
 \title{Whitespaces removal}
 \usage{
-wSpaces(traj, remove="Both")
+wSpaces(traj, remove="Both", verbose=TRUE)
 }
 \arguments{
 \item{traj}{[matrix (numeric)]: longitudinal data. Each row
@@ -14,6 +14,9 @@ The columns show the observations at consecutive time points.}
 \item{remove}{[character]: Type of whitespace to remove.
 That is, "Left" (leading), (2) "Right" (trailing), or "Both"
 (both leading and trailing whitespaces). Default: "Both".}
+
+\item{verbose}{to suppress output messages (to the console).
+Default: \code{TRUE}.}
 }
 \value{
 A matrix with all whitespaces (if any) removed.
@@ -34,9 +37,10 @@ errors in data recording devices.
 }
 \examples{
 
-traj <- traj
+data(traj_wSpaces)
 
-wSpaces(traj, remove="Both")
+wSpaces(traj_wSpaces, remove="Both", verbose=TRUE)
+
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Whitespace_character}

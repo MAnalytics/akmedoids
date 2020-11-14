@@ -23,8 +23,20 @@ It combines alphabets for ids greater than 26.
 }
 \examples{
 
-set.seed(10)
-ids <- sample(1:100, 10, replace=FALSE)
+data(TO1Risk)
 
-ids_alphab <- alphaLabel(ids)
+set.seed(1000)
+#pick 4 random clusters
+center <- TO1Risk[runif(4,1,nrow(TO1Risk)), ]
+
+#Assigning each individual to nearest centre
+numeric_Labels <- kml::affectIndivC(TO1Risk, center)
+
+mode(numeric_Labels)
+
+#transform numeric cluster labels to alphabets
+alphab_Labels <- alphaLabel(numeric_Labels)
+
+mode(alphab_Labels)
+
 }

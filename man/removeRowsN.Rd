@@ -25,7 +25,11 @@ A matrix with complete observations
 }
 \description{
 This function removes any rows in which an 'NA'
-or an 'Inf' entry is found.
+or an 'Inf' entry is found.The ability to remove records with
+'Inf' entries distinguishes this function from the popular
+'na.omit()' function.
+ removal of '' function differs from
+'na.omit(data)'
 }
 \details{
 Given a matrix (or a dataframe) containing an 'NA' or
@@ -34,7 +38,7 @@ complete observations.
 }
 \examples{
 
-traj <- traj
+data(traj)
 
 removeRowsN(traj, id_field=TRUE, remove=3)
 }

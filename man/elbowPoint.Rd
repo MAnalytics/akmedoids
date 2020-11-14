@@ -12,7 +12,8 @@ elbowPoint(x, y)
 \item{y}{vector of y coordinates of points on the curve}
 }
 \value{
-an x, y coordinates of the elbow point.
+indicate the optimal k value determined by
+the elbow point point.
 }
 \description{
 Given a list of x, y coordinates on a curve,
@@ -24,14 +25,13 @@ elbow point (credit: 'github.com/agentlans')
 }
 \examples{
 
-# Generate some curve
-x <- runif(100, min=-2, max=3)
+data(TO1Risk)
 
-y <- -exp(-x) * (1+rnorm(100)/3)
+output <- akClustr(TO1Risk, id_field = FALSE,
+                  method = "linear", k = c(3,20),
+                  crit='Silhouette',
+                  verbose = TRUE, quality_Plot=TRUE)
 
-plot(x, y)
-
-# Plot elbow points
-abline(v=elbowPoint(x,y)$y, col="blue", pch=20, cex=3)
+print(output$optimal_k)
 
 }
