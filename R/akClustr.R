@@ -428,6 +428,8 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
           print(plt)
         }
 
+        class(final_result) <- c("akObject", class(final_result))
+
         return(final_result)
 
       }
