@@ -17,5 +17,5 @@ test_that('terminate upon errors', {
 
 test_that('correct dimension', {
   expect_equal(length(ids2),
-                   length(alphaLabel(ids2)$alphabetic_Labels))
+                   length(alphaLabel(ids2)))
 })
