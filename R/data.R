@@ -6,7 +6,7 @@
 #'
 #' @format A dataframe containing one variable:
 #' \itemize{
-#'   \item label: alphabetical label of clusters
+#'   \item label: alphabetical label by clusters
 #'     }
 "clustr"
 
