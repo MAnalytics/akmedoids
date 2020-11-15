@@ -71,7 +71,8 @@ estimate the missing values.
 
 # Using the example 'traj' datasets
 
-imp_data <- dataImputation(traj, id_field = TRUE, method = 2, replace_with = 1,
+imp_data <- dataImputation(traj, id_field = TRUE, method = 2,
+replace_with = 1,
 fill_zeros = FALSE, verbose=FALSE)
 
 }

@@ -68,8 +68,8 @@ trajectry <- dataImputation(traj, id_field=TRUE, method = 1,
 
 trajectry <- props(trajectry$CompleteData, id_field=TRUE)
 
-outp <- outlierDetect(trajectry, id_field = TRUE, method = 1, threshold = 0.95,
-   count = 1, replace_with = 1, verbose=TRUE)
+outp <- outlierDetect(trajectry, id_field = TRUE, method = 1,
+threshold = 0.95, count = 1, replace_with = 1, verbose=TRUE)
 
 outp <- outlierDetect(trajectry, id_field = TRUE, method = 2, threshold = 15,
   count = 4, replace_with = 3, verbose=TRUE)
