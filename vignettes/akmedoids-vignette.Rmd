@@ -121,6 +121,8 @@ fig <- local({
 })
 ```
 
+
+
 # Introduction
 
 Longitudinal clustering analysis is ubiquitous in social and behavioral sciences for investigating the developmental processes of a phenomenon over time. Examples of the commonly used techniques in these areas include group-based trajectory modeling (GBTM) and the non-parametric kmeans method. Whilst kmeans has a number of benefits over GBTM, such as more relaxed statistical assumptions, generic implementations render it more sensitive to outliers and short-term fluctuations, which minimises its ability to identify long-term linear trends in data. In crime and place research, for example, the identification of such `long-term` linear trends may help to develop some theoretical understanding of criminal victimization within a geographical space [@Weisburd2004; @Griffith2004]. In order to address this sensitivity problem, we advance a novel technique named `anchored kmedoids` (`'akmedoids'`) which implements three key modifications to the existing longitudinal `kmeans` approach. First, it approximates trajectories using ordinary least square regression (`OLS`) and second, `anchors` the initialisation process with median observations. It then deploys the `medoids` observations as new anchors for each iteration of the expectation-maximization procedure [@Celeux1992]. These modifications ensure that the impacts of short-term fluctuations and outliers are minimized. By linking the final groupings back to the original trajectories, a clearer delineation of the long-term linear trends of trajectories are obtained.
@@ -152,13 +154,13 @@ knitr::kable(tble, caption = "Table 1. `Data manipulation` functions", col.names
   #row_spec(3:5, bold = T, color = "white", background = "#D7261E")
 ```
 
-#1. Data manipulation
+# 1. Data manipulation
 
 Table 1 shows the main data manipulation functions and their descriptions. These functions help to address common data issues prior to analysis, as well as basic data manipulation tasks such as converting longitudinal data from `count` to `proportion` measures (as per the crime inequality paper where `akmedoids` was first implemented). In order to demonstrate the utility of these functions, we provide a simulated dataset `traj` which can be called by typing `traj` in `R` console after loading the `akmedoids` library.
 
 
 
-### (i) `"dataImputation"` function
+## (i) `"dataImputation"` function
 
 Calculates any missing entries in a data, according to a chosen method. This function recognizes three kinds of data entries as missing. These are `NA`, `Inf`, `null`, and an option of whether or not to consider `0`'s as missing values. The function provides a replacement option for the missing entries using two methods. First, an `arithmetic` method which uses the `mean`, `minimum` or `maximum` value of the corresponding rows or columns of the missing values. Second, a `regression` method which uses OLS  regression lines to estimate the missing values. Using the regression method, only the missing data points derive values from the regression line while the remaining (observed) data points retain their original values. The function terminates if there is any trajectory with only one observation in it. Using the `'traj'` dataset, we demonstrate how the `'regression'` method estimates missing values. 
 
@@ -320,7 +322,7 @@ head(pop_imp_result)
 Given that there are only two data points in each row, the `regression` method will simply generate the missing values by fitting a straight line to the available data points. The higher the number of available data points in any trajectory the better the estimation of the missing points. Figure `r fig$ref("figs1")` illustrates this estimation process. 
 
 
-###(ii) `"rates"` function
+## (ii) `"rates"` function
 
 Given a longitudinal data ($m\times n$) and its associated denominator data ($s\times n$), the `'rates'` function converts the longitudinal data to 'rates' measures (e.g. counts per 100 residents). Both the longitudinal and the denominator data may contain different number of rows, but need to have the same number of columns, and must include the `id` (unique) field as their first column. The rows do not have to be sorted in any particular order. The rate measures (i.e. the output) will contain only rows whose `id's` match from both datasets. We demonstrate the utility of this function using the `imp_traj` object (above) and the estimated population data ('`pop_imp_result`'). 
 
@@ -342,7 +344,8 @@ nrow(crime_per_200_people)
 From the output, it can be observed that the number of rows of the output data is 9. This implies that only 9 `location_ids` match between the two datasets. The unmatched `ids` are ignored. **Note**: the calculation of `rates` often returns outputs with some of the cell entries having `Inf` and `NA` values, due to calculation errors and character values in the data. We therefore recommend that users re-run the `dataImputation` function after generating `rates` measures, especially for a large data matrix.
 
 
-###(iii) `"props"` function {#props}
+
+## (iii) `"props"` function
 
 
 Given a longitudinal data, the `props` function converts each data point (i.e. entry in each cell) to the proportion of the sum of their corresponding column. Using the `crime_per_200_people` estimated above, we can derive the `proportion of crime per 200 people` for each entry as follows:  
@@ -366,13 +369,13 @@ colSums(prop_crime_per200_people[,2:ncol(prop_crime_per200_people)])
 In line with the demonstration in Adepeju et al. (2019), we will use these `proportion` measures to demonstrate the main clustering function of this package. 
 
 
-### (iv) `"outlierDetect"` function
+## (iv) `"outlierDetect"` function
 This function is aimed at allowing users to identify any outlier observations in their longitudinal data, and replace or remove them accordingly. The first step towards identifying outliers in any data is to visualize the data. A user can then decide a cut-off value for isolating the outliers. The `outlierDetect` function provides two options for doing this: (`i`) a `quantile` method, which isolates any observations with values higher than a specified quantile of the data values distribution, and (`ii`) a `manual` method, in which a user specifies the cut-off value. The '`replace_with`' argument is used to determine whether an outlier value should be replaced with the mean value of the row or the mean value of the column in which the outlier is located. The user also has the option to simply remove the trajectory that contains an outlier value. In deciding whether a trajectory contains outlier or not, the `count` argument allows the user to set an horizontal threshold (i.e. number of outlier values that must occur in a trajectory) in order for the trajectory to be considered as having outlier observations. Below, we demonstrate the utility of the `outlierDetect` function using the `imp_traj` data above. 
 
-### (v) `"wSpaces"` function
+## (v) `"wSpaces"` function
 Given a matrix suspected to contain whitespaces, this function removes all the whitespaces and returns a cleaned data. ’Whitespaces’ are white characters often introduced during data entry, for instance by wrongly pressing the spacebar. For example, neither " A" nor "A " equates "A" because of the whitespaces that exist in them. They can also result from systematic errors in data recording devices.
 
-### (vi) `"removeRowsN"` function
+## (vi) `"removeRowsN"` function
 This function removes any rows in which an 'NA' or an 'Inf' entry is found.
 
 
@@ -426,12 +429,12 @@ print(p)
 
 Setting `replace_with = 2`, that is to replace the outlier points with the 'mean of the row observations', the function generates outputs re-plotted in Figure `r fig$ref("figs3")`.
 
-###(v) 'Other' functions
+## (vii) 'Other' functions
 
 Please see the `akmedoids` user manual for the remaining `data manipulation` functions. 
 
 
-#2. Data Clustering
+# 2. Data Clustering
 
 Table 2 shows the two main functions required to carry out the longitudinal clustering and generate the descriptive statistics of the resulting groups. The relevant functions are `akClustr` and `print_akStats`. The `akClustr` function clusters trajectories according to the similarities of their long-term trends, while the `print_akStats` function extracts descriptive and change statistics for each of the clusters. The former also generates `quality` plots for the best cluster solution.
 
@@ -491,17 +494,17 @@ print(p)
 In the following sections, we provide a worked example of clustering with `akClustr` function using the `prop_crime_per200_people` object. The function will generate cluster solution over a set of `k` values, determine the optimal value of `k`. The `print_akStats` function will then be applied to generate the descriptive summary and the change statistics of the clusters. The `prop_crime_per200_people` object is plotted in `r fig$ref("figs5")`.  
 
 
-### (i) `akClustr` function
+## (i) `akClustr` function
 
 ***Dataset***: 
 
-Each trajectory in Figure `r fig$ref("figs5")` represents the proportion of crimes per 200 residents in each location over time. The goal is to first extract the inequality trend lines such as in Figure `r fig$ref("figs4")` and then cluster them according to the similarity of their slopes. For the `akClustr` function, a user sets the `k` value which may be an integer or a vector of length two specifying the minimum and maximum numbers of clusters to loop through. In the latter case, the `akClustr` function employs either the `Silhouette` (@Rousseeuw1987)) or the `Calinski_Harabasz` score (@Calinski1974;  @Genolini2010) to determine the best cluster solution. In other words, it determines the `k` value that optimizes the specified criterion. The function is executed as follows:
+Each trajectory in Figure `r fig$ref("figs5")` represents the proportion of crimes per 200 residents in each location over time. The goal is to first extract the inequality trend lines such as in Figure `r fig$ref("figs4")` and then cluster them according to the similarity of their slopes. For the `akClustr` function, a user sets the `k` value which may be an integer or a vector of length two specifying the minimum and maximum numbers of clusters to loop through. In the latter case, the `akClustr` function employs either the `Silhouette` (@Rousseeuw1987)) or the `Calinski_Harabasz` score (@Calinski1974;  @Genolini2010) to determine the best cluster solution. In other words, it determines the `k` value that optimizes the specified criterion. The `verbose` argument can be used to control the processing messages. The function is executed as follows:
 
 ```{r, echo=TRUE, include=TRUE}
 
 #clustering
 akObj <- akClustr(prop_crime_per200_people, id_field = TRUE, 
-                                method = "linear", k = c(3,8), crit = "Calinski_Harabasz")
+                                method = "linear", k = c(3,8), crit = "Calinski_Harabasz", verbose=TRUE)
 ```
 
 In order to preview all the variables of the `quality_plot` object, type: 
@@ -529,7 +532,7 @@ names(akObj)
   + `QltyPlot` - the plot of `qualityCrit.List`, with a red vertical line to indicate the optimal value of `k`.
 
 
-*Accessing the optimal solution*
+***Accessing the optimal solution****
 
 The `qualityCrit.List` can be viewed graphically by setting the `quality_Plot` argument as `TRUE`. Also, the plot may still be accessed after clustering by printing the variable `akObj$QltyPlot`. 
 
@@ -541,27 +544,22 @@ knitr::include_graphics("caliHara.png")
 
 From (Figure `r fig$ref("figs6")`), the best value of `k` is the highest at `k=5`, and therefore determined as the best solution. It is recommended that the determination based on either of the quality criteria should be used complementarily with users judgment in relation to the problem at hand. 
 
-Given a value of `k`, the group membership (labels) of its cluster solution can be extracted by typing the following command: 
+Given a value of `k`, the group membership (labels) of its cluster solution can be extracted by entering `k'= k - 2`) into the variable `akObj$solutions[[k']]`. E.g.  
 
 ```{r, echo=TRUE, include=TRUE}
 
-#clustering
-cluster_output <- akClustr(prop_crime_per200_people, id_field = TRUE, 
-                                  method = "linear", k = c(5))
-
-#vector of group memberships
-as.vector(cluster_output$memberships$alphabetic_Labels) 
+#5-group clusters
+akObj$solutions[[3]] #for `k=5` solution
 
 ```
 
 
-Also, note that the indexes of the group memberships correspond to that of the trajectory object (`prop_crime_per200_people`) inputted into the function. That is, the membership labels, `"C"`, `"D"`, `"E"`, `....` are the group membership of the trajectories `"E01012628"`,`"E01004768"`,`"E01004803"`,`...` of the object `prop_crime_per200_people`.
+Also, note that the indexes of the group memberships correspond to that of the trajectory object (`prop_crime_per200_people`) inputted into the function. That is, the membership labels, `"D"`, `"A"`, `"A"`, `....` are the group membership of the trajectories `"E01012628"`,`"E01004768"`,`"E01004803"`,`...` of the object `prop_crime_per200_people`.
 
-### (ii) `print_akStats` function:
+## (ii) `print_akStats` function:
 
-Given the vector of group membership (labels), such as  `= c("C", "D", "E", "B",....)` in the example above, and its corresponding trajectory object,  `prop_crime_per200_people`, the `print_akStats` function generates both the `descriptive` and the `change` statistics of the groups. The function also generates the plots of the `group memberships` and their `performances` in terms of their shares of the `proportion` measure captured over time. 
+The properties (i.e. the descriptive and change statistics) of a cluster solutions (i.e. solution for any value of `k`) such as in `k = 5` above can be generated by  using the special `print` function `print_akStats`. The print function takes as input the `akObject` class, e.g. `akObj`. The descriptive statistics shows the `group memberships` and their `performances` in terms of their shares of the `proportion` measure captured over time. The change statistics shows the information regarding the direction variances of the groups in relation to reference direction. In trajectory clustering analysis, the resulting groups are often re-classified into larger classes based on the slopes, such as `Decreasing`, `Stable`, or `Increasing` classes (@Weisburd2004;Andresen et al. 2017). The slope of a group is the angle made by the medoid of the group relative to a reference line ($R$). The `reference` argument is specified as `1`, `2` or `3`, representing the `mean trajectory`, `medoid trajectory`, or a `horizontal line with slope = 0`, respectively. Let $\vartheta_{1}$ and $\vartheta_{n}$ represent the angular deviations of the group medoids with the lowest slope (negative) and highest (positive) slopes, respectively. 
 
-In trajectory clustering analysis, the resulting groups are often re-classified into larger classes based on the slopes, such as `Decreasing`, `Stable`, or `Increasing` classes (@Weisburd2004;Andresen et al. 2017). The slope of a group is the angle made by the medoid of the group relative to a reference line ($R$). The `reference` argument is specified as `1`, `2` or `3`, representing the `mean trajectory`, `medoid trajectory`, or a `horizontal line with slope = 0`, respectively. Let $\vartheta_{1}$ and $\vartheta_{n}$ represent the angular deviations of the group medoids with the lowest slope (negative) and highest (positive) slopes, respectively. 
 
 ```{r figs7, echo=FALSE, fig.cap=fig$cap("figs7", "Quantile sub-divisions of most-diverging groups (N.quant=4)"), out.width = '80%', fig.align="center"} 
 
@@ -574,23 +572,17 @@ If we sub-divide each of these slopes into a specified number of equal intervals
 In addition to the slope composition of trajectories found in each group, the quantile location of each group medoid can be used to further categorize the groups into larger classes. We refer users to the package `user manual` for more details about these parameters. Using the current example, the function can be ran as follows: 
 
 
-```{r, echo=TRUE, include=TRUE}
+```{r, echo=TRUE, include=TRUE, eval=TRUE}
 
-#assigning k=5 cluster membership to a variable
-clustr <- as.vector(cluster_output$memberships$alphabetic_Labels) 
-clustr
-#plotting the group membership
-print(print_akStats(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, N.quant = 4, type="lines", y.scaling="fixed"))
+#Specifying the optimal solution, output$optimal_k (i.e. `k = 5`) and using `lines` type graph
+prpties = print_akStats(akObj, k = 5, type="lines", y.scaling="fixed", show_Plots = FALSE)
 
 ```
 
 ```{r, echo=TRUE, include=TRUE}
 
-#assigning k=5 cluster membership to a variable
-clustr <- as.vector(cluster_output$memberships$alphabetic_Labels) 
-
-#plotting the group membership
-print(print_akStats(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, N.quant = 4, type="stacked"))
+#Specifying the optimal solution, output$optimal_k (i.e. `k = 5`) and using `stacked` type graph
+prpties = print_akStats(akObj, k = 5, type="lines", y.scaling="fixed", show_Plots = FALSE)
 
 ```
 
