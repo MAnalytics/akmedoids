@@ -27,21 +27,30 @@ stat_clustering_1 <- print_akStats(clusterng_1, k = 3, show_Plots = FALSE)
 test_that('check error msgs output correctly', {
   expect_error(print_akStats(clusterng_1, showplots=FALSE, N.quant = 2,
                          prints_text(paste("*----Unequal number of clusters",
-                                           "elements and trajectories----*", sep=" "))))
+                                           "elements and trajectories----*",
+                                           sep=" "))))
   #invalid quantile value
   expect_error(print_akStats(clusterng_1, showplots=FALSE, N.quant = 1,
-                         prints_text(paste("*----Please, enter an integer between 2",
-                                            "and 10 for the 'N.quant' argument'!!!----*", sep=" "))))
+                         prints_text(paste("*----Please, enter an integer",
+                                            "between 2",
+                                            "and 10 for the 'N.quant'",
+                                            "argument'!!!----*",
+                                           sep=" "))))
 
   #invalid quantile value
   expect_error(print_akStats(clusterng_1, df, showplots=FALSE, N.quant = 11,
-                         prints_text(paste("*----Please, enter an integer between 2",
-                                            "and 10 for the 'N.quant' argument'!!!----*", sep=" "))))
+                         prints_text(paste("*----Please, enter an",
+                                            "integer between 2",
+                                            "and 10 for the 'N.quant'",
+                                            "argument'!!!----*",
+                                           sep=" "))))
 
   #invalid quantile value
   expect_error(print_akStats(clusterng_1, df, showplots=FALSE, N.quant = 2,
-                          prints_text(paste("(: The 'id_field' is not a unique field.",
-                                            "Function terminated!!! :)", sep=" "))))
+                          prints_text(paste("(: The 'id_field' is not a",
+                                            "unique field.",
+                                            "Function terminated!!! :)",
+                                            sep=" "))))
 
 })
 
@@ -50,11 +59,11 @@ test_that('output clusters counts are accurate', {
   expect_equal(sum(as.numeric(stat_clustering_1$descriptiveStats$n)), 10)
   expect_equal(sum(as.numeric(stat_clustering_1$descriptiveStats$`n(%)`)), 100)
   expect_equal(sum(as.numeric(stat_clustering_1$changeStats$`%+ve Traj.`[1]),
-                   as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[1])), 100)
+          as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[1])), 100)
   expect_equal(sum(as.numeric(stat_clustering_1$changeStats$`%+ve Traj.`[2]),
-                   as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[2])), 100)
+          as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[2])), 100)
   expect_equal(sum(as.numeric(stat_clustering_1$changeStats$`%+ve Traj.`[3]),
-                   as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[3])), 100)
+          as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[3])), 100)
 })
 
 
@@ -70,9 +79,9 @@ incr <- function(a, b){
 
 test_that('testing cluster categories', {
   expect_equal(incr(as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[1]),
-                    as.numeric(stat_clustering_1$changeStats$`%+ve Traj.`[1])), 1)
+         as.numeric(stat_clustering_1$changeStats$`%+ve Traj.`[1])), 1)
   expect_equal(incr(as.numeric(stat_clustering_1$changeStats$`%+ve Traj.`[3]),
-                    as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[3])), 1)
+         as.numeric(stat_clustering_1$changeStats$`%-ve Traj.`[3])), 1)
 
 })
 
