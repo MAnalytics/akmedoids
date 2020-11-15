@@ -180,7 +180,9 @@ library(akmedoids)
 
 ```{r, eval=TRUE}
 
-#viewing the first 6 rows of 'traj' object
+#import and preview the first 6 rows of 'traj' object
+data(traj)
+
 head(traj)
 
 #no. of rows
@@ -266,12 +268,15 @@ The key step towards using the function for this purpose is to create a matrix, 
 
 ```{r, eval=TRUE}
 
-#viewing the data first 6 rows
-head(population)
+#import population data
+data(popl)
 
-nrow(population) #no. of rows
+#preview the data
+head(popl)
 
-ncol(population) #no. of columns
+nrow(popl) #no. of rows
+
+ncol(popl) #no. of columns
 ```
 
 
@@ -280,11 +285,11 @@ The corresponding `input` dataset is prepared as follows and saved as `populatio
 
 ```{r, echo=FALSE}
 #create a matrix of the same rows and column as the `traj` data
-pop <- as.data.frame(matrix(0, nrow(population), ncol(traj)))
+pop <- as.data.frame(matrix(0, nrow(popl), ncol(traj)))
 colnames(pop) <- names(traj) 
-pop[,1] <- as.vector(as.character(population[,1]))
-pop[,4] <- as.vector(as.character(population[,2]))
-pop[,8] <- as.vector(as.character(population[,3]))
+pop[,1] <- as.vector(as.character(popl[,1]))
+pop[,4] <- as.vector(as.character(popl[,2]))
+pop[,8] <- as.vector(as.character(popl[,3]))
 list_ <- c(2, 3, 5, 6, 7, 9, 10)
 for(u_ in seq_len(length(list_))){ #u_<-1
   pop[,list_[u_]] <- "NA"
@@ -428,11 +433,11 @@ Please see the `akmedoids` user manual for the remaining `data manipulation` fun
 
 #2. Data Clustering
 
-Table 2 shows the two main functions required to carry out the longitudinal clustering and generate the descriptive statistics of the resulting groups. The relevant functions are `akClustr` and `statPrint`. The `akClustr` function clusters trajectories according to the similarities of their long-term trends, while the `statPrint` function extracts descriptive and change statistics for each of the clusters. The latter also generates `quality` plots for the best cluster solution.
+Table 2 shows the two main functions required to carry out the longitudinal clustering and generate the descriptive statistics of the resulting groups. The relevant functions are `akClustr` and `print_akStats`. The `akClustr` function clusters trajectories according to the similarities of their long-term trends, while the `print_akStats` function extracts descriptive and change statistics for each of the clusters. The former also generates `quality` plots for the best cluster solution.
 
-The long-term trends of trajectories are defined in terms of a set of OLS regression lines. This allows the clustering function to classify the final groupings in terms of their slopes as `rising`, `stable`, and `falling`. The key benefits of this implementation is that it allows the clustering process to ignore the short-term fluctuations of actual trajectories and focus on their long-term linear trends. Adepeju and colleagues (2019) applied this technique in crime concentration research for measuring long-term inequalities in the exposure to crime at find-grained spatial scales. 
+The long-term trends of trajectories are defined in terms of a set of OLS regression lines. This allows the clustering function to classify the final groupings in terms of their slopes as `rising`, `stable`, and `falling`. The key benefits of this implementation is that it allows the clustering process to ignore the short-term fluctuations of actual trajectories and focus on their long-term linear trends. Adepeju and colleagues (2020) applied this technique in crime concentration research for measuring long-term inequalities in the exposure to crime at find-grained spatial scales. 
 
-```{r figs4, echo=FALSE, fig.cap=fig$cap("figs4", paste("Long-time linear trends of relative (`proportion`, `p`) crime exposure. Three inequality trends: trajectory i1: crime exposure is falling faster, i2, crime exposure is falling at the same rate, and i3, crime exposure is falling slower or increasing, relatively to the citywide trend. (Source:", "Adepeju et al. 2019)", sep=" ")), out.width = '60%', fig.align="center"} 
+```{r figs4, echo=FALSE, fig.cap=fig$cap("figs4", paste("Long-time linear trends of relative (`proportion`, `p`) crime exposure. Three inequality trends: trajectory i1: crime exposure is falling faster, i2, crime exposure is falling at the same rate, and i3, crime exposure is falling slower or increasing, relatively to the citywide trend. (Source:", "Adepeju et al. 2020)", sep=" ")), out.width = '60%', fig.align="center"} 
 knitr::include_graphics("inequality.png")
 ```
 
@@ -444,9 +449,9 @@ In addition to the use of trend lines, the `akmedoids` makes two other modificat
 ```{r, echo=FALSE, include=FALSE}
 
 col1 <- c("1", "2")
-col2 <- c("`akClustr`","`statPrint`")
+col2 <- c("`akClustr`","`print_akStats`")
 col3 <- c("`Anchored k-medoids clustering`","`Descriptive (Change) statistics and plots`")
-col4 <- c("Clusters trajectories into a `k` number of groups according to the similarities in their long-term trend and determines the best solution based on the Calinski-Harabasz criterion","Generates the descriptive and change statistics of groups, and also plots the groups performances")
+col4 <- c("Clusters trajectories into a `k` number of groups according to the similarities in their long-term trend and determines the best solution based on the Silhouette width measure or the Calinski-Harabasz criterion","Generates the descriptive and change statistics of groups, and also plots the groups performances")
 tble2 <- data.frame(col1, col2, col3, col4)
 tble2 <- tble2
 
@@ -483,32 +488,58 @@ print(p)
 
 ```
 
-In the following sections, we provide a worked example of clustering with `akClustr` function using the `prop_crime_per200_people` object. The `statPrint` function will then generate the descriptive summary of the clusters. The `prop_crime_per200_people` object is plotted in `r fig$ref("figs5")` as follows: 
+In the following sections, we provide a worked example of clustering with `akClustr` function using the `prop_crime_per200_people` object. The function will generate cluster solution over a set of `k` values, determine the optimal value of `k`. The `print_akStats` function will then be applied to generate the descriptive summary and the change statistics of the clusters. The `prop_crime_per200_people` object is plotted in `r fig$ref("figs5")`.  
 
 
 ### (i) `akClustr` function
 
 ***Dataset***: 
 
-Each trajectory in Figure `r fig$ref("figs5")` represents the proportion of crimes per 200 residents in each location over time. The goal is to first extract the inequality trend lines such as in Figure `r fig$ref("figs4")` and then cluster them according to the similarity of their slopes. For the `akClustr` function, a user sets the `k` value which may be an integer or a vector of length two specifying the minimum and maximum numbers of clusters to loop through. In the latter case, the `akClustr` function employs either the `Silhouette` (@Rousseeuw1987)) or the `Calinski_Harabasz` score (@Calinski1974;  @Genolini2010) to determine the best cluster solution. The function is executed as follows:
+Each trajectory in Figure `r fig$ref("figs5")` represents the proportion of crimes per 200 residents in each location over time. The goal is to first extract the inequality trend lines such as in Figure `r fig$ref("figs4")` and then cluster them according to the similarity of their slopes. For the `akClustr` function, a user sets the `k` value which may be an integer or a vector of length two specifying the minimum and maximum numbers of clusters to loop through. In the latter case, the `akClustr` function employs either the `Silhouette` (@Rousseeuw1987)) or the `Calinski_Harabasz` score (@Calinski1974;  @Genolini2010) to determine the best cluster solution. In other words, it determines the `k` value that optimizes the specified criterion. The function is executed as follows:
 
 ```{r, echo=TRUE, include=TRUE}
 
 #clustering
-quality_plot <- akClustr(prop_crime_per200_people, id_field = TRUE, 
+akObj <- akClustr(prop_crime_per200_people, id_field = TRUE, 
                                 method = "linear", k = c(3,8), crit = "Calinski_Harabasz")
+```
 
-#generate performance (quality) plot
-quality_plot
+In order to preview all the variables of the `quality_plot` object, type: 
+
+```{r, echo=TRUE, message=TRUE, eval=TRUE}
+
+names(akObj)
 
 ```
+
+* The description of these variables are as follow:
+
+  + `traj` - returns the input data set used for the clustering.
+
+  + `id_field` - indicates whether the input data set included the id field.
+
+  + `solutions` - the list of cluster solutions by `k` values.
+
+  + `qualitycriterion` - the quality criterion specified.
+
+  + `optimal_k` - the optimal value of `k` as determined by the quality criterion.
+
+  + `qualityCrit.List` - the estimated quality of cluster solutions by `k` values.
+
+  + `QltyPlot` - the plot of `qualityCrit.List`, with a red vertical line to indicate the optimal value of `k`.
+
+
+*Accessing the optimal solution*
+
+The `qualityCrit.List` can be viewed graphically by setting the `quality_Plot` argument as `TRUE`. Also, the plot may still be accessed after clustering by printing the variable `akObj$QltyPlot`. 
+
 
 ```{r figs6, echo=FALSE, fig.cap=fig$cap("figs6", "Clustering performance at different values of k"), out.width = '80%', fig.align="center"} 
 knitr::include_graphics("caliHara.png")
 ```
 
 
-In addition to the performance plot (Figure `r fig$ref("figs6")`) that shows the `Calinki-Harabasz` scores at different values of `k`, the `akClustr` function also generates output messages which include the group memberships of the best solution, as determined quality criterion used. From the plot, the best value of `k` is the highest at `k=5`, and therefore determined as the best solution. It is recommended that the determination based on either of the quality criteria should be used complementarily with users judgment in relation to the problem at hand. 
+From (Figure `r fig$ref("figs6")`), the best value of `k` is the highest at `k=5`, and therefore determined as the best solution. It is recommended that the determination based on either of the quality criteria should be used complementarily with users judgment in relation to the problem at hand. 
 
 Given a value of `k`, the group membership (labels) of its cluster solution can be extracted by typing the following command: 
 
@@ -526,9 +557,9 @@ as.vector(cluster_output$memberships$alphabetic_Labels)
 
 Also, note that the indexes of the group memberships correspond to that of the trajectory object (`prop_crime_per200_people`) inputted into the function. That is, the membership labels, `"C"`, `"D"`, `"E"`, `....` are the group membership of the trajectories `"E01012628"`,`"E01004768"`,`"E01004803"`,`...` of the object `prop_crime_per200_people`.
 
-### (ii) `statPrint` function:
+### (ii) `print_akStats` function:
 
-Given the vector of group membership (labels), such as  `= c("C", "D", "E", "B",....)` in the example above, and its corresponding trajectory object,  `prop_crime_per200_people`, the `statPrint` function generates both the `descriptive` and the `change` statistics of the groups. The function also generates the plots of the `group memberships` and their `performances` in terms of their shares of the `proportion` measure captured over time. 
+Given the vector of group membership (labels), such as  `= c("C", "D", "E", "B",....)` in the example above, and its corresponding trajectory object,  `prop_crime_per200_people`, the `print_akStats` function generates both the `descriptive` and the `change` statistics of the groups. The function also generates the plots of the `group memberships` and their `performances` in terms of their shares of the `proportion` measure captured over time. 
 
 In trajectory clustering analysis, the resulting groups are often re-classified into larger classes based on the slopes, such as `Decreasing`, `Stable`, or `Increasing` classes (@Weisburd2004;Andresen et al. 2017). The slope of a group is the angle made by the medoid of the group relative to a reference line ($R$). The `reference` argument is specified as `1`, `2` or `3`, representing the `mean trajectory`, `medoid trajectory`, or a `horizontal line with slope = 0`, respectively. Let $\vartheta_{1}$ and $\vartheta_{n}$ represent the angular deviations of the group medoids with the lowest slope (negative) and highest (positive) slopes, respectively. 
 
@@ -549,7 +580,7 @@ In addition to the slope composition of trajectories found in each group, the qu
 clustr <- as.vector(cluster_output$memberships$alphabetic_Labels) 
 clustr
 #plotting the group membership
-print(statPrint(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, N.quant = 4, type="lines", y.scaling="fixed"))
+print(print_akStats(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, N.quant = 4, type="lines", y.scaling="fixed"))
 
 ```
 
@@ -559,7 +590,7 @@ print(statPrint(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, 
 clustr <- as.vector(cluster_output$memberships$alphabetic_Labels) 
 
 #plotting the group membership
-print(statPrint(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, N.quant = 4, type="stacked"))
+print(print_akStats(clustr, prop_crime_per200_people, id_field=TRUE, reference = 1, N.quant = 4, type="stacked"))
 
 ```
 
