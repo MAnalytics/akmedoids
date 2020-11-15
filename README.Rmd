@@ -252,6 +252,14 @@ prpties$cluster_Plot
 
 ```
 
+To visualize the corresponding stacked histogram:
+
+```{r, echo=TRUE, message=FALSE, eval=TRUE}
+
+prpties = print_akStats(output, k = 3, type="stacked", y.scaling="fixed", show_Plots = FALSE)
+
+prpties$cluster_Plot
+```
 
 ### Documentation
 
