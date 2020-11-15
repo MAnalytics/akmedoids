@@ -572,21 +572,23 @@ If we sub-divide each of these slopes into a specified number of equal intervals
 In addition to the slope composition of trajectories found in each group, the quantile location of each group medoid can be used to further categorize the groups into larger classes. We refer users to the package `user manual` for more details about these parameters. Using the current example, the function can be ran as follows: 
 
 
-```{r, echo=TRUE, include=TRUE, eval=TRUE}
+```{r, echo=TRUE, include=TRUE, eval=TRUE, fig.width=5,fig.height=5,fig.align="center"}
 
 #Specifying the optimal solution, output$optimal_k (i.e. `k = 5`) and using `lines` type graph
 prpties = print_akStats(akObj, k = 5, type="lines", y.scaling="fixed", show_Plots = FALSE)
 
+prpties
 ```
 
-```{r, echo=TRUE, include=TRUE}
+```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
 
 #Specifying the optimal solution, output$optimal_k (i.e. `k = 5`) and using `stacked` type graph
-prpties = print_akStats(akObj, k = 5, type="lines", y.scaling="fixed", show_Plots = FALSE)
+prpties = print_akStats(akObj, k = 5, type="stacked", y.scaling="fixed", show_Plots = FALSE)
 
+prpties
 ```
 
-```{r figs8, echo=FALSE, fig.cap=fig$cap("figs8","group memberships"), out.width = '85%', fig.align="center"} 
+```{r figs8, echo=FALSE, eval=FALSE, include=FALSE, fig.cap=fig$cap("figs8","group memberships"), out.width = '85%', fig.align="center"} 
 
 knitr::include_graphics("traj_perfm.png")
 
@@ -599,7 +601,7 @@ In the context of the long-term inequality study, broad conclusions can be made 
 It is important to state that this proposed classification method is  simply advisory; you may devise a different approach or interpretation depending on your research questions and data.
 
 
-```{r figs9, echo=FALSE, fig.cap=fig$cap("figs9", "group quality over time"), out.width = '60%', fig.align="center"} 
+```{r figs9, echo=FALSE, eval=FALSE, include=FALSE, fig.cap=fig$cap("figs9", "group quality over time"), out.width = '60%', fig.align="center"} 
 
 knitr::include_graphics("traj_perfm2.png")
 
