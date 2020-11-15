@@ -5,4 +5,7 @@
 cran-comments.md
 paper.bib
 paper.md
+README.html
+input
+quality_Plot.png
 ^README\.Rmd$
