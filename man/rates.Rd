@@ -38,9 +38,9 @@ denominator data
 traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
 replace_with = 1, fill_zeros = FALSE)
 
-pop <- population #read denominator data
+pop <- popl #read denominator data
 
-pop2 <- as.data.frame(matrix(0, nrow(population), ncol(traj)))
+pop2 <- as.data.frame(matrix(0, nrow(popl), ncol(traj)))
 
 colnames(pop2) <- names(traj2$CompleteData)
 
