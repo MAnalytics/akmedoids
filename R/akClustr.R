@@ -80,7 +80,8 @@
 #' @importFrom Hmisc cut2
 #' @importFrom utils flush.console
 #' @importFrom grDevices dev.new
-#' @importFrom ggplot2 ggplot aes geom_line geom_point ggtitle geom_vline geom_smooth
+#' @importFrom ggplot2 ggplot aes geom_line geom_point
+#' ggtitle geom_vline geom_smooth
 #' @importFrom clusterCrit intCriteria
 #' @export
 
@@ -237,7 +238,7 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
     #compute the clusters for all values of k
 
     #initialise a counter
-    counter = 0
+    counter <- 0
 
     if(verbose == TRUE){
       flush.console()
@@ -247,7 +248,7 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
 
     for(r_ in seq_len(length(k_))){
 
-      counter = counter + 1
+      counter <- counter + 1
       #1st iteration
 
       part2 <- affectIndivC(dat_slopp,
@@ -391,7 +392,8 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
         #terminate if missing or infinite values exist
         if(any(is.na(qualit$qualityCrit))){
           stop(paste("*----*(: 'Silhouette' criterion is not applicable",
-                     "to this dataset!. Try 'Calinski_Harabasz':)*----*", sep=" "))
+                     "to this dataset!. Try 'Calinski_Harabasz':)*----*",
+                     sep=" "))
         }
 
         #determine the 'elbow' point, using 'linearity' method
