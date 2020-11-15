@@ -5,9 +5,9 @@ traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
   replace_with = 1, fill_zeros = FALSE)
 
 #create full population data from 'population.rda'
-pop <- population
+pop <- popl
 
-pop2 <- as.data.frame(matrix(0, nrow(population), ncol(traj)))
+pop2 <- as.data.frame(matrix(0, nrow(popl), ncol(traj)))
 colnames(pop2) <- names(traj2)
 
 pop2[,1] <- as.vector(as.character(pop[,1]))
@@ -60,7 +60,7 @@ test_that('uniqueness of solutions', {
 test_that('output correct error messages', {
   expect_error(rates(traj=traj2, denomin=pop_imp_result,id_field=FALSE,
    prints_text("*---unique field must be set as 'TRUE'!---*")))
-  expect_error(rates(traj=traj2, denomin=population,id_field=TRUE,
+  expect_error(rates(traj=traj2, denomin=popl,id_field=TRUE,
    prints_text("(: The 'id_field' of the 'traj' object is not a",
                "unique field. Function terminated!!! :)", sep=" ")))
 
