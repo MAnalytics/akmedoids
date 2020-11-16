@@ -78,7 +78,7 @@
 #' Data Analysis. Spring-Verlag New York (2016)}
 #'
 #' @export
-print_akStats <- function(akObject, k = 3, reference = 1,
+print_akStats<- function(akObject, k = 3, reference = 1,
                       N.quant = 4, show_Plots=TRUE,
                       type = "lines",
                       y.scaling="fixed"){
