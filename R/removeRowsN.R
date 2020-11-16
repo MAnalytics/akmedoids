@@ -1,10 +1,8 @@
 #' @title Removes rows that contain 'NA' and/or 'Inf' entries
 #' @description This function removes any rows in which an 'NA'
-#' or an 'Inf' entry is found.The ability to remove records with
-#' 'Inf' entries distinguishes this function from the popular
-#' 'na.omit()' function.
-#'  removal of '' function differs from
-#' 'na.omit(data)'
+#' or an 'Inf' entry is found. The function is also able to
+#' remove records with 'Inf' entries, distinguishing it from
+#' the popular 'na.omit()' function in R.
 #' @param traj [data.frame (numeric)]: longitudinal data.
 #' Each row represents an individual trajectory (of observations).
 #' The columns show the observations at consecutive time points.
