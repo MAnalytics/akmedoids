@@ -414,13 +414,24 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
         #             round(elbP$x, digits=0),
         #             "clusters. See the plot for further examination!",
         #             sep=" ")
-        final_result <- list(traj=traj,
+
+        if(k[1]==k[2]){
+         final_result <- list(traj=traj,
                                id_field = id_field,
                                solutions=result_,
                                qualitycriterion =  qualiCriterion,
-                               optimal_k=(elbP$x),
-                               qualityCrit.List=qualit,
-                               QltyPlot=plt)
+                               qualityCrit.List=qualit)
+        }
+
+        if(k[1]!=k[2]){
+          final_result <- list(traj=traj,
+                             id_field = id_field,
+                             solutions=result_,
+                             qualitycriterion =  qualiCriterion,
+                             optimal_k=(elbP$x),
+                             qualityCrit.List=qualit,
+                             QltyPlot=plt)
+        }
 
         #}
         #----------------------------------
@@ -471,17 +482,28 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
       #                       ##qualityCrit.List=qualit, message=out_msg)
 
       #combine the results
-      final_result <- list(traj=traj,
+      if(k[1]==k[2]){
+       final_result <- list(traj=traj,
+                           id_field = id_field,
+                           solutions=result_,
+                           qualitycriterion =  qualiCriterion,
+                           qualityCrit.List=qualit)
+      }
+
+      if(k[1]!=k[2]){
+       final_result <- list(traj=traj,
                            id_field = id_field,
                            solutions=result_,
                            qualitycriterion =  qualiCriterion,
                            optimal_k=optimal_k,
                            qualityCrit.List=qualit,
                            QltyPlot=plt)
+      }
+
       ##qualityCrit.List=qualit, message=out_msg)
 
 
-      if(quality_Plot==TRUE){
+      if(quality_Plot==TRUE & k[1]!=k[2]){
         flush.console()
         dev.new(width=3, height=3)
         print(plt)
