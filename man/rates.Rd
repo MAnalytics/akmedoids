@@ -27,7 +27,15 @@ each object.}
 \code{traj/denomin} is expressed. Default is \code{100}.}
 }
 \value{
-A matrix of 'rates' measures
+An object which comprised of four output variables, namely:
+(i) `$common_ids` - individual ids present in both
+`traj` (trajectory data) and `denomin` (denominator data);
+(ii) `$ids_unique_to_traj_data` - individual ids unique to
+trajectory data (i.e. not present in the denominator data);
+(iii) `$ids_unique_to_denom_data` - individual ids unique
+to denominator data (i.e. not present in the trajectory data);
+(iv) `` - a dataframe of rates estimates. Note: only the individual
+ids in `$rates_estimates` are used in the `rates` estimation.
 }
 \description{
 Calculates rates from 'observed' count and a
