@@ -3,26 +3,20 @@
 #' @description This function perform two tasks:
 #' (i) it generate the descriptive and change statistics
 #' of groups, particularly suited for the outputs form
-#' the \code{\link{akClustr}} function, and
+#' the \code{\link{akclustr}} function, and
 #' (ii) generates the plots of the groups (performances).
-#' @param akObject An output of \code{\link{akClustr}} function.
+#' @param ak_object An output of \code{\link{akclustr}} function.
 #' The object contains individual trajectories and their cluster
 #' solution(s) at the specified values of \code{k}. Also, includes
 #' the optimal value of \code{k} based on the criterion specified.
 #' at (different) values of \code{k} the \code{traj}.
 #' @param k [integer] \code{k} cluster to generate its solution.
-#' @param type [character] plot type. Available options are:
-#' \code{"lines"} and \code{"stacked"}.
-#' @param y.scaling [character] works only if \code{type="lines"}.
-#' \code{y.scaling} set the vertical scales of the cluster panels.
-#' Options are: \code{"fixed"}: uses uniform scale for all panels,
-#' \code{"free"}: uses variable scales for panels.
 #' @param reference [numeric] Specifying the reference line from
 #' which the direction of each group is measured. Options are:
 #' \code{1}: slope of mean trajectory, \code{2}: slope of medoid
 #' trajectory, \code{3}: slope of a horizontal line
 #' (i.e. slope = 0). Default: \code{1}.
-#' @param N.quant [numeric] Number of equal intervals (quantiles)
+#' @param n_quant [numeric] Number of equal intervals (quantiles)
 #' to create between the reference line \code{(R)} and the medoids
 #' \code{(M)} of the most-diverging groups of both sides of
 #' \code{(R)}. Default is \code{4} - meaning quartile subdivisions
@@ -30,39 +24,33 @@
 #' returns the quartile in which the medoid of each group falls.
 #' This result can be used to further categorize the groups into
 #' 'classes'. For example, groups that fall within the \code{1st}
-#' quartile may be classified as 'Stable' groups (Adepeju et al. 2019).
-#' @param show_Plots [TRUE or FALSE] To display cluster plots.
-#' Defaults \code{TRUE}
-#' @s3method print_akStats
+#' quartile may be classified as 'Stable' groups (Adepeju et al. 2020).
+#' @param show_plots [TRUE or FALSE] To display cluster plots.
+#' Line plots are displayed by default. Please, see
+#' \code{plot_akstats} function for more plot options.
+#' Defaults \code{FALSE}
+#' @s3method print_akstats
 #' @examples
 #'
 #' data(traj)
 #'
-#' trajectry <- dataImputation(traj, id_field = TRUE, method = 1,
+#' trajectry <- data_imputation(traj, id_field = TRUE, method = 1,
 #' replace_with = 1, fill_zeros = FALSE)
 #'
 #' print(trajectry$CompleteData)
 #'
 #' trajectry <- props(trajectry$CompleteData, id_field = TRUE)
 #'
-#' akSolution <- akClustr(trajectry, id_field = TRUE,
-#' method = "linear", k = c(3,5), crit='Calinski_Harabasz')
+#' aksolution <- akclustr(trajectry, id_field = TRUE,
+#'     method = "linear", k = c(3,5), crit='Calinski_Harabasz')
 #'
-#' print_akStats(akSolution, k = 4, type="lines",
-#' y.scaling="fixed", show_Plots = TRUE)
+#' print_akstats(aksolution, k = 4, show_plots=FALSE)
 #'
-#' print_akStats(akSolution, k = 4, reference = 1,
-#' show_Plots = TRUE, N.quant = 4, type="stacked")
-#'
-#' @details Generates the descriptive and change statistics
-#' of the trajectory groupings. Given an \code{akObject} class (from
-#' the \code{akClustr} function), this function generates both the
-#' descriptive and change statistics of the clusters.
-#' There is also an option to show the plots of cluster groups.
-#' The function draw from the functionalities of the
-#' \code{ggplot2} library.
-#' For a more customized visualisation, we recommend that users
-#' deploy \code{ggplot2} directly (\code{Wickham H. (2016)}).
+#' @details Generates the plot of trajectory groupings.
+#' Given an \code{ak_object} class (from
+#' the \code{akclustr} function), this function show the
+#' plots of cluster groups. The plot component draws from
+#' \code{plot_akstats} function.
 #' @return A plot showing group membership or sizes (proportion)
 #' and statistics.
 #' @references \code{1}. Adepeju, M. et al. (2019). Anchored k-medoids:
@@ -70,48 +58,44 @@
 #' inequality in the exposure to crime across micro places (Submitted).
 #' @importFrom reshape2 melt
 #' @importFrom stats quantile
-#' @importFrom utils flush.console
-#' @importFrom grDevices dev.new
 #' @importFrom ggplot2 stat_summary scale_colour_brewer theme_light
 #' theme geom_area scale_x_continuous scale_fill_brewer facet_wrap
 #' @references \code{Wickham H. (2016). Elegant graphics for
 #' Data Analysis. Spring-Verlag New York (2016)}
 #'
 #' @export
-print_akStats<- function(akObject, k = 3, reference = 1,
-                      N.quant = 4, show_Plots=TRUE,
-                      type = "lines",
-                      y.scaling="fixed"){
+print_akstats<- function(ak_object, k = 3, reference = 1,
+                      n_quant = 4,
+                      show_plots=FALSE){
 
-  UseMethod('print_akStats')
+  UseMethod('print_akstats')
 }
 
 #' @export
-print_akStats.default <- function(akObject, k = 3, reference = 1,
-                     N.quant = 4, show_Plots=TRUE,
-                     type = "lines",
-                     y.scaling="fixed"){
+print_akstats.default <- function(ak_object, k = 3, reference = 1,
+                     n_quant = 4,
+                     show_plots=FALSE){
 
   #first testing that correct values of k is specified.
   #get all values of k..
-  all_K <- as.vector(unlist(lapply(akObject$solutions, attributes)))
+  all_K <- as.vector(unlist(lapply(ak_object$solutions, attributes)))
 
   if(!k %in% all_K){
     stop(paste("*----k =", k, "is not applicable!. Print the",
-    "'akObject' to see allowed k-values----*", sep=" "))
+    "'akobject' to see allowed k-values----*", sep=" "))
   }
 
   # check object type
-  if(class(akObject)[1] != "akObject"){
-    stop("*----Object not right type!! 'akClustr' object required!----*")
+  if(class(ak_object)[1] != "akobject"){
+    stop("*----Object not right type!! 'akclustr' object required!----*")
   }
 
   #test data type/or class
 
   #extract variables
-  traj <- akObject$traj
-  clustr <- as.vector(akObject$solutions[[k-2]])
-  id_field <- akObject$id_field
+  traj <- ak_object$traj
+  clustr <- as.vector(ak_object$solutions[[k-2]])
+  id_field <- ak_object$id_field
 
   #testing that data and clusters have equal number of elements
   if(length(clustr)!=nrow(traj)){
@@ -123,11 +107,11 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
 
   dat <- traj #back up traj
 
-  N.quant <- round(N.quant, digits = 0)
+  n_quant <- round(n_quant, digits = 0)
 
-  if(N.quant < 2 | N.quant > 10){
+  if(n_quant < 2 | n_quant > 10){
     stop(paste("*----Please, enter an integer between 2",
-    "and 10 for the 'N.quant' argument'!!!----*", sep=" "))
+    "and 10 for the 'n_quant' argument'!!!----*", sep=" "))
   }
 
   #test id_field is true
@@ -194,66 +178,21 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
     #----------------------------------------------------
     #plotting
     #----------------------------------------------------
-    ggplot <- aes <- Year <- value <- id <- geom_line <- facet_wrap <-
-    geom_smooth <- theme_minimal <- variable <- NULL
 
-    #plot option 1:
-    if(type=="lines"){
-      if(y.scaling=="fixed"){
-        plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
-                                            group=id, color=clusters)) +
-            geom_line() +
-            stat_summary(fun.y=mean, geom="line", aes(group=clusters),
-                                            color="black", size=1) +
-            facet_wrap(~clusters, scales = "fixed") +
-            facet_wrap(~clusters) +
-            scale_colour_brewer(palette = "Set1")) #clusters
-      }
+    #calling the 'plot_akstats'
+    plt = plot_akstats(ak_object, k = k, type="lines", y_scaling="fixed")
 
-      if(y.scaling=="free"){
-        plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
-                                         group=id, color=clusters)) +
-            geom_line() +
-            stat_summary(fun.y=mean, geom="line", aes(group=clusters),
-                         color="black", size=1) +
-            facet_wrap(~clusters, scales = "free") +
-            facet_wrap(~clusters) +
-            scale_colour_brewer(palette = "Set1") +
-            theme_light()) #clusters
-      }
+    if(show_plots==TRUE){
+      #plot
+      #flush.console()
+      #dev.new(width=3, height=3)
+      print(plt)
     }
 
-    #----------------------------------------------------
-    #plot option 2:
-    if(type=="stacked"){
-      change_ave_yr_ALL_transpose <- t(change_ave_yr_ALL)
-      grp.dat<-data.frame(change_ave_yr_ALL_transpose,
-                      row.names=seq_len(nrow(change_ave_yr_ALL_transpose)))
-      names(grp.dat)<-clusters_uni
-      p.dat<-data.frame(Year=row.names(grp.dat),grp.dat,stringsAsFactors=F)
-      p.dat<-melt(p.dat,id='Year')
-      p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
-      class(p.dat$Year)
-
-      plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
-      geom_area(aes(fill=variable), colour = "gray30", position='fill') +
-      scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
-                     labels=Year)+
-      scale_fill_brewer(palette = "Set1") +
-      theme_light())
+    #do not show plot
+    if(show_plots==FALSE){
+      #Do nothing
     }
-
-  if(show_Plots==TRUE){
-    #plot
-    flush.console()
-    dev.new(width=3, height=3)
-    print(plt)
-  }
-
-  #not show plot
-  if(show_Plots==FALSE){
-    #Do nothing
-  }
 
   #----------------------------------------------------
   #To generate descriptive statistics
@@ -380,7 +319,7 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
              '%+ve Traj.'-> % of trajectories with negative slopes")
 
   #-----------------------------------------------------------------
-  #create the 'N.quant' intervals on each side of the reference line
+  #create the 'n_quant' intervals on each side of the reference line
   #get the medoid of each group
 
   gr_medoid <- NULL
@@ -408,13 +347,13 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
 
   #create the intervals
   interv_ <- as.numeric(as.character(quantile(c(min(all_f), max(all_f)),
-                                            probs = seq(0, 1, 1/N.quant))))
+                                            probs = seq(0, 1, 1/n_quant))))
 
   #determine where medoid of each group falls
   int_V <- findInterval(as.numeric(as.character(temp_falling_$slope)),
                       interv_, all.inside = TRUE)
 
-  intervals_fall <- (N.quant:1)[int_V]
+  intervals_fall <- (n_quant:1)[int_V]
 
   #first, collate all medoids that are falling relative to the reference line
   temp_rising_ <- gr_medoid[which(as.numeric(as.character(gr_medoid$slope))>=
@@ -427,7 +366,7 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
   #create the intervals
   interv_ <- as.numeric(as.character(quantile(c(min(all_r),
                                             max(all_r)) ,
-                                            probs = seq(0, 1, 1/N.quant))))
+                                            probs = seq(0, 1, 1/n_quant))))
 
   #determine where medoid of each group falls
   intervals_rise <- findInterval(as.numeric(as.character(temp_rising_$slope)),
@@ -447,23 +386,23 @@ print_akStats.default <- function(akObject, k = 3, reference = 1,
   class2<-rank_positive[intervals_rise]
   class <- c(class1, class2)
   class <- data.frame(class)
-  colnames(class) <- c(paste("Qtl:","1st-",N.quant, "th", sep=""))
+  colnames(class) <- c(paste("Qtl:","1st-",n_quant, "th", sep=""))
 
-  if(N.quant==2){
-    colnames(class) <- c(paste("Qtl:","1st-",N.quant, "nd", sep=""))
+  if(n_quant==2){
+    colnames(class) <- c(paste("Qtl:","1st-",n_quant, "nd", sep=""))
   }
 
-  if(N.quant==3){
-    colnames(class) <- c(paste("Qtl:","1st-",N.quant, "rd", sep=""))
+  if(n_quant==3){
+    colnames(class) <- c(paste("Qtl:","1st-",n_quant, "rd", sep=""))
   }
 
   change_Stats <- cbind(change_Stats, class)
 
-  all_statistics <- list(descriptiveStats = desc_Stats,
-                       changeStats = change_Stats, cluster_Plot = plt)
+  all_statistics <- list(descriptive_stats = desc_Stats,
+                       change_stats = change_Stats)
 
   #-------------------
-    return(all_statistics)
+  return(all_statistics)
 }
 
 
