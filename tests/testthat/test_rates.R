@@ -31,30 +31,30 @@ test_that('dimension of test data', {
   expect_equal(length(crime_rates), 4)
 
   expect_equal(length(crime_rates$common_ids), 9)
-  expect_equal(length(crime_rates$noncommon_ids_from_trajectories), 1)
-  expect_equal(length(crime_rates$noncommon_ids_from_denominator), 2)
-  expect_equal(ncol(crime_rates$rates_data), 10)
-  expect_equal(nrow(crime_rates$rates_data), 9)
+  expect_equal(length(crime_rates$ids_unique_to_traj_data), 1)
+  expect_equal(length(crime_rates$ids_unique_to_denom_data), 2)
+  expect_equal(ncol(crime_rates$rates_estimates), 10)
+  expect_equal(nrow(crime_rates$rates_estimates), 9)
 })
 
 test_that('data types correct', {
-  expect_is(crime_rates$rates_data,'data.frame')
+  expect_is(crime_rates$rates_estimates,'data.frame')
   expect_is(crime_rates$common_ids, 'character')
-  expect_is(crime_rates$noncommon_ids_from_trajectories, 'character')
-  expect_is(crime_rates$noncommon_ids_from_denominator, 'character')
+  expect_is(crime_rates$ids_unique_to_traj_data, 'character')
+  expect_is(crime_rates$ids_unique_to_denom_data, 'character')
 })
 
 test_that('no missing values in the solution', {
-  expect_identical(crime_rates$rates_data, na.omit(crime_rates$rates_data))
+  expect_identical(crime_rates$rates_estimates, na.omit(crime_rates$rates_estimates))
 })
 
 test_that('uniqueness of solutions', {
   expect_false(isTRUE(all.equal(crime_rates$common_ids,
-                                crime_rates$noncommon_ids_from_trajectories)))
+                                crime_rates$ids_unique_to_traj_data)))
   expect_false(isTRUE(all.equal(crime_rates$common_ids,
-                                crime_rates$noncommon_ids_from_denominator)))
-  expect_false(isTRUE(all.equal(crime_rates$noncommon_ids_from_trajectories,
-                                crime_rates$noncommon_ids_from_denominator)))
+                                crime_rates$ids_unique_to_denom_data)))
+  expect_false(isTRUE(all.equal(crime_rates$ids_unique_to_traj_data,
+                                crime_rates$ids_unique_to_denom_data)))
 })
 
 test_that('output correct error messages', {
