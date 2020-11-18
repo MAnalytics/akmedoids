@@ -19,7 +19,7 @@
 #' @usage rates(traj, denomin, id_field, multiplier)
 #' @examples
 #'
-#' traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
+#' traj2 <- data_imputation(traj, id_field = TRUE, method = 2,
 #' replace_with = 1, fill_zeros = FALSE)
 #'
 #' pop <- popl #read denominator data
@@ -42,7 +42,7 @@
 #' }
 #'
 #' #estimate missing fields
-#' pop_imp_result <- dataImputation(pop2, id_field = TRUE, method = 2,
+#' pop_imp_result <- data_imputation(pop2, id_field = TRUE, method = 2,
 #' replace_with = 1, fill_zeros = FALSE)
 #'
 #' #calculate rates i.e. crimes per 200 population
