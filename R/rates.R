@@ -49,7 +49,16 @@
 #' crime_rates <- rates(traj2$CompleteData, denomin=pop_imp_result$CompleteData,
 #' id_field=TRUE, multiplier = 200)
 #'
-#' @return A matrix of 'rates' measures
+#' @return An object which comprised of four output variables, namely:
+#' (i) `$common_ids` - individual ids present in both
+#' `traj` (trajectory data) and `denomin` (denominator data);
+#' (ii) `$ids_unique_to_traj_data` - individual ids unique to
+#' trajectory data (i.e. not present in the denominator data);
+#' (iii) `$ids_unique_to_denom_data` - individual ids unique
+#' to denominator data (i.e. not present in the trajectory data);
+#' (iv) `` - a dataframe of rates estimates. Note: only the individual
+#' ids in `$rates_estimates` are used in the `rates` estimation.
+#'
 #' @export
 
 
@@ -143,9 +152,9 @@ rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
   colnames(data_Fresh) <-  n_CL
 
   solution <- list(common_ids=common_ids,
-                  noncommon_ids_from_trajectories=noncommon_ids_traj,
-                  noncommon_ids_from_denominator=noncommon_ids_denom,
-                  rates_data = data_Fresh)
+                  ids_unique_to_traj_data=noncommon_ids_traj,
+                  ids_unique_to_denom_data=noncommon_ids_denom,
+                  rates_estimates = data_Fresh)
 
   return(solution)
 
