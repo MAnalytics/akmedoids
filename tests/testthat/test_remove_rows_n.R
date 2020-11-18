@@ -1,10 +1,10 @@
-context("Testing removeRowsN.R function")
+context("Testing remove_rows_n.R function")
 
 test.data2 <- traj
 
-ch_1 <- removeRowsN(test.data2, remove=1)
-ch_2 <- removeRowsN(test.data2, remove=2)
-ch_3 <- removeRowsN(test.data2, remove=3)
+ch_1 <- remove_rows_n(test.data2, remove=1)
+ch_2 <- remove_rows_n(test.data2, remove=2)
+ch_3 <- remove_rows_n(test.data2, remove=3)
 
 test_that('check removal operation is correct', {
   expect_equal(ch_1$totalRowsRemoved, 4)

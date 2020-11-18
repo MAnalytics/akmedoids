@@ -1,4 +1,4 @@
-context("Testing outlierDetect.R function")
+context("Testing outlier_detect.R function")
 
 sn <- c('sn1','sn2','sn3', 'sn4', 'sn5')
 set.seed(1)
@@ -24,20 +24,20 @@ set.seed(1)
 test.data5[3,2:7] <- sample(40:50,6)#all outliers
 
 test_that('output correct error messages', {
-  expect_error(outlierDetect(test.data4, id_field = TRUE, threshold = 1.8,
+  expect_error(outlier_detect(test.data4, id_field = TRUE, threshold = 1.8,
    prints_text(paste("*--Terminated!!!--*, The 'threshold'",
                      "value should be between 0 and 1", sep=" "))))
-  expect_error(outlierDetect(test.data4, id_field = TRUE,
+  expect_error(outlier_detect(test.data4, id_field = TRUE,
                              threshold = 0.8, replace_with=1,
    prints_text("*--Outlier observation(s) was found in trajectory 3 --*")))
-  expect_error(outlierDetect(test.data4, id_field = TRUE,
+  expect_error(outlier_detect(test.data4, id_field = TRUE,
                              threshold = 0.8, replace_with=2,
    prints_text("*--Outlier observation(s) was found in trajectory 3 --*")))
 
 })
 
 #basic detect and replace
-outlier_detection <- outlierDetect(test.data4, id_field = TRUE)
+outlier_detection <- outlier_detect(test.data4, id_field = TRUE)
 
 test_that('output dimensions are correct', {
   expect_equal(length(outlier_detection$Outlier_Observations), 1)
@@ -47,14 +47,14 @@ test_that('output dimensions are correct', {
   expect_equal(ncol(outlier_detection$Outliers_Replaced), 7)
 })
 
-outlier_detection2 <- outlierDetect(test.data5, id_field = TRUE)
+outlier_detection2 <- outlier_detect(test.data5, id_field = TRUE)
 
 test_that('output values correct and complete', {
   expect_equal(outlier_detection2$Threshold, 45.1)
   expect_equal(outlier_detection2$Outliers_Replaced[3,4], 13)
 })
 
-outlier_detection3 <- outlierDetect(test.data5, id_field = TRUE,
+outlier_detection3 <- outlier_detect(test.data5, id_field = TRUE,
                                     threshold=0.75, replace_with=3)
 
 test_that('remove outliers', {

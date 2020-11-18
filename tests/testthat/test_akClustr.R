@@ -1,4 +1,4 @@
-context("Testing akClustr.R function")
+context("Testing akclustr.R function")
 
 #simulate dataset
 sn <- c('sn1','sn2','sn3', 'sn4', 'sn5')
@@ -19,34 +19,34 @@ test.data9 <- test.data8
 test.data9$sn[3] <- "sn2"
 
 test_that('print the right message post clustering', {
-  expect_that(akClustr(test.data8, id_field = TRUE, k = c(3),
+  expect_that(akclustr(test.data8, id_field = TRUE, k = c(3),
           crit = 'Calinski_Harabasz', verbose=TRUE),
           prints_text("solution of k = 3 determined!"))
 })
 
 test_that('check error msgs output correctly', {
   #cluster number cannot be less than 3
-  expect_error(akClustr(test.data8, id_field = TRUE, k = c(2),
+  expect_error(akclustr(test.data8, id_field = TRUE, k = c(2),
          prints_text("(: Program terminated!!! :)")))
   #number of clusters cannot descend
-  expect_error(akClustr(test.data8, id_field = TRUE, k = c(4,3),
+  expect_error(akclustr(test.data8, id_field = TRUE, k = c(4,3),
          prints_text("(: Program terminated!!! :)")))
   #id_field non_unique
-  expect_error(akClustr(test.data9, id_field = TRUE, k = c(3),
+  expect_error(akclustr(test.data9, id_field = TRUE, k = c(3),
          prints_text(paste("(: The 'id_field' does not contain unique",
          "elements. Function terminated!!! :)", sep=" "))))
-  expect_error(akClustr(test.data8, id_field = TRUE, k = c(3,5),
+  expect_error(akclustr(test.data8, id_field = TRUE, k = c(3,5),
          crit="someRandomCrit",
          prints_text(paste("*----*(: Quality criterion specified is NOT",
          "RECOGNISED!! Execution terminated!!! :)*----*", sep= " "))))
-  expect_error(akClustr(test.data8, id_field = TRUE, k = c(3,5),
+  expect_error(akclustr(test.data8, id_field = TRUE, k = c(3,5),
       crit="Silhouette",
       prints_text(paste("*----*(: 'Silhouette' criterion is not applicable!.",
       "Try 'Calinski_Harabasz':)*----*", sep=" "))))
 })
 
 
-output <- akClustr(test.data8, id_field = TRUE, k = c(3, 5),
+output <- akclustr(test.data8, id_field = TRUE, k = c(3, 5),
                          crit = "Calinski_Harabasz")
 
 test_that('check that output is complete', {

@@ -1,7 +1,7 @@
 context("Testing rates.R function")
 
 #utilise trajectory data ('traj.rda')
-traj2 <- dataImputation(traj, id_field = TRUE, method = 2,
+traj2 <- data_imputation(traj, id_field = TRUE, method = 2,
   replace_with = 1, fill_zeros = FALSE)
 
 #create full population data from 'population.rda'
@@ -21,7 +21,7 @@ list_ <- c(2, 3, 5, 6, 7, 9, 10) #vector of missing years
   }
 
 #estimate missing fields
-pop_imp_result <- dataImputation(pop2, id_field = TRUE, method = 2,
+pop_imp_result <- data_imputation(pop2, id_field = TRUE, method = 2,
   replace_with = 1, fill_zeros = FALSE)
 
 crime_rates <- rates(traj=traj2$CompleteData,

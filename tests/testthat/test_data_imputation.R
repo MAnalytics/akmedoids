@@ -1,4 +1,4 @@
-context("Testing dataImputation.R function")
+context("Testing data_imputation.R function")
 
 sn <- c('sn1','sn2','sn3', 'sn4', 'sn5')
 set.seed(3)
@@ -31,7 +31,7 @@ test_that('data types are correct', {
   expect_is(test.data6$col2, 'integer')
 })
 
-test1 <- dataImputation(test.data6, id_field = TRUE, method = 1,
+test1 <- data_imputation(test.data6, id_field = TRUE, method = 1,
                replace_with = 1)
 
 test_that('checking output is complete and dimensions correct', {
@@ -43,18 +43,18 @@ test_that('checking output is complete and dimensions correct', {
 })
 
 test_that('detecting singular entry', {
-  expect_error(dataImputation(test.data7, id_field = TRUE,
+  expect_error(data_imputation(test.data7, id_field = TRUE,
                               method = 2, replace_with = 1,
   prints_text(paste("Trajectory has only one data point.",
                     "Unable to inter/extrapolate between points.",
                     "Program terminated!!", sep=" "))))
 })
 
-test2 <- dataImputation(test.data6, id_field = TRUE, method = 1,
+test2 <- data_imputation(test.data6, id_field = TRUE, method = 1,
                         replace_with = 1)
 
 test_that('detecting no missing data entry', {
-  expect_error(dataImputation(test2$CompleteData, id_field = TRUE,
+  expect_error(data_imputation(test2$CompleteData, id_field = TRUE,
                           method = 1, replace_with = 1,
                           prints_text(paste("No missing entries in data"))))
 })
