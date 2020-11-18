@@ -27,17 +27,17 @@
 #' \code{crit="Silhouette"}, use the average Silhouette width
 #' (\code{Rousseeuw P. J. 1987}). Using the \code{"Silhouette"} criterion,
 #' the optimal value of \code{k} can be determined as the elbow point of
-#' the curve. Other valid criterion is the "Caliński_Harabasz"
+#' the curve. Other valid criterion is the "Calinski_Harabasz"
 #' (\code{Caliński T. & Harabasz J. 1974}) in which the maximum score
 #' represents the point of optimality. Having determined the optimal
 #' \code{k}, the function can then be re-run, using the exact (optimal)
 #' value of \code{k}.
 #' @param verbose to suppress output messages (to the console)
 #' during clustering. Default: \code{TRUE}.
-#' @param quality_Plot Whether to show plot of quality criteria across
+#' @param quality_plot Whether to show plot of quality criteria across
 #' different values of \code{k}. Default: \code{FALSE}.
-#' @usage akClustr(traj, id_field = FALSE, method = "linear",
-#' k = c(3,6), crit="Silhouette", verbose = TRUE, quality_Plot=FALSE)
+#' @usage akclustr(traj, id_field = FALSE, method = "linear",
+#' k = c(3,6), crit="Silhouette", verbose = TRUE, quality_plot=FALSE)
 #' @details This function works by first approximating the trajectories
 #' based on the chosen parametric forms (e.g. linear), and then partitions
 #' the original trajectories based on the form groupings, in similar
@@ -50,20 +50,20 @@
 #'
 #' data(traj)
 #'
-#' trajectry <- dataImputation(traj, id_field = TRUE, method = 2,
+#' trajectry <- data_imputation(traj, id_field = TRUE, method = 2,
 #' replace_with = 1, fill_zeros = FALSE)
 #'
 #' trajectry <- props(trajectry$CompleteData, id_field = TRUE)
 #'
 #' print(trajectry)
 #'
-#' output <- akClustr(trajectry, id_field = TRUE,
+#' output <- akclustr(trajectry, id_field = TRUE,
 #' method = "linear", k = c(3,7), crit='Calinski_Harabasz',
-#' verbose = FALSE, quality_Plot=FALSE)
+#' verbose = FALSE, quality_plot=FALSE)
 #'
 #' print(output)
 #'
-#' @return generates an \code{akObject} consisting of the
+#' @return generates an \code{akobject} consisting of the
 #' cluster solutions at the specified values of \code{k}. Also,
 #' the graphical plot of the quality scores of the cluster
 #' solutions.
@@ -86,9 +86,9 @@
 #' @export
 
 
-akClustr <- function(traj, id_field = FALSE, method = "linear",
+akclustr <- function(traj, id_field = FALSE, method = "linear",
                             k = c(3,6), crit = "Silhouette",
-                            verbose = TRUE, quality_Plot=FALSE){
+                            verbose = TRUE, quality_plot=FALSE){
 
   qualityCrit <- 0
 
@@ -106,11 +106,11 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
     #list k
     k_ <- k[1]:k[2]
 
-    #to check that quality_Plot' is used correctly.
-    if(k[1]==k[2] & quality_Plot == TRUE){
-      stop(paste("...'quality_Plot==TRUE' argument not applicable.",
+    #to check that quality_plot' is used correctly.
+    if(k[1]==k[2] & quality_plot == TRUE){
+      stop(paste("...'quality_plot==TRUE' argument not applicable.",
                  "Provide a set of k values (See documentation of",
-                 "'akClustr' function).", sep=" "))}
+                 "'akclustr' function).", sep=" "))}
 
     #check if unacceptable value of k in inputted
 
@@ -328,7 +328,7 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
 
       #convert cluster labels to alphabets
 
-      sol_k <- alphaLabel(part2)
+      sol_k <- alpha_label(part2)
       sol_k_integers <- part2
       attr(sol_k,"cluster labels for k =") <- k_[r_]
       result_[[counter]] <- sol_k
@@ -397,7 +397,7 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
         }
 
         #determine the 'elbow' point, using 'linearity' method
-        elbP <- elbowPoint(qualit$k,qualit$qualityCrit)
+        elbP <- elbow_point(qualit$k,qualit$qualityCrit)
         plt <- ggplot(qualit, aes(x = k, y = qualityCrit)) +
           #geom_line(linetype = "dotdash") +
           geom_point(shape=0)+
@@ -409,7 +409,7 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
                      color = "red", size=0.5) +
           theme_light()
           qualiCriterion  <- paste("Quality criterion:", crit, sep=" ")
-        #if(quality_Plot==FALSE){
+        #if(quality_plot==FALSE){
         # out_msg <- paste("Suggested optimal solution contains",
         #             round(elbP$x, digits=0),
         #             "clusters. See the plot for further examination!",
@@ -430,18 +430,18 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
                              qualitycriterion =  qualiCriterion,
                              optimal_k=(elbP$x),
                              qualityCrit.List=qualit,
-                             QltyPlot=plt)
+                             qltyplot=plt)
         }
 
         #}
         #----------------------------------
-        if(quality_Plot==TRUE){
+        if(quality_plot==TRUE){
           flush.console()
           dev.new(width=3, height=3)
           print(plt)
         }
 
-        class(final_result) <- c("akObject", class(final_result))
+        class(final_result) <- c("akobject", class(final_result))
 
         return(final_result)
 
@@ -497,19 +497,19 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
                            qualitycriterion =  qualiCriterion,
                            optimal_k=optimal_k,
                            qualityCrit.List=qualit,
-                           QltyPlot=plt)
+                           qltyplot=plt)
       }
 
       ##qualityCrit.List=qualit, message=out_msg)
 
 
-      if(quality_Plot==TRUE & k[1]!=k[2]){
+      if(quality_plot==TRUE & k[1]!=k[2]){
         flush.console()
         dev.new(width=3, height=3)
         print(plt)
       }
 
-      class(final_result) <- c("akObject", class(final_result))
+      class(final_result) <- c("akobject", class(final_result))
 
       return(final_result)
 
@@ -522,7 +522,7 @@ akClustr <- function(traj, id_field = FALSE, method = "linear",
 # class(final_result) <-
 #   c(
 #     class(final_result),
-#     'akClustr'
+#     'akclustr'
 #   )
 #
 # return(final_result)
