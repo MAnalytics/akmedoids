@@ -151,4 +151,4 @@
 #'   \item X2008: Values at time step 8 (i.e. year 2008)
 #'   \item X2009: Values at time step 9 (i.e. year 2009)
 #'     }
-"traj_wSpaces"
+"traj_w_spaces"
