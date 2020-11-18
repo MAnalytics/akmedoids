@@ -29,6 +29,7 @@
 #' plot. Please, see \code{plot_akstats} function for more
 #' plot options.
 #' Defaults \code{FALSE}
+#'
 #' @s3method print_akstats
 #' @examples
 #'
