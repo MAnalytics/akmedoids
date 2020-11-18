@@ -1,6 +1,6 @@
 ---
-#output: github_document
-output: html_document
+output: github_document
+#output: html_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -151,7 +151,7 @@ The `akmedoids::akclustr()` is used to perform the clustering analysis. Using th
 ```{r, echo=TRUE, message=TRUE, eval=TRUE}
 
 output <- akclustr(Import_simulated, id_field=TRUE, verbose = FALSE, k=c(3,12), crit = "Silhouette",
-                  quality_Plot=FALSE)
+                  quality_plot=FALSE)
 
 #RemarkS: The results can be printed out to the console by typing `output`
 
@@ -250,17 +250,17 @@ The above printouts represent the properties (i.e. the descriptive and change pr
 
 (a) ***Group trajectories (directional change over time)***
 
-```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
+```{r, echo=TRUE, include=TRUE, fig.width=4,fig.height=4,fig.align="center"}
 
-  plot_akstats(akObj, k = 5, type="lines", y_scaling="fixed")
+  plot_akstats(output, k = 3, type="lines", y_scaling="fixed")
 
 ```
 
 (b) ***Proportional change of groups change over time***
 
-```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
+```{r, echo=TRUE, include=TRUE, fig.width=4,fig.height=4,fig.align="center"}
 
-  plot_akstats(akObj, k = 5, reference = 1, n_quant = 4, type="stacked")
+  plot_akstats(output, k = 3, reference = 1, n_quant = 4, type="stacked")
 
 ```
 
