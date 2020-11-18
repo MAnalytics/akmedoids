@@ -334,7 +334,7 @@ crime_per_200_people <- rates(imp_traj, denomin=pop_imp_result, id_field=TRUE,
                               multiplier = 200)
 
 #view the full output
-crime_per_200_people <- crime_per_200_people$rates_data
+crime_per_200_people <- crime_per_200_people$rates_estimates
 
 #check the number of rows
 nrow(crime_per_200_people)
