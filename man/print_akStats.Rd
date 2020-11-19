@@ -31,9 +31,9 @@ This result can be used to further categorize the groups into
 'classes'. For example, groups that fall within the \code{1st}
 quartile may be classified as 'Stable' groups (Adepeju et al. 2020).}
 
-\item{show_plots}{[TRUE or FALSE] To display cluster plots.
-Line plots are displayed by default. Please, see
-\code{plot_akstats} function for more plot options.
+\item{show_plots}{[TRUE or FALSE] Provides the trajectory group
+plot. Please, see \code{plot_akstats} function for more
+plot options.
 Defaults \code{FALSE}}
 }
 \value{
