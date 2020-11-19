@@ -282,7 +282,7 @@ prpties$change_stats
 (See the package vignette for more details about the interpretation of
 the tables)
 
-## (iii) `plot_akstats` function:
+### Plotting the groups
 
 The above printouts represent the properties (i.e. the descriptive and
 change properties) of the clusters. Note that the `print_akstats`
