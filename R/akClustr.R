@@ -436,8 +436,8 @@ akclustr <- function(traj, id_field = FALSE, method = "linear",
         #}
         #----------------------------------
         if(quality_plot==TRUE){
-          flush.console()
-          dev.new(width=3, height=3)
+          #flush.console()
+          #dev.new(width=3, height=3)
           print(plt)
         }
 
@@ -504,8 +504,8 @@ akclustr <- function(traj, id_field = FALSE, method = "linear",
 
 
       if(quality_plot==TRUE & k[1]!=k[2]){
-        flush.console()
-        dev.new(width=3, height=3)
+        #flush.console()
+        #dev.new(width=3, height=3)
         print(plt)
       }
 
