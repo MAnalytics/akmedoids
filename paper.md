@@ -11,7 +11,7 @@ authors:
   name: Monsuru Adepeju
   orcid: 0000-0002-9006-4934
 - affiliation: 1
-  name: Sam Langton
+  name: Samuel Langton
   orcid: 0000-0002-1322-1553
 - affiliation: 1
   name: Jon Bannister
