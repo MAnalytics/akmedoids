@@ -22,7 +22,6 @@ tags:
 - crime
 - longitudinal clustering
 - long-term trends
-aas-doi: 10.3847/xxxxx
 ---
 
 # Statement of Need
