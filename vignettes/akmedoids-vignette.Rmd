@@ -22,7 +22,7 @@ always_allow_html: yes
 #fig_caption: yes
 bibliography: references.bib
 
-abstract: The `'akmedoids'` package advances a set of R-functions for longitudinal clustering of long-term trajectories and determines the optimal solution based on the `Caliński-Harabasz` criterion (Caliński and Harabasz 1974). The package also includes a set of functions for addressing common data issues, such as missing entries and outliers, prior to conducting advance longitudinal data analysis. One of the key objectives of this package is to facilitate easy replication of a recent paper which examined small area inequality in the crime drop (see Adepeju et al. 2019). This document is created to provide a guide towards accomplishing this objective. Many of the functions provided in the `akmedoids` package may be applied to longitudinal data in general.
+abstract: The `'akmedoids'` package advances a set of R-functions for longitudinal clustering of long-term trajectories and determines the optimal solution based on the `Caliński-Harabasz` criterion (Caliński and Harabasz 1974). The package also includes a set of functions for addressing common data issues, such as missing entries and outliers, prior to conducting advance longitudinal data analysis. One of the key objectives of this package is to facilitate easy replication of a recent paper which examined small area inequality in the crime drop (see Adepeju et al. 2021). This document is created to provide a guide towards accomplishing this objective. Many of the functions provided in the `akmedoids` package may be applied to longitudinal data in general.
   
 vignette: >
   %\VignetteIndexEntry{A guide to measuring long-term inequality in the exposure to crime at micro-area levels using 'Akmedoids' package}
@@ -366,7 +366,7 @@ colSums(prop_crime_per200_people[,2:ncol(prop_crime_per200_people)])
 
 ```
 
-In line with the demonstration in Adepeju et al. (2019), we will use these `proportion` measures to demonstrate the main clustering function of this package. 
+In line with the demonstration in Adepeju et al. (2021), we will use these `proportion` measures to demonstrate the main clustering function of this package. 
 
 
 ## (iv) `"outlier_detect"` function
@@ -438,9 +438,9 @@ Please see the `akmedoids` user manual for the remaining `data manipulation` fun
 
 Table 2 shows the two main functions required to carry out the longitudinal clustering and generate the descriptive statistics of the resulting groups. The relevant functions are `akclustr` and `print_akstats`. The `akclustr` function clusters trajectories according to the similarities of their long-term trends, while the `print_akstats` function extracts descriptive and change statistics for each of the clusters. The former also generates `quality` plots for the best cluster solution.
 
-The long-term trends of trajectories are defined in terms of a set of OLS regression lines. This allows the clustering function to classify the final groupings in terms of their slopes as `rising`, `stable`, and `falling`. The key benefits of this implementation is that it allows the clustering process to ignore the short-term fluctuations of actual trajectories and focus on their long-term linear trends. Adepeju and colleagues (2020) applied this technique in crime concentration research for measuring long-term inequalities in the exposure to crime at find-grained spatial scales. 
+The long-term trends of trajectories are defined in terms of a set of OLS regression lines. This allows the clustering function to classify the final groupings in terms of their slopes as `rising`, `stable`, and `falling`. The key benefits of this implementation is that it allows the clustering process to ignore the short-term fluctuations of actual trajectories and focus on their long-term linear trends. Adepeju and colleagues (2021) applied this technique in crime concentration research for measuring long-term inequalities in the exposure to crime at find-grained spatial scales. 
 
-```{r figs4, echo=FALSE, fig.cap=fig$cap("figs4", paste("Long-time linear trends of relative (`proportion`, `p`) crime exposure. Three inequality trends: trajectory i1: crime exposure is falling faster, i2, crime exposure is falling at the same rate, and i3, crime exposure is falling slower or increasing, relatively to the citywide trend. (Source:", "Adepeju et al. 2020)", sep=" ")), out.width = '60%', fig.align="center"} 
+```{r figs4, echo=FALSE, fig.cap=fig$cap("figs4", paste("Long-time linear trends of relative (`proportion`, `p`) crime exposure. Three inequality trends: trajectory i1: crime exposure is falling faster, i2, crime exposure is falling at the same rate, and i3, crime exposure is falling slower or increasing, relatively to the citywide trend. (Source:", "Adepeju et al. 2021)", sep=" ")), out.width = '60%', fig.align="center"} 
 knitr::include_graphics("inequality.png")
 ```
 
@@ -505,6 +505,7 @@ Each trajectory in Figure `r fig$ref("figs5")` represents the proportion of crim
 #clustering
 akObj <- akclustr(prop_crime_per200_people, id_field = TRUE, 
                                 method = "linear", k = c(3,8), crit = "Calinski_Harabasz", verbose=TRUE)
+
 ```
 
 In order to preview all the variables of the `quality_plot` object, type: 
@@ -558,7 +559,7 @@ Also, note that the indexes of the group memberships correspond to that of the t
 
 ## (ii) `print_akstats` function:
 
-The properties (i.e. the descriptive and change statistics) of a cluster solutions (i.e. solution for any value of `k`) such as in `k = 5` above can be generated by  using the special `print` function `print_akstats`. The print function takes as input the `akobject` class, e.g. `akObj`. The descriptive statistics shows the `group memberships` and their `performances` in terms of their shares of the `proportion` measure captured over time. The change statistics shows the information regarding the direction variances of the groups in relation to reference direction. In trajectory clustering analysis, the resulting groups are often re-classified into larger classes based on the slopes, such as `Decreasing`, `Stable`, or `Increasing` classes (@Weisburd2004;Andresen et al. 2017). The slope of a group is the angle made by the medoid of the group relative to a reference line ($R$). The `reference` argument is specified as `1`, `2` or `3`, representing the `mean trajectory`, `medoid trajectory`, or a `horizontal line with slope = 0`, respectively. Let $\vartheta_{1}$ and $\vartheta_{n}$ represent the angular deviations of the group medoids with the lowest slope (negative) and highest (positive) slopes, respectively. 
+The properties (i.e. the descriptive and change statistics) of a cluster solutions (i.e. solution for any value of `k`) such as in `k = 5` above can be generated by  using the special `print` function `print_akstats`. The print function takes as input the `akobject` class, e.g. `akObj`. The descriptive statistics shows the `group memberships` and their `performances` in terms of their shares of the `proportion` measure captured over time. The change statistics shows the information regarding the direction variances of the groups in relation to reference direction. In trajectory clustering analysis, the resulting groups are often re-classified into larger classes based on the slopes, such as `Decreasing`, `Stable`, or `Increasing` classes (@Weisburd2004; Andresen et al. 2017). The slope of a group is the angle made by the medoid of the group relative to a reference line ($R$). The `reference` argument is specified as `1`, `2` or `3`, representing the `mean trajectory`, `medoid trajectory`, or a `horizontal line with slope = 0`, respectively. Let $\vartheta_{1}$ and $\vartheta_{n}$ represent the angular deviations of the group medoids with the lowest slope (negative) and highest (positive) slopes, respectively. 
 
 
 ```{r figs7, echo=FALSE, fig.cap=fig$cap("figs7", "Quantile sub-divisions of most-diverging groups (n_quant=4)"), out.width = '80%', fig.align="center"} 
@@ -606,7 +607,7 @@ The above printouts represent the properties (i.e. the descriptive and change pr
 
 ```
 
-In the context of the long-term inequality study, broad conclusions can be made from both the statistical properties and the plots regarding relative crime exposure in the area represented by each group or class (Adepeju et al. 2020). For example, whilst relative crime exposure have declined in 33.3% (groups `A` and `B`) of the study area, the relative crime exposure have risen in 44.4% (groups `D` and `E`) of the area. The relative crime exposure can be said to be `stable` in 22.2% (group `C`) of the area, based on its close proximity to the reference line. The medoid of the group falls within the $1^{st}(+ve)$ quantile (see Figure `r fig$ref("figs8")`). In essence, we determine that groups `A` and `B` belong to the `Decreasing` class, while groups `D` and `E` belong to the `Increasing` class. 
+In the context of the long-term inequality study, broad conclusions can be made from both the statistical properties and the plots regarding relative crime exposure in the area represented by each group or class (Adepeju et al. 2021). For example, whilst relative crime exposure have declined in 33.3% (groups `A` and `B`) of the study area, the relative crime exposure have risen in 44.4% (groups `D` and `E`) of the area. The relative crime exposure can be said to be `stable` in 22.2% (group `C`) of the area, based on its close proximity to the reference line. The medoid of the group falls within the $1^{st}(+ve)$ quantile (see Figure `r fig$ref("figs8")`). In essence, we determine that groups `A` and `B` belong to the `Decreasing` class, while groups `D` and `E` belong to the `Increasing` class. 
 
 It is important to state that this proposed classification method is  simply advisory; you may devise a different approach or interpretation depending on your research questions and data.
 
@@ -644,7 +645,7 @@ knitr::kable(tble3, caption = "Table 3. field description of clustering outputs"
 
 # Conclusion
 
-The `akmedoids` package has been developed in order to aid the replication of a place-based crime inequality investigation conducted in Adepeju et al. (2019). Meanwhile, the utility of the functions in this package are not limited to criminology, but rather can be applicable to longitudinal datasets more generally. This package is being updated on a regular basis to add more functionalities to the existing `functions` and add new functions to carry out other longitudinal data analysis. 
+The `akmedoids` package has been developed in order to aid the replication of a place-based crime inequality investigation conducted in @Adepeju2021. Meanwhile, the utility of the functions in this package are not limited to criminology, but rather can be applicable to longitudinal datasets more generally. This package is being updated on a regular basis to add more functionalities to the existing `functions` and add new functions to carry out other longitudinal data analysis. 
 
 We encourage users to report any bugs encountered while using the package so that they can be fixed immediately. Welcome contributions to this package which will be acknowledged accordingly. 
 
