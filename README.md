@@ -19,7 +19,7 @@ set of functions for addressing common data issues, such as missing
 entries and outliers, prior to conducting advance longitudinal data
 analysis. One of the key objectives of this package is to facilitate
 easy replication of a recent paper which examined small area inequality
-in the crime drop (Adepeju et al. 2020). Many of the functions provided
+in the crime drop (Adepeju et al. 2021). Many of the functions provided
 in the `akmedoids` package may be applied to longitudinal data in
 general.
 
@@ -342,7 +342,7 @@ Caliński, T., and J. Harabasz. 1974. “A Dendrite Method for Cluster
 Analysis.” Communications in Statistics-Theory and Methods, 3(1): 1–27.
 [link](https://www.tandfonline.com/doi/abs/10.1080/03610927408827101)
 
-Adepeju, M., Langton, S. and Bannister, J. 2020. Anchored k-medoids: a
-novel adaptation of k-means further refined to measure instability in
-the exposure to crime. Journal of Computational Social Science
-(Revised).
+Adepeju, M., Langton, S. and Bannister, J. 2021. Anchored k-medoids: a
+novel adaptation of k-medoids further refined to measure instability in
+the exposure to crime. Journal of Computational Social Science 
+[link](https://link.springer.com/article/10.1007/s42001-021-00103-1#citeas)
