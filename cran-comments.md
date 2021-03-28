@@ -17,7 +17,7 @@ There were no ERRORs, WARNINGs or NOTEs.
 'Akmedoids' package updated (Version: v1.2.5)
 
 ### Updates:
-1. Updated `README` file to include examples based on simulated datasets. 
+1. Updated the `README.md` file to include examples based on simulated datasets. 
 2. Added four additional sample datasets, and used in the functions accordingly. They datasets are `clustr`, `simulated`, `TO1Risk`, `traj_w_space`.
 3. Provided detailed descriptions of all datasets. See `format` of the dataset descriptions.
 4. Updated the citation `Adepeju et al. 2019` in the functions as well as in the Vignette (updated as to `Adepeju et al. 2021`)
