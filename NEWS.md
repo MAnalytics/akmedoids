@@ -9,9 +9,9 @@ output: html_document
 'Akmedoids' package updated (Version: v1.2.5)
 
 ### Updates:
-1. Updated `README` file to include examples based on simulated datasets. 
-2. Added four additional sample datasets, and used in the functions accordingly. They datasets are `clustr`, `simulated`, `TO1Risk`, `traj_w_space`.
-3. Provided detailed descriptions of all datasets. See `format` of the dataset descriptions.
+1. Updated the `README.md` file to include clustering demonstration using a simulated dataset. 
+2. Added 4 new sample datasets, and used in the function examples. The datasets include `clustr`, `simulated`, `TO1Risk`, `traj_w_space`.
+3. Added detailed descriptions of fields in each dataset. See `format` section of each dataset documentation.
 4. Updated the citation `Adepeju et al. 2019` in the functions as well as in the Vignette (updated as to `Adepeju et al. 2021`)
 5. Modified functions names to more intuitive names, e.g. `akmedoids.clust` to `akclustr`,  `statPrint` to `print_akstats`, `population` to `popl`.
 6. Added two new functions, namely; `remove_rows_n`, `plot_akstats` 
