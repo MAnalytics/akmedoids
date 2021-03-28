@@ -70,10 +70,10 @@
 #' @references \code{1}. Genolini, C. et al. (2015) kml and kml3d:
 #' R Packages to Cluster Longitudinal Data. Journal of Statistical
 #' Software, 65(4), 1-34. URL http://www.jstatsoft.org/v65/i04/.
-#' \code{2}. Rousseeuw P. J. (1987) Silhouettes: A graphical aid
+#' @references \code{2}. Rousseeuw P. J. (1987) Silhouettes: A graphical aid
 #' to the interpretation and validation of cluster analysis.
 #' J. Comput. Appl. Math 20:53–65.
-#' \code{3}. Caliński T, Harabasz J (1974) A dendrite method for
+#' @references \code{3}. Caliński T, Harabasz J (1974) A dendrite method for
 #' cluster analysis. Commun. Stat. 3:1-27.
 #' @importFrom kml affectIndivC
 #' @importFrom stats lm median coefficients
