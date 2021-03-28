@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  fig.path = "input/figures/README-",
   out.width = "100%"
 )
 ```

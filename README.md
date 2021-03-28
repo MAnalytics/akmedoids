@@ -158,7 +158,7 @@ ggplot(simulated_long, aes(x = Time, y = value, group=ID, color=Groups)) +
   theme_light()
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="input/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ### Performing clustering using `akmedoids`
 
@@ -215,7 +215,7 @@ output$qltyplot
 #> `geom_smooth()` using formula 'y ~ x'
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="input/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ``` r
 
@@ -301,7 +301,7 @@ comprehensive performance plots of the groups. Examples:
 #> $cluster_plot
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="input/figures/README-unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
 
 2)  ***Proportional change of groups change over time***
 
@@ -313,7 +313,7 @@ comprehensive performance plots of the groups. Examples:
 #> $cluster_plot
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="input/figures/README-unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Documentation
 
