@@ -24,7 +24,7 @@
 #' returns the quartile in which the medoid of each group falls.
 #' This result can be used to further categorize the groups into
 #' 'classes'. For example, groups that fall within the \code{1st}
-#' quartile may be classified as 'Stable' groups (Adepeju et al. 2020).
+#' quartile may be classified as 'Stable' groups (Adepeju et al. 2021).
 #' @param show_plots [TRUE or FALSE] Provides the trajectory group
 #' plot. Please, see \code{plot_akstats} function for more
 #' plot options.
@@ -54,15 +54,16 @@
 #' \code{plot_akstats} function.
 #' @return A plot showing group membership or sizes (proportion)
 #' and statistics.
-#' @references \code{1}. Adepeju, M. et al. (2019). Anchored k-medoids:
-#' A novel adaptation of k-means further refined to measure
-#' inequality in the exposure to crime across micro places (Submitted).
+#' @references \code{1}. Adepeju, M. et al. (2021). Anchored k-medoids:
+#' A novel adaptation of k-medoids further refined to measure
+#' inequality in the exposure to crime across micro places,
+#' doi: 10.1007/s42001-021-00103-1.
+#' @references \code{2}. Wickham H. (2016). Elegant graphics for
+#' Data Analysis. Spring-Verlag New York (2016).
 #' @importFrom reshape2 melt
 #' @importFrom stats quantile
 #' @importFrom ggplot2 stat_summary scale_colour_brewer theme_light
 #' theme geom_area scale_x_continuous scale_fill_brewer facet_wrap
-#' @references \code{Wickham H. (2016). Elegant graphics for
-#' Data Analysis. Spring-Verlag New York (2016)}
 #'
 #' @export
 print_akstats<- function(ak_object, k = 3, reference = 1,
