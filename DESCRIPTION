@@ -20,7 +20,7 @@ Description: Advances a novel adaptation of longitudinal k-means clustering
     data prior to the clustering process.
 Language: en-US
 License: GPL-3
-URL: https://cran.r-project.org/web/packages/akmedoids/index.html 
+URL: https://cran.r-project.org/package=akmedoids 
 BugReports: https://github.com/MAnalytics/akmedoids/issues
 Depends: R (>= 3.5.0)
 Encoding: UTF-8
@@ -42,5 +42,6 @@ Suggests:
     testthat,
     digest,
     dplyr,
-    kableExtra
+    kableExtra,
+    devtools
 VignetteBuilder: knitr
