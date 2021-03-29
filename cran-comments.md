@@ -10,7 +10,7 @@ There were no ERRORs, WARNINGs or NOTEs.
 
 ##
 
-'Akmedoids' package updated 28th March 2021 (New version: v1.2.5)
+'Akmedoids' package updated 29th March 2021 (New version: v1.2.5)
 
 ### Updates:
 
