@@ -24,7 +24,7 @@ in the `akmedoids` package may be applied to longitudinal data in
 general.
 
 **For more information and usability, check out details on
-[CRAN](https://cran.r-project.org/web/packages/akmedoids/index.html).**
+[CRAN](https://cran.r-project.org/package=akmedoids).**
 
 ### Installation from `CRAN`
 
@@ -319,11 +319,8 @@ comprehensive performance plots of the groups. Examples:
 
 From an R console type `??akmedoids` for help on the package. The
 package page on CRAN is
-[here](https://cran.r-project.org/web/packages/akmedoids/index.html),
-package reference manual is
-[here](https://cran.r-project.org/web/packages/akmedoids/akmedoids.pdf),
-package vignette is
-[here](https://cran.r-project.org/web/packages/akmedoids/vignettes/akmedoids-vignette.html).
+[here](https://cran.r-project.org/package=akmedoids), in which the 
+package reference manual as well as the vignette can be found.
 
 ### Support and Contributions:
 
