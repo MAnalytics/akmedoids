@@ -34,12 +34,12 @@ Imports:
     signal,
     grDevices,
     ggplot2,
-    clusterCrit
+    clusterCrit,
+    kableExtra
 RoxygenNote: 7.1.1
 Suggests:
     knitr,
     rmarkdown,
-    kableExtra,
     testthat,
     digest,
     dplyr
