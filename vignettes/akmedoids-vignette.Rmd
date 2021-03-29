@@ -132,6 +132,7 @@ We facilitate the easy use of `akmedoids` through an open-source package using `
 ```{r, eval=TRUE, echo=FALSE, include=FALSE}
 #install.packages("kableExtra")
 require(knitr)
+library(gdtools)
 library(kableExtra)
 library(clusterCrit)
 ```
@@ -169,8 +170,8 @@ Calculates any missing entries in a data, according to a chosen method. This fun
 ```{r, eval=FALSE}
 
 #installing the `akmedoids` packages
-#install.packages("devtools")
-#devtools::install_github("manalytics/akmedoids")
+install.packages("devtools")
+devtools::install_github("manalytics/akmedoids")
 
 ```
 
