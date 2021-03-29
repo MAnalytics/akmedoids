@@ -37,10 +37,10 @@ Imports:
     clusterCrit
 RoxygenNote: 7.1.1
 Suggests:
+    kableExtra,
     knitr,
     rmarkdown,
     testthat,
     digest,
-    kableExtra,
     dplyr
 VignetteBuilder: knitr
