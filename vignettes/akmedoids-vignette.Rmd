@@ -129,7 +129,7 @@ Longitudinal clustering analysis is ubiquitous in social and behavioral sciences
 
 We facilitate the easy use of `akmedoids` through an open-source package using `R`. We encourage the use of the package outside of criminology, should it be appropriate. Before outlining the main `clustering` functions, we demonstrate the use of a few `data manipulation` functions that assist in data preparation. The worked demonstration uses a small example dataset which should allow users to get a clear understanding of the operation of each function. 
 
-```{r, echo=FALSE, include=FALSE}
+```{r, eval=TRUE, echo=FALSE, include=FALSE}
 require(knitr)
 library(kableExtra)
 library(clusterCrit)
