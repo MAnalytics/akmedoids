@@ -342,4 +342,4 @@ Analysis.” Communications in Statistics-Theory and Methods, 3(1): 1–27.
 Adepeju, M., Langton, S. and Bannister, J. 2021. Anchored k-medoids: a
 novel adaptation of k-medoids further refined to measure instability in
 the exposure to crime. Journal of Computational Social Science 
-[link](https://link.springer.com/article/10.1007/s42001-021-00103-1#citeas)
+[link](https://doi.org/10.1007/s42001-021-00103-1)
