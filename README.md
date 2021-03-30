@@ -151,12 +151,14 @@ simulated_long <- data.frame(cbind(simulated_long,
 simulated_long$Time <- factor(simulated_long$Time, 
                                 levels = c(1:21))
 
-options(rgl.useNULL = TRUE)
-ggplot(simulated_long, aes(x = Time, y = value, group=ID, color=Groups)) +
+prt <- ggplot(simulated_long, aes(x = Time, y = value, group=ID, color=Groups)) +
   geom_point(size=0.5) + 
   geom_line() +
   scale_color_manual(values=c('#999999','#E69F00', '#56B4E9')) +
   theme_light()
+
+options(rgl.useNULL = TRUE)
+print(prt)
 ```
 
 <img src="input/figures/README-unnamed-chunk-4-1.png" width="100%" />
@@ -211,7 +213,7 @@ The plot of `qualityCrit.List` can be displayed by setting the
 by printing the variable `output$qltyplot` to the console. For example,
 
 ``` r
-
+options(rgl.useNULL = TRUE)
 output$qltyplot
 #> `geom_smooth()` using formula 'y ~ x'
 ```
@@ -238,6 +240,7 @@ input as follows:
 
 #Specifying the optimal solution, output$optimal_k (i.e. `k = 3`)
 
+options(rgl.useNULL = TRUE)
 prpties = print_akstats(output, k = 3, show_plots = FALSE)
 #> Warning: `fun.y` is deprecated. Use `fun` instead.
 ```
@@ -296,8 +299,8 @@ comprehensive performance plots of the groups. Examples:
 <!-- end list -->
 
 ``` r
-
-  plot_akstats(output, k = 3, type="lines", y_scaling="fixed")
+options(rgl.useNULL = TRUE)
+plot_akstats(output, k = 3, type="lines", y_scaling="fixed")
 #> Warning: `fun.y` is deprecated. Use `fun` instead.
 #> $cluster_plot
 ```
@@ -309,8 +312,8 @@ comprehensive performance plots of the groups. Examples:
 <!-- end list -->
 
 ``` r
-
-  plot_akstats(output, k = 3, reference = 1, n_quant = 4, type="stacked")
+options(rgl.useNULL = TRUE)
+plot_akstats(output, k = 3, reference = 1, n_quant = 4, type="stacked")
 #> $cluster_plot
 ```
 
