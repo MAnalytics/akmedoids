@@ -403,6 +403,7 @@ p <-  ggplot(imp_traj_long, aes(x=variable, y=value,
             geom_point() + 
             geom_line()
 
+options(rgl.useNULL = TRUE)
 print(p)
 
 ```
@@ -419,6 +420,7 @@ imp_traj_New <- outlier_detect(imp_traj, id_field = TRUE, method = 2,
 
 imp_traj_New <- imp_traj_New$Outliers_Replaced 
 
+options(rgl.useNULL = TRUE)
 print(imp_traj_New)
 
 imp_traj_New_long <- melt(imp_traj_New, id="location_ids") 
