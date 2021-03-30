@@ -151,6 +151,7 @@ simulated_long <- data.frame(cbind(simulated_long,
 simulated_long$Time <- factor(simulated_long$Time, 
                                 levels = c(1:21))
 
+options(rgl.useNULL = TRUE)
 ggplot(simulated_long, aes(x = Time, y = value, group=ID, color=Groups)) +
   geom_point(size=0.5) + 
   geom_line() +
