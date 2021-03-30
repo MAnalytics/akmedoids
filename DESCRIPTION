@@ -44,5 +44,6 @@ Suggests:
     dplyr,
     gdtools,
     kableExtra,
-    devtools
+    devtools,
+    rgl
 VignetteBuilder: knitr
