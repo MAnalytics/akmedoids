@@ -10,11 +10,11 @@ There were no ERRORs, WARNINGs or NOTEs.
 
 ##
 
-'Akmedoids' package updated 29th March 2021 (New version: v1.2.5)
+'Akmedoids' package updated 30th March 2021 (New version: v1.2.6)
 
 ### Updates:
 
-'Akmedoids' package updated (Version: v1.2.5)
+'Akmedoids' package updated (Version: v1.2.6)
 
 ### Updates:
 1. Updated the `README.md` file to include clustering demonstration using a simulated dataset. 
