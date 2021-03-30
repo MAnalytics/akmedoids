@@ -194,7 +194,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
   #plot option 1:
   if(type=="lines"){
     if(y_scaling=="fixed"){
-      options(rgl.useNULL = TRUE)
+      #options(rgl.useNULL = TRUE)
       plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
                                              group=id, color=clusters)) +
                 geom_line() +
