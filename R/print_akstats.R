@@ -182,12 +182,14 @@ print_akstats.default <- function(ak_object, k = 3, reference = 1,
     #----------------------------------------------------
 
     #calling the 'plot_akstats'
+    options(rgl.useNULL = TRUE)
     plt = plot_akstats(ak_object, k = k, type="lines", y_scaling="fixed")
 
     if(show_plots==TRUE){
       #plot
       #flush.console()
       #dev.new(width=3, height=3)
+      options(rgl.useNULL = TRUE)
       print(plt)
     }
 
