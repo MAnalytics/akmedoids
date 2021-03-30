@@ -398,7 +398,7 @@ akclustr <- function(traj, id_field = FALSE, method = "linear",
 
         #determine the 'elbow' point, using 'linearity' method
         elbP <- elbow_point(qualit$k,qualit$qualityCrit)
-        option(rgl.useNULL = TRUE)
+        options(rgl.useNULL = TRUE)
         plt <- ggplot(qualit, aes(x = k, y = qualityCrit)) +
           #geom_line(linetype = "dotdash") +
           geom_point(shape=0)+
@@ -439,7 +439,7 @@ akclustr <- function(traj, id_field = FALSE, method = "linear",
         if(quality_plot==TRUE){
           #flush.console()
           #dev.new(width=3, height=3)
-          option(rgl.useNULL = TRUE)
+          options(rgl.useNULL = TRUE)
           print(plt)
         }
 
@@ -456,7 +456,7 @@ akclustr <- function(traj, id_field = FALSE, method = "linear",
       id_opt <- (which(qualit[,2]==max(qualit))[1] + (k[1]-1))
 
       #plot
-      option(rgl.useNULL = TRUE)
+      options(rgl.useNULL = TRUE)
       plt <- ggplot(qualit, aes(x = k, y = qualityCrit)) +
       geom_line(linetype = "dotdash") + geom_point(shape=0)+
       ggtitle(paste("Optimal solution based on the", crit,
@@ -509,7 +509,7 @@ akclustr <- function(traj, id_field = FALSE, method = "linear",
       if(quality_plot==TRUE & k[1]!=k[2]){
         #flush.console()
         #dev.new(width=3, height=3)
-        option(rgl.useNULL = TRUE)
+        options(rgl.useNULL = TRUE)
         print(plt)
       }
 
