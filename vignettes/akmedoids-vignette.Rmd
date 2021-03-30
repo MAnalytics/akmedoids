@@ -214,6 +214,7 @@ head(imp_traj)
 par(mar=c(2,2,2,2)+0.1)
 par(adj = 0)
 par(mfrow=c(6,2))
+dev.new()
 dat <- as.data.frame(traj)
 t_name <- as.vector(traj[,1])
 dat <- dat[,2:ncol(dat)]
@@ -247,7 +248,6 @@ for(k in seq_len(nrow(dat))){ #k<-2
 plot_colors <- c("black","red")
 text <- c("Observed points", "Predicted points")
 options(rgl.useNULL = TRUE)
-plot.new()
 par(xpd=TRUE)
 legend("center",legend = text, text.width = max(sapply(text, strwidth)),
        col=plot_colors, pch = 1, cex=1, horiz = FALSE)
@@ -397,7 +397,6 @@ imp_traj_long <- melt(imp_traj, id="location_ids")
 head(imp_traj_long)
 
 #plot function
-options(rgl.useNULL = TRUE)
 p <-  ggplot(imp_traj_long, aes(x=variable, y=value,
             group=location_ids, color=location_ids)) + 
             geom_point() + 
