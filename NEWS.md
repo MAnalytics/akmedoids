@@ -1,12 +1,12 @@
 ---
 title: "NEWS.md"
 authors: "geoMADE"
-date: "29 March 2021"
+date: "30 March 2021"
 output: html_document
 ---
 
 
-'Akmedoids' package updated (Version: v1.2.5)
+'Akmedoids' package updated (Version: v1.2.6)
 
 ### Updates:
 1. Updated the `README.md` file to include clustering demonstration using a simulated dataset. 
