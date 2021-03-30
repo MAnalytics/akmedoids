@@ -194,6 +194,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
   #plot option 1:
   if(type=="lines"){
     if(y_scaling=="fixed"){
+      options(rgl.useNULL = TRUE)
       plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
                                              group=id, color=clusters)) +
                 geom_line() +
@@ -205,6 +206,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
     }
 
     if(y_scaling=="free"){
+      options(rgl.useNULL = TRUE)
       plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
                                              group=id, color=clusters)) +
                 geom_line() +
@@ -228,7 +230,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
     p.dat<-melt(p.dat,id='Year')
     p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
     class(p.dat$Year)
-
+    options(rgl.useNULL = TRUE)
     plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
               geom_area(aes(fill=variable), colour = "gray30", position='fill') +
               scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
