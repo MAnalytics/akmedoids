@@ -131,7 +131,6 @@ We facilitate the easy use of `akmedoids` through an open-source package using `
 
 ```{r, eval=TRUE, echo=FALSE, include=FALSE}
 #install.packages("kableExtra")
-options(rgl.useNULL = TRUE)
 require(knitr)
 library(gdtools)
 library(kableExtra)
@@ -179,6 +178,7 @@ devtools::install_github("manalytics/akmedoids")
 
 #loading the package
 library(akmedoids)
+library(rgl)
 
 ```
 
@@ -236,6 +236,7 @@ for(k in seq_len(nrow(dat))){ #k<-2
   #Add the predicted points to the original data
   #dev.new()
   #plot(1:10, col=2)
+  options(rgl.useNULL = TRUE)
   plot (known$x, known$y, type="o", main=paste("traj_id:",t_name[k], sep=" "), font.main = 1)
   if(!length(newY)==0){#plot only if it has elements
   lines(l_pred, lty="dotted", col="red", lwd=2)
@@ -245,6 +246,7 @@ for(k in seq_len(nrow(dat))){ #k<-2
 #point legend
 plot_colors <- c("black","red")
 text <- c("Observed points", "Predicted points")
+options(rgl.useNULL = TRUE)
 plot.new()
 par(xpd=TRUE)
 legend("center",legend = text, text.width = max(sapply(text, strwidth)),
@@ -254,6 +256,7 @@ par(xpd=FALSE)
 #line legend
 plot_colors <- c("black","red")
 text <- c("line joining observed points", "regression line predicting missing points")
+options(rgl.useNULL = TRUE)
 plot.new()
 par(xpd=TRUE)
 legend("center",legend = text, text.width = max(sapply(text, strwidth)),
@@ -394,6 +397,7 @@ imp_traj_long <- melt(imp_traj, id="location_ids")
 head(imp_traj_long)
 
 #plot function
+options(rgl.useNULL = TRUE)
 p <-  ggplot(imp_traj_long, aes(x=variable, y=value,
             group=location_ids, color=location_ids)) + 
             geom_point() + 
@@ -420,11 +424,13 @@ print(imp_traj_New)
 imp_traj_New_long <- melt(imp_traj_New, id="location_ids") 
 
 #plot function
+options(rgl.useNULL = TRUE)
 p <-  ggplot(imp_traj_New_long, aes(x=variable, y=value,
             group=location_ids, color=location_ids)) + 
             geom_point() + 
             geom_line()
 
+options(rgl.useNULL = TRUE)
 print(p)
 
 ```
@@ -484,11 +490,13 @@ head(prop_crime_per200_people)
 prop_crime_per200_people_melt <- melt(prop_crime_per200_people, id="location_ids") 
 
 #plot function
+options(rgl.useNULL = TRUE)
 p <-  ggplot(prop_crime_per200_people_melt, aes(x=variable, y=value,
             group=location_ids, color=location_ids)) + 
             geom_point() + 
             geom_line()
 
+options(rgl.useNULL = TRUE)
 print(p)
 
 ```
@@ -597,6 +605,7 @@ The above printouts represent the properties (i.e. the descriptive and change pr
 
 ```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
 
+  options(rgl.useNULL = TRUE)
   plot_akstats(akObj, k = 5, type="lines", y_scaling="fixed")
 
 ```
@@ -604,7 +613,7 @@ The above printouts represent the properties (i.e. the descriptive and change pr
 (b) ***Proportional change of groups change over time***
 
 ```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
-
+  options(rgl.useNULL = TRUE)
   plot_akstats(akObj, k = 5, reference = 1, n_quant = 4, type="stacked")
 
 ```
