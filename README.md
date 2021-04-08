@@ -7,6 +7,8 @@
 
 <!-- badges: end -->
 
+<!--
+
 An R package for analyzing and clustering longitudinal data
 
 ### Description
@@ -299,6 +301,8 @@ comprehensive performance plots of the groups. Examples:
 
 <!-- end list -->
 
+<!--
+
 ``` r
 options(rgl.useNULL = TRUE)
 plot_akstats(output, k = 3, type="lines", y_scaling="fixed")
@@ -312,6 +316,7 @@ plot_akstats(output, k = 3, type="lines", y_scaling="fixed")
 
 <!-- end list -->
 
+<!--
 ``` r
 options(rgl.useNULL = TRUE)
 plot_akstats(output, k = 3, reference = 1, n_quant = 4, type="stacked")
@@ -348,3 +353,5 @@ Adepeju, M., Langton, S. and Bannister, J. 2021. Anchored k-medoids: a
 novel adaptation of k-medoids further refined to measure instability in
 the exposure to crime. Journal of Computational Social Science 
 [link](https://doi.org/10.1007/s42001-021-00103-1)
+
+
