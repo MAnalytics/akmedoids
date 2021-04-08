@@ -32,6 +32,7 @@ From an R console, type:
 
 ``` r
 #install.packages("akmedoids")
+options(rgl.useNULL = TRUE)
 library(akmedoids)
 
 #Other libraries

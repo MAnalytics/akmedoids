@@ -46,4 +46,3 @@ Suggests:
     kableExtra,
     devtools,
     rgl
-VignetteBuilder: knitr
