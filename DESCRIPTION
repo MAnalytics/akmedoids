@@ -44,5 +44,4 @@ Suggests:
     dplyr,
     gdtools,
     kableExtra,
-    devtools,
     rgl
