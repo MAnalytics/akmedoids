@@ -57,7 +57,7 @@
 #'
 #' @return A data.frame with missing values (\code{NA}, \code{Inf},
 #' \code{null}) imputed according to the a specified technique.
-#' @importFrom stats predict
+#' @importFrom stats predict lm quantile
 #' @importFrom utils flush.console
 #' @export
 
