@@ -188,61 +188,61 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
   #----------------------------------------------------
   #plotting
   #----------------------------------------------------
-  ggplot <- aes <- Year <- value <- id <- geom_line <- facet_wrap <-
-    geom_smooth <- theme_minimal <- variable <- group <- NULL
-
-  #plot option 1:
-  if(type=="lines"){
-    if(y_scaling=="fixed"){
-      #options(rgl.useNULL = TRUE)
-      plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
-                                             group=id, color=clusters)) +
-                geom_line() +
-                stat_summary(fun.y=mean, geom="line", aes(group=clusters),
-                             color="black", size=1) +
-                facet_wrap(~clusters, scales = "fixed") +
-                facet_wrap(~clusters) +
-                scale_colour_brewer(palette = "Set1")) #clusters
-    }
-
-    if(y_scaling=="free"){
-      options(rgl.useNULL = TRUE)
-      plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
-                                             group=id, color=clusters)) +
-                geom_line() +
-                stat_summary(fun.y=mean, geom="line", aes(group=clusters),
-                             color="black", size=1) +
-                facet_wrap(~clusters, scales = "free") +
-                facet_wrap(~clusters) +
-                scale_colour_brewer(palette = "Set1") +
-                theme_light()) #clusters
-    }
-  }
+  # ggplot <- aes <- Year <- value <- id <- geom_line <- facet_wrap <-
+  #   geom_smooth <- theme_minimal <- variable <- group <- NULL
+  #
+  # #plot option 1:
+  # if(type=="lines"){
+  #   if(y_scaling=="fixed"){
+  #     #options(rgl.useNULL = TRUE)
+  #     plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
+  #                                            group=id, color=clusters)) +
+  #               geom_line() +
+  #               stat_summary(fun.y=mean, geom="line", aes(group=clusters),
+  #                            color="black", size=1) +
+  #               facet_wrap(~clusters, scales = "fixed") +
+  #               facet_wrap(~clusters) +
+  #               scale_colour_brewer(palette = "Set1")) #clusters
+  #   }
+  #
+  #   if(y_scaling=="free"){
+  #     options(rgl.useNULL = TRUE)
+  #     plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
+  #                                            group=id, color=clusters)) +
+  #               geom_line() +
+  #               stat_summary(fun.y=mean, geom="line", aes(group=clusters),
+  #                            color="black", size=1) +
+  #               facet_wrap(~clusters, scales = "free") +
+  #               facet_wrap(~clusters) +
+  #               scale_colour_brewer(palette = "Set1") +
+  #               theme_light()) #clusters
+  #   }
+  # }
 
   #----------------------------------------------------
   #plot option 2:
-  if(type=="stacked"){
-    change_ave_yr_ALL_transpose <- t(change_ave_yr_ALL)
-    grp.dat<-data.frame(change_ave_yr_ALL_transpose,
-                        row.names=seq_len(nrow(change_ave_yr_ALL_transpose)))
-    names(grp.dat)<-clusters_uni
-    p.dat<-data.frame(Year=row.names(grp.dat),grp.dat,stringsAsFactors=F)
-    p.dat<-melt(p.dat,id='Year')
-    p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
-    class(p.dat$Year)
-    options(rgl.useNULL = TRUE)
-    plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
-              geom_area(aes(fill=variable), colour = "gray30", position='fill') +
-              scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
-                                 labels=Year)+
-              scale_fill_brewer(palette = "Set1") +
-              theme_light())
-            }
-
-  all_plots <- list(cluster_plot = plt)
-
-  #-------------------
-  return(all_plots)
+  # if(type=="stacked"){
+  #   change_ave_yr_ALL_transpose <- t(change_ave_yr_ALL)
+  #   grp.dat<-data.frame(change_ave_yr_ALL_transpose,
+  #                       row.names=seq_len(nrow(change_ave_yr_ALL_transpose)))
+  #   names(grp.dat)<-clusters_uni
+  #   p.dat<-data.frame(Year=row.names(grp.dat),grp.dat,stringsAsFactors=F)
+  #   p.dat<-melt(p.dat,id='Year')
+  #   p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
+  #   class(p.dat$Year)
+  #   options(rgl.useNULL = TRUE)
+  #   plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
+  #             geom_area(aes(fill=variable), colour = "gray30", position='fill') +
+  #             scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
+  #                                labels=Year)+
+  #             scale_fill_brewer(palette = "Set1") +
+  #             theme_light())
+  #           }
+  #
+  # all_plots <- list(cluster_plot = plt)
+  #
+  # #-------------------
+  # return(all_plots)
 }
 
 
