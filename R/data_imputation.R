@@ -58,12 +58,14 @@
 #' @return A data.frame with missing values (\code{NA}, \code{Inf},
 #' \code{null}) imputed according to the a specified technique.
 #' @importFrom stats predict lm quantile
-#' @importFrom utils flush.console
+#' @importFrom utils combn
 #' @export
 
 data_imputation <- function(traj, id_field = FALSE, method = 2,
                            replace_with = 1, fill_zeros = FALSE,
                            verbose=TRUE){
+
+  lm <- predit <- NULL
 
   dat <- as.data.frame(traj) #test.data6
 
@@ -214,7 +216,7 @@ data_imputation <- function(traj, id_field = FALSE, method = 2,
   }
 
   if(verbose == TRUE){
-  flush.console()
+  #flush.console()
     print(paste(fill_count, "entries were found/filled!", sep=" "))
   }
 
