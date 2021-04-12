@@ -27,11 +27,11 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     kml,
-    Hmisc,
-    reshape2,
     stats,
     utils,
+    dplyr,
     signal,
+    Hmisc,
     grDevices,
     ggplot2,
     clusterCrit
@@ -39,10 +39,8 @@ RoxygenNote: 7.1.1
 Suggests:
     knitr,
     rmarkdown,
-    testthat,
     digest,
-    dplyr,
     gdtools,
     kableExtra,
-    devtools,
     rgl
+VignetteBuilder: knitr
