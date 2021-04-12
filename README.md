@@ -34,7 +34,7 @@ Code contributions to akmedoids are also very welcome.
 
 ### References:
 
-Adepeju, M., Langton, S. and Bannister, J. 2021. Anchored k-medoids: a
+Adepeju, M., Langton, S. and Bannister, J. (2021). Anchored k-medoids: a
 novel adaptation of k-medoids further refined to measure instability in
 the exposure to crime. Journal of Computational Social Science
 [link](https://doi.org/10.1007/s42001-021-00103-1)
