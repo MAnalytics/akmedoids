@@ -41,6 +41,5 @@ Suggests:
     rmarkdown,
     digest,
     gdtools,
-    kableExtra,
-    rgl
+    kableExtra
 VignetteBuilder: knitr
