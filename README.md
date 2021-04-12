@@ -23,7 +23,7 @@ in the `akmedoids` package may be applied to longitudinal data in
 general.
 
 **For more information and usability, check out details on
-[CRAN](https://cran.r-project.org/web/packages/akmedoids/index.html).**
+[CRAN](https://cran.r-project.org/package=akmedoids).**
 
 ### Support and Contributions:
 
