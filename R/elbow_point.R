@@ -9,12 +9,12 @@
 #'
 #' data(TO1Risk)
 #'
-# output <- akclustr(TO1Risk, id_field = FALSE,
-#                   method = "linear", k = c(3,20),
-#                   crit='Silhouette',
-#                   verbose = TRUE, quality_plot=FALSE)
+#' output <- akclustr(TO1Risk, id_field = FALSE,
+#'                   method = "linear", k = c(3,20),
+#'                   crit='Silhouette',
+#'                   verbose = TRUE, quality_plot=FALSE)
 #'
-# print(output$optimal_k)
+#' print(output$optimal_k)
 #'
 #' @return indicate the optimal k value determined by
 #' the elbow point point.
