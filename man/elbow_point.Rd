@@ -25,13 +25,11 @@ elbow point (credit: 'github.com/agentlans')
 }
 \examples{
 
-data(TO1Risk)
-
-output <- akclustr(TO1Risk, id_field = FALSE,
-                  method = "linear", k = c(3,20),
-                  crit='Silhouette',
-                  verbose = TRUE, quality_plot=FALSE)
-
-print(output$optimal_k)
+# Generate some curve
+x <- runif(100, min=-2, max=3)
+y <- -exp(-x) * (1+rnorm(100)/3)
+plot(x, y)
+#Plot elbow points
+abline(v=elbow_point(x,y)$y, col="blue", pch=20, cex=3)
 
 }
