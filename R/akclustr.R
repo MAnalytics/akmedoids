@@ -81,7 +81,7 @@
 #' @importFrom utils flush.console
 #' @importFrom grDevices dev.new
 #' @importFrom ggplot2 ggplot aes geom_line geom_point
-#' ggtitle geom_vline geom_smooth
+#' ggtitle geom_vline geom_smooth theme_light
 #' @importFrom clusterCrit intCriteria
 #' @export
 
