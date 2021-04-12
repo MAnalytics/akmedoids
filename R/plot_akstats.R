@@ -69,7 +69,7 @@
 # @importFrom grDevices dev.new
 #' @importFrom ggplot2 stat_summary scale_colour_brewer theme_light
 #' theme geom_area scale_x_continuous scale_fill_brewer facet_wrap
-#'
+#' @importFrom dplyr bind_cols
 #' @export
 plot_akstats<- function(ak_object, k = 3, reference = 1,
                       n_quant = 4,
@@ -158,12 +158,19 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
   code_ <- rep(col_names, ncol(data_subset)-1)
   d_bind <- NULL
   for(v in seq_len(ncol(data_subset)-1)){
-    d_bind <- c(d_bind, data_subset[,(v+1)])
+    d_bind <- c(d_bind, as.numeric(data_subset[,(v+1)]))
   }
 
-  data.subset.melted <- data.frame(cbind(code=as.character(code_), variable =
-                        rep(seq_len((ncol(data_subset))-1),
-                        each=length(col_names)), value=d_bind))
+  code <- data.frame(location_ids=as.character(code_))
+  variable <- data.frame(variable=as.character(rep(seq_len((ncol(data_subset))-1),
+                                                   each=length(col_names))))
+  value=data.frame(value = as.numeric(d_bind))
+
+  data.subset.melted <- bind_cols(code, variable,value)
+
+  # data.subset.melted <- data.frame(cbind(code=code_, variable =
+  #                       rep(seq_len((ncol(data_subset))-1),
+  #                       each=length(col_names)), value=d_bind))
 
   #append cluster list with traj
   data.subset.melted <- cbind(data.subset.melted,
@@ -179,7 +186,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
 
   change_ave_yr_ALL <- NULL
 
-  for(q in seq_len(length(clusters_uni))){
+  for(q in seq_len(length(clusters_uni))){ #q=1
 
     all_clust_list <-
       data.subset.melted[which(data.subset.melted$clusters==clusters_uni[q]),]
@@ -190,7 +197,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
       yr_ <-
         all_clust_list[which(as.vector(all_clust_list$Year)==year_uni[m]),]
 
-      ave_yr <- c(ave_yr, sum(yr_$value))
+      ave_yr <- c(ave_yr, sum(as.numeric(as.character(yr_$value))))
     }
 
     change_ave_yr_ALL <- rbind(change_ave_yr_ALL,  ave_yr)
@@ -245,17 +252,19 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
 
     #p.dat<-melt(p.dat,id='Year')
     #discarding the use of 'melt' function above
-    code_ <- rep(seq_len(nrow(change_ave_yr_ALL_transpose)), ncol(p.dat)-1)
+    code_ <- rep(seq_len(nrow(change_ave_yr_ALL_transpose)),
+                 ncol(p.dat)-1)
     e_bind <- NULL
     for(v in seq_len(ncol(p.dat)-1)){
-      e_bind <- c(e_bind, p.dat[,(v+1)])
+      e_bind <- c(e_bind, as.numeric(p.dat[,(v+1)]))
     }
 
-    p.dat <- data.frame(cbind(Year=as.character(code_), variable =
-                      rep(clusters_uni,
-                      each=nrow(change_ave_yr_ALL_transpose)), value=e_bind))
+    code <- data.frame(Year=as.character(code_))
+    variable <- data.frame(variable=as.character(rep(clusters_uni,
+                each=nrow(change_ave_yr_ALL_transpose))))
+    value=data.frame(value = as.numeric(e_bind))
 
-
+    p.dat <- bind_cols(code, variable,value)
 
     p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
     class(p.dat$Year)
