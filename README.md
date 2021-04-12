@@ -18,7 +18,7 @@ set of functions for addressing common data issues, such as missing
 entries and outliers, prior to conducting advance longitudinal data
 analysis. One of the key objectives of this package is to facilitate
 easy replication of a recent paper which examined small area inequality
-in the crime drop (Adepeju et al. 2021). Many of the functions provided
+in the crime drop (Adepeju et al.2021). Many of the functions provided
 in the `akmedoids` package may be applied to longitudinal data in
 general.
 
