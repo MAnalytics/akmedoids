@@ -6,7 +6,7 @@ output: html_document
 ---
 
 
-'Akmedoids' package updated (Version: v1.2.6)
+'Akmedoids' package updated (Version: v1.2.8)
 
 ### Updates:
 1. Added 4 new sample datasets, and used in the function examples. The datasets include `clustr`, `simulated`, `TO1Risk`, `traj_w_space`.
