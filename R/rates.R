@@ -58,7 +58,7 @@
 #' to denominator data (i.e. not present in the trajectory data);
 #' (iv) `` - a dataframe of rates estimates. Note: only the individual
 #' ids in `$rates_estimates` are used in the `rates` estimation.
-#'
+#' @importFrom dplyr select left_join
 #' @export
 
 
@@ -145,9 +145,9 @@ rates <- function(traj, denomin, id_field=TRUE, multiplier = 100){
   #rates data
   data_Fresh <- data.frame(cbind(as.factor(keep_names), data_Fresh))
 
-  data_Fresh <- dplyr::left_join(common_ids_join, data_Fresh,
+  data_Fresh <- left_join(common_ids_join, data_Fresh,
                                  by = c("id" = "X1"))
-  data_Fresh <- dplyr::select(data_Fresh, -c(id))
+  data_Fresh <- select(data_Fresh, -c(id))
 
   colnames(data_Fresh) <-  n_CL
 
