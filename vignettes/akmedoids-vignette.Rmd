@@ -135,7 +135,7 @@ require(knitr)
 library(gdtools)
 library(kableExtra)
 library(clusterCrit)
-library(rgl)
+library(dplyr)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
@@ -160,7 +160,6 @@ knitr::kable(tble, caption = "Table 1. `Data manipulation` functions", col.names
 # 1. Data manipulation
 
 Table 1 shows the main data manipulation functions and their descriptions. These functions help to address common data issues prior to analysis, as well as basic data manipulation tasks such as converting longitudinal data from `count` to `proportion` measures (as per the crime inequality paper where `akmedoids` was first implemented). In order to demonstrate the utility of these functions, we provide a simulated dataset `traj` which can be called by typing `traj` in `R` console after loading the `akmedoids` library.
-
 
 
 ## (i) `"data_imputation"` function
@@ -236,7 +235,7 @@ for(k in seq_len(nrow(dat))){ #k<-2
   #Add the predicted points to the original data
   #dev.new()
   #plot(1:10, col=2)
-  options(rgl.useNULL = TRUE)
+  #options(rgl.useNULL = TRUE)
   plot (known$x, known$y, type="o", main=paste("traj_id:",t_name[k], sep=" "), font.main = 1)
   if(!length(newY)==0){#plot only if it has elements
   lines(l_pred, lty="dotted", col="red", lwd=2)
@@ -246,7 +245,7 @@ for(k in seq_len(nrow(dat))){ #k<-2
 #point legend
 plot_colors <- c("black","red")
 text <- c("Observed points", "Predicted points")
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 par(xpd=TRUE)
 legend("center",legend = text, text.width = max(sapply(text, strwidth)),
        col=plot_colors, pch = 1, cex=1, horiz = FALSE)
@@ -255,7 +254,7 @@ par(xpd=FALSE)
 #line legend
 plot_colors <- c("black","red")
 text <- c("line joining observed points", "regression line predicting missing points")
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 plot.new()
 par(xpd=TRUE)
 legend("center",legend = text, text.width = max(sapply(text, strwidth)),
@@ -393,18 +392,21 @@ library(ggplot2)
 #doing it manually instead of using 'melt' function from 'reshape2'
 
 #imp_traj_long <- melt(imp_traj, id="location_ids") 
+
 coln <- colnames(imp_traj)[2:length(colnames(imp_traj))]
 code_ <- rep(imp_traj$location_ids, ncol(imp_traj)-1)
 d_bind <- NULL
   for(v in seq_len(ncol(imp_traj)-1)){
-    d_bind <- c(d_bind, imp_traj[,(v+1)])
+    d_bind <- c(d_bind, as.numeric(imp_traj[,(v+1)]))
   }
 
-imp_traj_long <- data.frame(cbind(location_ids=as.character(code_), variable =
-                        rep(coln,
-                        each=length(imp_traj$location_ids)), value=d_bind))
+code <- data.frame(location_ids=as.character(code_))
+variable <- data.frame(variable=as.character(rep(coln,
+                        each=length(imp_traj$location_ids))))
+value=data.frame(value = as.numeric(d_bind))
 
-
+imp_traj_long <- bind_cols(code, variable,value) 
+  
 #view the first 6 rows
 head(imp_traj_long)
 
@@ -414,7 +416,7 @@ p <-  ggplot(imp_traj_long, aes(x=variable, y=value,
             geom_point() + 
             geom_line()
 
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 print(p)
 
 ```
@@ -431,19 +433,34 @@ imp_traj_New <- outlier_detect(imp_traj, id_field = TRUE, method = 2,
 
 imp_traj_New <- imp_traj_New$Outliers_Replaced 
 
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 print(imp_traj_New)
 
-imp_traj_New_long <- melt(imp_traj_New, id="location_ids") 
+#imp_traj_New_long <- melt(imp_traj_New, id="location_ids") 
+
+coln <- colnames(imp_traj_New)[2:length(colnames(imp_traj_New))]
+code_ <- rep(imp_traj_New$location_ids, ncol(imp_traj_New)-1)
+
+d_bind <- NULL
+  for(v in seq_len(ncol(imp_traj_New)-1)){
+    d_bind <- c(d_bind, as.numeric(imp_traj_New[,(v+1)]))
+  }
+
+code <- data.frame(location_ids=as.character(code_))
+variable <- data.frame(variable=as.character(rep(coln,
+              each=length(imp_traj_New$location_ids))))
+value=data.frame(value = as.numeric(d_bind))
+
+imp_traj_New_long <- bind_cols(code, variable,value)
 
 #plot function
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 p <-  ggplot(imp_traj_New_long, aes(x=variable, y=value,
             group=location_ids, color=location_ids)) + 
             geom_point() + 
             geom_line()
 
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 print(p)
 
 ```
@@ -500,16 +517,26 @@ knitr::kable(tble2, caption = "Table 2. `Data clustering` functions", col.names 
 #view the first few rows
 head(prop_crime_per200_people)
 
-prop_crime_per200_people_melt <- melt(prop_crime_per200_people, id="location_ids") 
+#prop_crime_per200_people_melt <- melt(prop_crime_per200_people, id="location_ids") 
+coln <- colnames(prop_crime_per200_people)[2:length(colnames(prop_crime_per200_people))]
+code_ <- rep(prop_crime_per200_people$location_ids, ncol(prop_crime_per200_people)-1)
+d_bind <- NULL
+  for(v in seq_len(ncol(prop_crime_per200_people)-1)){
+    d_bind <- c(d_bind, prop_crime_per200_people[,(v+1)])
+  }
+
+prop_crime_per200_people_melt <- data.frame(cbind(location_ids=as.character(code_), variable =
+                        rep(coln,
+                        each=length(prop_crime_per200_people$location_ids)), value=d_bind))
 
 #plot function
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 p <-  ggplot(prop_crime_per200_people_melt, aes(x=variable, y=value,
             group=location_ids, color=location_ids)) + 
             geom_point() + 
             geom_line()
 
-options(rgl.useNULL = TRUE)
+#options(rgl.useNULL = TRUE)
 print(p)
 
 ```
@@ -618,7 +645,7 @@ The above printouts represent the properties (i.e. the descriptive and change pr
 
 ```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
 
-  options(rgl.useNULL = TRUE)
+  #options(rgl.useNULL = TRUE)
   plot_akstats(akObj, k = 5, type="lines", y_scaling="fixed")
 
 ```
@@ -626,7 +653,7 @@ The above printouts represent the properties (i.e. the descriptive and change pr
 (b) ***Proportional change of groups change over time***
 
 ```{r, echo=TRUE, include=TRUE, fig.width=5,fig.height=5,fig.align="center"}
-  options(rgl.useNULL = TRUE)
+  #options(rgl.useNULL = TRUE)
   plot_akstats(akObj, k = 5, reference = 1, n_quant = 4, type="stacked")
 
 ```
