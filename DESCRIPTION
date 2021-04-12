@@ -1,7 +1,7 @@
 Package: akmedoids
 Type: Package
 Title: Anchored Kmedoids for Longitudinal Data Clustering
-Version: 1.2.6
+Version: 1.2.8
 Author: Monsuru Adepeju [cre, aut], 
     Samuel Langton [aut], 
     Jon Bannister [aut]
