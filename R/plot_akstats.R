@@ -29,7 +29,7 @@
 #' This result can be used to further categorize the groups into
 #' 'classes'. For example, groups that fall within the \code{1st}
 #' quartile may be classified as 'Stable' groups (Adepeju et al. 2021).
-#' @s3method plot_akstats
+# @s3method plot_akstats
 #' @examples
 #'
 #' data(traj)
@@ -64,18 +64,17 @@
 #' doi: 10.1007/s42001-021-00103-1.
 #' @references \code{2}. Wickham H. (2016). Elegant graphics for
 #' Data Analysis. Spring-Verlag New York (2016).
-#' @importFrom reshape2 melt
 #' @importFrom stats quantile
-#' @importFrom utils flush.console
-#' @importFrom grDevices dev.new
+# @importFrom utils flush.console
+# @importFrom grDevices dev.new
 #' @importFrom ggplot2 stat_summary scale_colour_brewer theme_light
 #' theme geom_area scale_x_continuous scale_fill_brewer facet_wrap
 #'
 #' @export
 plot_akstats<- function(ak_object, k = 3, reference = 1,
-                         n_quant = 4,
-                         type = "lines",
-                         y_scaling="fixed"){
+                      n_quant = 4,
+                      type = "lines",
+                      y_scaling="fixed"){
 
   UseMethod('plot_akstats')
 }
@@ -97,7 +96,7 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
 
   # check object type
   if(class(ak_object)[1] != "akobject"){
-    stop("*----Object not right type!! 'akclustr' object required!----*")
+  stop("*----Object not right type!! 'akclustr' object required!----*")
   }
 
   #test data type/or class
@@ -151,7 +150,20 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
 
   colnames(data_subset) <- c("code", seq_len((ncol(data_subset))-1))
 
-  data.subset.melted <- suppressWarnings(melt(data_subset, id="code"))
+  #data.subset.melted <- suppressWarnings(melt(data_subset, id="code"))
+
+  #tranform wide to long (to resolve the rgl.null
+  #package built problem)
+  #avoid using 'melt' function
+  code_ <- rep(col_names, ncol(data_subset)-1)
+  d_bind <- NULL
+  for(v in seq_len(ncol(data_subset)-1)){
+    d_bind <- c(d_bind, data_subset[,(v+1)])
+  }
+
+  data.subset.melted <- data.frame(cbind(code=as.character(code_), variable =
+                        rep(seq_len((ncol(data_subset))-1),
+                        each=length(col_names)), value=d_bind))
 
   #append cluster list with traj
   data.subset.melted <- cbind(data.subset.melted,
@@ -184,65 +196,83 @@ plot_akstats.default <- function(ak_object, k = 3, reference = 1,
     change_ave_yr_ALL <- rbind(change_ave_yr_ALL,  ave_yr)
   }
 
+
+
+
   #whether to plot the clusters
   #----------------------------------------------------
   #plotting
   #----------------------------------------------------
-  # ggplot <- aes <- Year <- value <- id <- geom_line <- facet_wrap <-
-  #   geom_smooth <- theme_minimal <- variable <- group <- NULL
-  #
-  # #plot option 1:
-  # if(type=="lines"){
-  #   if(y_scaling=="fixed"){
-  #     #options(rgl.useNULL = TRUE)
-  #     plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
-  #                                            group=id, color=clusters)) +
-  #               geom_line() +
-  #               stat_summary(fun.y=mean, geom="line", aes(group=clusters),
-  #                            color="black", size=1) +
-  #               facet_wrap(~clusters, scales = "fixed") +
-  #               facet_wrap(~clusters) +
-  #               scale_colour_brewer(palette = "Set1")) #clusters
-  #   }
-  #
-  #   if(y_scaling=="free"){
-  #     options(rgl.useNULL = TRUE)
-  #     plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
-  #                                            group=id, color=clusters)) +
-  #               geom_line() +
-  #               stat_summary(fun.y=mean, geom="line", aes(group=clusters),
-  #                            color="black", size=1) +
-  #               facet_wrap(~clusters, scales = "free") +
-  #               facet_wrap(~clusters) +
-  #               scale_colour_brewer(palette = "Set1") +
-  #               theme_light()) #clusters
-  #   }
-  # }
+  ggplot <- aes <- Year <- value <- id <- geom_line <- facet_wrap <-
+    geom_smooth <- theme_minimal <- variable <- group <- NULL
+
+  #plot option 1:
+  if(type=="lines"){
+    if(y_scaling=="fixed"){
+      #options(rgl.useNULL = TRUE)
+      plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
+                                             group=id, color=clusters)) +
+                geom_line() +
+                stat_summary(fun.y=mean, geom="line", aes(group=clusters),
+                             color="black", size=1) +
+                facet_wrap(~clusters, scales = "fixed") +
+                facet_wrap(~clusters) +
+                scale_colour_brewer(palette = "Set1")) #clusters
+    }
+
+    if(y_scaling=="free"){
+      options(rgl.useNULL = TRUE)
+      plt <- (ggplot(data.subset.melted, aes(x=Year, y=value,
+                                             group=id, color=clusters)) +
+                geom_line() +
+                stat_summary(fun.y=mean, geom="line", aes(group=clusters),
+                             color="black", size=1) +
+                facet_wrap(~clusters, scales = "free") +
+                facet_wrap(~clusters) +
+                scale_colour_brewer(palette = "Set1") +
+                theme_light()) #clusters
+    }
+  }
 
   #----------------------------------------------------
   #plot option 2:
-  # if(type=="stacked"){
-  #   change_ave_yr_ALL_transpose <- t(change_ave_yr_ALL)
-  #   grp.dat<-data.frame(change_ave_yr_ALL_transpose,
-  #                       row.names=seq_len(nrow(change_ave_yr_ALL_transpose)))
-  #   names(grp.dat)<-clusters_uni
-  #   p.dat<-data.frame(Year=row.names(grp.dat),grp.dat,stringsAsFactors=F)
-  #   p.dat<-melt(p.dat,id='Year')
-  #   p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
-  #   class(p.dat$Year)
-  #   options(rgl.useNULL = TRUE)
-  #   plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
-  #             geom_area(aes(fill=variable), colour = "gray30", position='fill') +
-  #             scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
-  #                                labels=Year)+
-  #             scale_fill_brewer(palette = "Set1") +
-  #             theme_light())
-  #           }
-  #
-  # all_plots <- list(cluster_plot = plt)
-  #
-  # #-------------------
-  # return(all_plots)
+  if(type=="stacked"){
+    change_ave_yr_ALL_transpose <- t(change_ave_yr_ALL)
+    grp.dat<-data.frame(change_ave_yr_ALL_transpose,
+                        row.names=seq_len(nrow(change_ave_yr_ALL_transpose)))
+    names(grp.dat)<-clusters_uni
+    p.dat<-data.frame(Year=row.names(grp.dat),grp.dat,stringsAsFactors=F)
+
+    #p.dat<-melt(p.dat,id='Year')
+    #discarding the use of 'melt' function above
+    code_ <- rep(seq_len(nrow(change_ave_yr_ALL_transpose)), ncol(p.dat)-1)
+    e_bind <- NULL
+    for(v in seq_len(ncol(p.dat)-1)){
+      e_bind <- c(e_bind, p.dat[,(v+1)])
+    }
+
+    p.dat <- data.frame(cbind(Year=as.character(code_), variable =
+                      rep(clusters_uni,
+                      each=nrow(change_ave_yr_ALL_transpose)), value=e_bind))
+
+
+
+    p.dat$Year<-as.numeric(p.dat$Year) #head(p.dat)
+    class(p.dat$Year)
+    options(rgl.useNULL = TRUE)
+    plt <- (ggplot(p.dat,aes(x=Year,y=value)) + theme(legend.position="none")+
+              geom_area(aes(fill=variable), colour = "gray30", position='fill') +
+              scale_x_continuous(breaks=seq_len(nrow(change_ave_yr_ALL_transpose)),
+                                 labels=Year)+
+              scale_fill_brewer(palette = "Set1") +
+              theme_light())
+            }
+
+  all_plots <- list(cluster_plot = plt)
+
+  #-------------------
+  return(all_plots)
+
 }
 
 
