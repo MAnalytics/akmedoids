@@ -60,7 +60,7 @@
 #' doi: 10.1007/s42001-021-00103-1.
 #' @references \code{2}. Wickham H. (2016). Elegant graphics for
 #' Data Analysis. Spring-Verlag New York (2016).
-#' @importFrom reshape2 melt
+# @importFrom reshape2 melt
 #' @importFrom stats quantile
 #' @importFrom ggplot2 stat_summary scale_colour_brewer theme_light
 #' theme geom_area scale_x_continuous scale_fill_brewer facet_wrap
@@ -143,7 +143,20 @@ print_akstats.default <- function(ak_object, k = 3, reference = 1,
 
   colnames(data_subset) <- c("code", seq_len((ncol(data_subset))-1))
 
-  data.subset.melted <- suppressWarnings(melt(data_subset, id="code"))
+  #data.subset.melted <- suppressWarnings(melt(data_subset, id="code"))
+
+  #tranform wide to long (to resolve the rgl.null
+  #package built problem)
+  #avoid using 'melt' function
+  code_ <- rep(col_names, ncol(data_subset)-1)
+  d_bind <- NULL
+  for(v in seq_len(ncol(data_subset)-1)){
+    d_bind <- c(d_bind, data_subset[,(v+1)])
+  }
+
+  data.subset.melted <- data.frame(cbind(code=as.character(code_), variable =
+                        rep(seq_len((ncol(data_subset))-1),
+                        each=length(col_names)), value=d_bind))
 
   #append cluster list with traj
   data.subset.melted <- cbind(data.subset.melted,
