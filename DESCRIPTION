@@ -13,7 +13,7 @@ Description: Advances a novel adaptation of longitudinal k-means clustering
     on either the average silhouette width (Rousseeuw P. J. 1987) 
     or the Calinski-Harabatz criterion (Calinski and Harabatz (1974) 
     <doi:10.1080/03610927408827101>). Includes functions to extract 
-    descriptive statistics and generate a visualisation of the 
+    descriptive statistics and generate a visualization of the 
     resulting groups, drawing methods from the 'ggplot2' library (Wickham H. (2016) 
     <doi:10.1007/978-3-319-24277-4>). The package also includes a number of 
     other useful functions for exploring and manipulating longitudinal 
