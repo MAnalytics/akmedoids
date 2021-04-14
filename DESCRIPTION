@@ -1,7 +1,7 @@
 Package: akmedoids
 Type: Package
 Title: Anchored Kmedoids for Longitudinal Data Clustering
-Version: 1.3.0
+Version: 1.2.6
 Author: Monsuru Adepeju [cre, aut], 
     Samuel Langton [aut], 
     Jon Bannister [aut]
@@ -27,11 +27,11 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     kml,
+    Hmisc,
+    reshape2,
     stats,
     utils,
-    dplyr,
     signal,
-    Hmisc,
     grDevices,
     ggplot2,
     clusterCrit
@@ -39,7 +39,10 @@ RoxygenNote: 7.1.1
 Suggests:
     knitr,
     rmarkdown,
+    testthat,
     digest,
+    dplyr,
     gdtools,
-    kableExtra
-VignetteBuilder: knitr
+    kableExtra,
+    devtools,
+    rgl
