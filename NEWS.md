@@ -1,14 +1,14 @@
-#---
-#title: "NEWS.md"
-#authors: "geoMADE"
-#date: "12th April 2021"
-#output: html_document
-#---
+---
+title: "NEWS.md"
+authors: "geoMADE"
+date: "12th April 2021"
+output: html_document
+---
 
 
-#'Akmedoids' package updated (Version: v1.3.0)
+Akmedoids' package updated (Version: v1.3.0)
 
-### Updates:
+Updates:
 1. Added 4 new sample datasets, and used in the function examples. The datasets include `clustr`, `simulated`, `TO1Risk`, `traj_w_space`.
 2. Added detailed descriptions of fields in each dataset. See `format` section of each dataset documentation.
 3. Change the citation `Adepeju et al. 2019` to `Adepeju et al. 2021` based on the newly published article upon which the `akmedoids` package is based.
