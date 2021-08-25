@@ -9,3 +9,6 @@ README.html
 input
 quality_Plot.png
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
